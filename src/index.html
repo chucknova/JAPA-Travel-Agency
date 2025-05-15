@@ -7,13 +7,16 @@
   <link href="./output.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <title>JAPA Travels: Your Sure Japa Plug</title>
 </head>
 
 <body>
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navcontents">
       <div class="navcontents-left">
@@ -32,18 +35,424 @@
 
 
       <div class="user-actions">
-        <button class="login-button"><a href="#">Log In</a></button>
+        <button class="login-button"><a href="user-auth.html">Log In</a></button>
       </div>
     </div>
 
   </nav>
+
+  <!-- Hero -->
   <div class="hero-section">
     <div class="hero-content">
       <h1 class="hero-header">Japa Today. Travel Without Wahala</h1>
       <p class="hero-subtext">Flights, visas, and curated experiences. All in one place — and built for you.</p>
     </div>
     <div class="hero-input-container">
+      <div class="input-contents">
+        <div class="input-wrapper">
+          <input type="text" placeholder="Leaving from" />
+        </div>
 
+        <div class="input-wrapper">
+          <input type="text" placeholder="Going to" />
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" placeholder="Departure Date"
+            onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" placeholder="Returning Date"
+            onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
+        </div>
+
+        <div class="button-wrapper">
+          <button>
+            Search flights
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flights -->
+  <div class="flights-section">
+    <div class="flights-section-top">
+      <div class="flights-section-top-right">
+        <h3>Explore flights in top destinations</h3>
+        <p>Explore our top travel packages at JAPA this month</p>
+      </div>
+      <div class="flights-section-top-left">
+        <button>See all flights</button>
+      </div>
+    </div>
+
+    <div class="flights-section-bottom">
+      <div class="flight-card">
+        <div class="flight-card-top">
+          <img src="" alt="" class="airline-logo">
+          <div class="airline-name-location">
+            <div class="airline-name">Qatar Airways</div>
+            <div class="airport-name">Murtala Muhammed International Airport</div>
+          </div>
+        </div>
+
+        <div class="flight-card-middle">
+          <div class="airport-codes-div">
+            <div class="airport-code">
+              <p class="airport-code-text">LOS</p>
+              <p class="airport-name">Lagos</p>
+            </div>
+
+            <svg class="plane-departure-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+              viewBox="0 0 25 24" fill="none">
+              <path
+                d="M23.5 11V13H22.5V14H15.5V15H14.5V17H13.5V18H12.5V20H11.5V21H10.5V22H7.5V19H8.5V16H9.5V14H5.5V15H4.5V16H3.5V17H1.5V14H2.5V10H1.5V7H3.5V8H4.5V9H5.5V10H9.5V8H8.5V5H7.5V2H10.5V3H11.5V4H12.5V6H13.5V7H14.5V9H15.5V10H22.5V11H23.5Z"
+                fill="#E71D36" />
+            </svg>
+
+            <div class="airport-code-2">
+              <p class="airport-code-text-2">DOH</p>
+              <p class="airport-name-2">Doha</p>
+            </div>
+          </div>
+
+          <div class="departure-arrival-div">
+            <div class="departure-time">
+              <p class="time">12:00 AM</p>
+              <p class="date">Friday, 12th Jan</p>
+            </div>
+
+            <div class="arrival-time">
+              <p class="time">12:00 AM</p>
+              <p class="date">Friday, 12th Jan</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="flight-card-bottom">
+          <div class="flight-pricing">
+            <p class="price-fare">Economy</p>
+            <p class="price">₦1,200,000</p>
+          </div>
+
+          <div class="flight-booking">
+            <button class="select-flight-button">Select Flight</button>
+          </div>
+        </div>
+      </div>
+      <div class="flight-card">
+        <div class="flight-card-top">
+          <img src="" alt="" class="airline-logo">
+          <div class="airline-name-location">
+            <div class="airline-name">Qatar Airways</div>
+            <div class="airport-name">Murtala Muhammed International Airport</div>
+          </div>
+        </div>
+
+        <div class="flight-card-middle">
+          <div class="airport-codes-div">
+            <div class="airport-code">
+              <p class="airport-code-text">LOS</p>
+              <p class="airport-name">Lagos</p>
+            </div>
+
+            <svg class="plane-departure-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+              viewBox="0 0 25 24" fill="none">
+              <path
+                d="M23.5 11V13H22.5V14H15.5V15H14.5V17H13.5V18H12.5V20H11.5V21H10.5V22H7.5V19H8.5V16H9.5V14H5.5V15H4.5V16H3.5V17H1.5V14H2.5V10H1.5V7H3.5V8H4.5V9H5.5V10H9.5V8H8.5V5H7.5V2H10.5V3H11.5V4H12.5V6H13.5V7H14.5V9H15.5V10H22.5V11H23.5Z"
+                fill="#E71D36" />
+            </svg>
+
+            <div class="airport-code-2">
+              <p class="airport-code-text-2">DOH</p>
+              <p class="airport-name-2">Doha</p>
+            </div>
+          </div>
+
+          <div class="departure-arrival-div">
+            <div class="departure-time">
+              <p class="time">12:00 AM</p>
+              <p class="date">Friday, 12th Jan</p>
+            </div>
+
+            <div class="arrival-time">
+              <p class="time">12:00 AM</p>
+              <p class="date">Friday, 12th Jan</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="flight-card-bottom">
+          <div class="flight-pricing">
+            <p class="price-fare">Economy</p>
+            <p class="price">₦1,200,000</p>
+          </div>
+
+          <div class="flight-booking">
+            <button class="select-flight-button">Select Flight</button>
+          </div>
+        </div>
+      </div>
+      <div class="flight-card">
+        <div class="flight-card-top">
+          <img src="" alt="" class="airline-logo">
+          <div class="airline-name-location">
+            <div class="airline-name">Qatar Airways</div>
+            <div class="airport-name">Murtala Muhammed International Airport</div>
+          </div>
+        </div>
+
+        <div class="flight-card-middle">
+          <div class="airport-codes-div">
+            <div class="airport-code">
+              <p class="airport-code-text">LOS</p>
+              <p class="airport-name">Lagos</p>
+            </div>
+
+            <svg class="plane-departure-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+              viewBox="0 0 25 24" fill="none">
+              <path
+                d="M23.5 11V13H22.5V14H15.5V15H14.5V17H13.5V18H12.5V20H11.5V21H10.5V22H7.5V19H8.5V16H9.5V14H5.5V15H4.5V16H3.5V17H1.5V14H2.5V10H1.5V7H3.5V8H4.5V9H5.5V10H9.5V8H8.5V5H7.5V2H10.5V3H11.5V4H12.5V6H13.5V7H14.5V9H15.5V10H22.5V11H23.5Z"
+                fill="#E71D36" />
+            </svg>
+
+            <div class="airport-code-2">
+              <p class="airport-code-text-2">DOH</p>
+              <p class="airport-name-2">Doha</p>
+            </div>
+          </div>
+
+          <div class="departure-arrival-div">
+            <div class="departure-time">
+              <p class="time">12:00 AM</p>
+              <p class="date">Friday, 12th Jan</p>
+            </div>
+
+            <div class="arrival-time">
+              <p class="time">12:00 AM</p>
+              <p class="date">Friday, 12th Jan</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="flight-card-bottom">
+          <div class="flight-pricing">
+            <p class="price-fare">Economy</p>
+            <p class="price">₦1,200,000</p>
+          </div>
+
+          <div class="flight-booking">
+            <button class="select-flight-button">Select Flight</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Travel Package -->
+  <div class="travel-packages">
+    <div class="top">
+      <div class="top-left">
+        <h3 class="travel-package-top-left-header">Our Top Travel Packages — Curated Just for You</h3>
+        <p class="travel-package-top-left-subheader">Explore our top travel packages this month at JAPA</p>
+      </div>
+      <div class="top-right">
+        <button>See all packages</button>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Zanzibar Beach Escape</h3>
+            <p>Eiffel Tower, croissants, and luxury shopping</p>
+          </div>
+          <div class="pricing">
+            From NGN 1,200,000
+          </div>
+        </div>
+      </div>
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Zanzibar Beach Escape</h3>
+            <p>Eiffel Tower, croissants, and luxury shopping</p>
+          </div>
+          <div class="pricing">
+            From NGN 1,200,000
+          </div>
+        </div>
+      </div>
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Zanzibar Beach Escape</h3>
+            <p>Eiffel Tower, croissants, and luxury shopping</p>
+          </div>
+          <div class="pricing">
+            From NGN 1,200,000
+          </div>
+        </div>
+      </div>
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Zanzibar Beach Escape</h3>
+            <p>Eiffel Tower, croissants, and luxury shopping</p>
+          </div>
+          <p class="pricing">
+            From NGN 1,200,000
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Travel Package Promo -->
+  <div class="travel-package-promo">
+    <div class="promo-container">
+      <div class="promo-content">
+        <div class="top">
+          <h2>Enjoy a 5-Day Paris Getaway</h2>
+          <p>Starting from NGN 2,800,000</p>
+        </div>
+        <div class="bottom">
+          <button>Book Package</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Destinations -->
+  <div class="destinations">
+    <div class="destinations-top">
+      <div class="destinations-top-left">
+        <h3>Not Sure Where to Go? Let the World Inspire You.</h3>
+        <p>Discover the world with JAPA</p>
+      </div>
+
+      <div class="destinations-top-right">
+        <button>See all destinations</button>
+      </div>
+
+    </div>
+    <div class="destinations-bottom">
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name">Tokyo, Japan 🇯🇵</div>
+          <button>Discover</button>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name">Barcelona, Spain 🇪🇸</div>
+          <button>Discover</button>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name">Bali, Indonesia 🇮🇩</div>
+          <button>Discover</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tours & Experiences -->
+  <div class="travel-packages">
+    <div class="top">
+      <div class="top-left">
+        <h3 class="travel-package-top-left-header">Authentic Experiences That Make Memories</h3>
+        <p class="travel-package-top-left-subheader">Live the culture. Explore handpicked local tours and adventures.
+        </p>
+      </div>
+      <div class="top-right">
+        <button>See all packages</button>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Jerusalem Historical & Spiritual Tour</h3>
+            <p>erusalem, Israel</p>
+          </div>
+          <div class="pricing">
+            NGN 1,500,000
+          </div>
+        </div>
+      </div>
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Jerusalem Historical & Spiritual Tour</h3>
+            <p>erusalem, Israel</p>
+          </div>
+          <div class="pricing">
+            NGN 1,500,000
+          </div>
+        </div>
+      </div>
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Jerusalem Historical & Spiritual Tour</h3>
+            <p>erusalem, Israel</p>
+          </div>
+          <div class="pricing">
+            NGN 1,500,000
+          </div>
+        </div>
+      </div>
+      <div class="travel-package-card">
+        <img class="thumbnail" src="" alt="" srcset="">
+        <div class="content">
+          <div class="name-desc">
+            <h3>Jerusalem Historical & Spiritual Tour</h3>
+            <p>erusalem, Israel</p>
+          </div>
+          <div class="pricing">
+            NGN 1,500,000
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- How does JAPA work? -->
+  <div class="how-japa-works">
+    <div class="main-container">
+      <div class="inner-container">
+        <div class="bg-img"></div>
+        <div class="left">
+          <div class="left-top">
+            <h3>How does JAPA work?</h3>
+            <p>1. Browse destinations and packages across the world.</p>
+            <p>2. Choose your dates and reserve in minutes—no stress.</p>
+            <p>3. Pack your bags, we handle the rest. Your Japa journey awaits.</p>
+          </div>
+          <div class="left-bottom">
+            <button>JAPA Today</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>

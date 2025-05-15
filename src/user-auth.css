@@ -1,0 +1,154 @@
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f9fafb;
+            color: #111827;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            max-width: 400px;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        .brand {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        input {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            background-color: #f3f4f6;
+            transition: background-color 0.15s ease;
+        }
+
+        input:focus {
+            outline: none;
+            background-color: #e5e7eb;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        button {
+            padding: 0.75rem 1rem;
+            background-color: #E71D36;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        button:hover {
+            background-color: #e71d35d5;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.25rem 0;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .divider span {
+            padding: 0 0.75rem;
+        }
+
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .google-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        .footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .footer a {
+            color: #7C3AED;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .subtle-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#7c3aed20 1px, transparent 1px);
+            background-size: 24px 24px;
+            z-index: -1;
+            opacity: 0.5;
+        }
