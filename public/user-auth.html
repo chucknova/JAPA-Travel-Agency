@@ -151,17 +151,15 @@
                 console.log(token);
 
                 var user = result.user;
-
-                
-                alert(`Welcome ${user}`);
-                console.log(user);
+// come back to redirect to index.html
 
                 // ...
             }).catch((error) => {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                // The email of the user's account used.
+               console.log(errorMessage);
+               
                 var email = error.email;
                 // The firebase.auth.AuthCredential type that was used.
                 var credential = error.credential;

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+
+const availableInventory = [
+  {
+    flightId: 'JAPA1234',
+    tripType: 'round-trip', // 'one-way' or 'round-trip'
+    airline: {
+      code: 'UA',
+      name: 'United Airlines',
+      logo: 'united.png'
+    },
+    route: {
+      from: 'LAX',
+      to: 'JFK',
+      stops: 1,
+      stopDetails: [
+        {
+          airportCode: 'ORD',
+          stopDuration: '1h 30m'
+        }
+      ]
+    },
+    schedule: {
+      departureTime: '08:00 AM',
+      arrivalTime: '06:00 PM',
+      duration: '10h'
+    },
+    returnSchedule: {                // only for round-trip
+      departureTime: '07:00 AM',
+      arrivalTime: '05:00 PM',
+      duration: '10h'
+    },
+    aircraft: 'Boeing 787',
+    seatsAvailable: {
+      economy: 100,
+      business: 20,
+      first: 5
+    },
+    fareRules: {
+      refundable: false,
+      changeFee: 150
+    },
+    baseFare: {
+      economy: 250,
+      business: 850,
+      first: 2500
+    },
+    taxes: 50,
+    partners: ['Expedia', 'Priceline']
+  },
+
+  {
+    flightId: 'JAPA5678',
+    tripType: 'one-way',
+    airline: {
+      code: 'DL',
+      name: 'Delta Airlines',
+      logo: 'delta.png'
+    },
+    route: {
+      from: 'ATL',
+      to: 'JFK',
+      stops: 0,
+      stopDetails: []
+    },
+    schedule: {
+      departureTime: '10:00 AM',
+      arrivalTime: '12:00 PM',
+      duration: '2h'
+    },
+    aircraft: 'Airbus A320',
+    seatsAvailable: {
+      economy: 50,
+      business: 10,
+      first: 2
+    },
+    fareRules: {
+      refundable: true,
+      changeFee: 100
+    },
+    baseFare: {
+      economy: 150,
+      business: 500,
+      first: 1200
+    },
+    taxes: 40,
+    partners: ['Orbitz', 'Kayak']
+  }
+];
+
+
+console.log(availableInventory);
+
+const flightDetails = availableInventory.map(flight => {
+  return {
+    flightId: flight.flightId,
+    tripType: flight.tripType,
+    airline: flight.airline.name,
+    route: `${flight.route.from} to ${flight.route.to}`,
+    stops: flight.route.stops,
+    departureTime: flight.schedule.departureTime,
+    arrivalTime: flight.schedule.arrivalTime,
+    duration: flight.schedule.duration,
+    aircraft: flight.aircraft,
+    seatsAvailable: flight.seatsAvailable.economy, // Assuming we are interested in economy-class seats
+    baseFare: flight.baseFare.economy + flight.taxes, // Including taxes
+  };
+});
+
+console.log(flightDetails);
+
+
+
+
+
+
+</script>

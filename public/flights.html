@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <script src="schema.js"></script>
+    <title>JAPA Flights</title>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navcontents">
+      <div class="navcontents-left">
+        <div class="logo">
+          <img src="assets/logo.png" alt="Logo" class="logo-img">
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#">Travel Packages</a></li>
+          <li><a href="#">Destinations</a></li>
+          <li><a href="#">Flights</a></li>
+          <li><a href="#">Tours & Experiences</a></li>
+          <li><a href="#">Visa</a></li>
+        </ul>
+      </div>
+
+
+      <div class="user-actions">
+        <button class="login-button"><a href="user-auth.html">Log In</a></button>
+      </div>
+    </div>
+
+  </nav>
+
+  
+</body>
+
+</html>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+        authDomain: "japa-269a4.firebaseapp.com",
+        projectId: "japa-269a4",
+        storageBucket: "japa-269a4.firebasestorage.app",
+        messagingSenderId: "736749113389",
+        appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+</script>
