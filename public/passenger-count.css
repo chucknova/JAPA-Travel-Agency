@@ -1,0 +1,194 @@
+.passenger-count-top-section {
+    display: flex;
+    width: 100%;
+    padding: 48px 64px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+    background: #3F220F;
+}
+
+.passenger-count-top-section-inner {
+    display: flex;
+    width: 956px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.passenger-count-top-section-inner h1 {
+    color: var(--White, #FFF);
+    font-family: "IBM Plex Sans";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 70px;
+    /* 194.444% */
+    align-self: stretch;
+}
+
+.passenger-count-top-section-inner p {
+    color: var(--White, #ffffffef);
+    font-family: "IBM Plex Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    /* 160% */
+    align-self: stretch;
+}
+
+.main-passenger-count-section {
+    display: flex;
+    width: 100%;
+    padding: 36px 80px;
+    align-items: center;
+    gap: 10px;
+}
+
+.passenger-count-form-container {
+    display: flex;
+    height: 500px;
+    padding: 32px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 16px;
+    background: #FFF;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.10);
+}
+
+.passenger-count-form-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+}
+
+.passenger-count-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.passenger-count-heading h1 {
+    color: var(--Main-text, #1B0E06);
+    font-family: "IBM Plex Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    align-self: stretch;
+}
+
+.passenger-count-heading p {
+    color: var(--Main-text, #1b0e06e3);
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    align-self: stretch;
+}
+
+.passenger-count-form {
+    display: flex;
+    width: 450px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.adult-counter,
+.child-counter,
+.infant-counter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.adult-tag-desc,
+.child-tag-desc,
+.infant-tag-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    flex: 1 0 0;
+}
+
+.adult-tag-desc h1,
+.child-tag-desc h1,
+.infant-tag-desc h1 {
+    color: #000;
+    font-family: "IBM Plex Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 145%;
+    /* 23.2px */
+    align-self: stretch;
+}
+
+.adult-tag-desc p,
+.child-tag-desc p,
+.infant-tag-desc p {
+    align-self: stretch;
+    color: #000;
+    font-family: "IBM Plex Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+    /* 20.3px */
+}
+
+.adult-counter-input input,
+.child-counter-input input,
+.infant-counter-input input {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background-color: #f3f4f6;
+    transition: background-color 0.15s ease;
+}
+
+.adult-counter-input input::placeholder,
+.child-counter-input input::placeholder,
+.infant-counter-input input::placeholder {
+    color: var(--Grey-400, #98A2B3);
+    font-feature-settings: 'cv03' on, 'cv04' on;
+    /* Paragraph/Small/Regular */
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+    /* 20.3px */
+}
+
+.book-flight-proceed-button {
+    height: 56px;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    align-self: stretch;
+    border-radius: 6px;
+    background: var(--Pink, #E71D36);
+    color: var(--White, #FFF);
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 145%;
+    cursor: pointer;
+    /* 23.2px */
+
+}

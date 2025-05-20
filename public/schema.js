@@ -105,7 +105,34 @@ const availableInventory = [
             ]
         },
 
-        cabin: "Economy",
+        // Removed redundant cabin field
+        // New simplified cabin availability structure
+        cabinAvailability: {
+            Economy: {
+                totalSeats: 180,
+                availableSeats: 30,
+                price: {
+                    currency: "NGN",
+                    amount: 150000
+                }
+            },
+            Business: {
+                totalSeats: 24,
+                availableSeats: 8,
+                price: {
+                    currency: "NGN",
+                    amount: 450000
+                }
+            },
+            First: {
+                totalSeats: 8,
+                availableSeats: 2,
+                price: {
+                    currency: "NGN",
+                    amount: 850000
+                }
+            }
+        },
         travelBaggageAddons: [
             "Seat choice included",
             "Carry-on bag included"
@@ -117,10 +144,6 @@ const availableInventory = [
             "2 checked bags included (50 lbs each)",
             "No refunds"
         ],
-        pricing: {
-            currency: "NGN",
-            amount: 150000
-        }
     },
 
     // Add one-way flight for example
@@ -168,7 +191,33 @@ const availableInventory = [
                 }
             ]
         },
-        cabin: "Business",
+        // New simplified cabin availability structure
+        cabinAvailability: {
+            Economy: {
+                totalSeats: 250,
+                availableSeats: 45,
+                price: {
+                    currency: "USD",
+                    amount: 800
+                }
+            },
+            Business: {
+                totalSeats: 48,
+                availableSeats: 12,
+                price: {
+                    currency: "USD",
+                    amount: 1200
+                }
+            },
+            First: {
+                totalSeats: 12,
+                availableSeats: 4,
+                price: {
+                    currency: "USD",
+                    amount: 2500
+                }
+            }
+        },
         travelBaggageAddons: [
             "Priority boarding",
             "Carry-on bag included",
@@ -178,13 +227,13 @@ const availableInventory = [
             "Seat choice included",
             "2 checked bags",
             "Full refund available before 24h"
-        ],
-        pricing: {
-            currency: "USD",
-            amount: 1200
-        }
+        ]
     }
 ];
+
+console.log(availableInventory);
+
+
 
 console.log(availableInventory);
 

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delightful Offcanvas Product Details</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .content-area {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Overlay background */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0);
+      visibility: hidden;
+      transition: background-color 0.5s ease-out, visibility 0s linear 0.5s;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      background-color: rgba(0, 0, 0, 0.4);
+      visibility: visible;
+      transition: background-color 0.5s ease-out, visibility 0s;
+    }
+
+    /* Offcanvas container */
+    .offcanvas {
+      position: fixed;
+      top: 0;
+      right: -450px;
+      width: 400px;
+      height: 100%;
+      background-color: white;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 1000;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(0) skew(0deg);
+    }
+
+    .offcanvas.active {
+      transform: translateX(-450px) skew(0deg);
+    }
+
+    /* Close button */
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #555;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .close-btn:hover {
+      background-color: #f0f0f0;
+      transform: rotate(90deg);
+    }
+
+    /* Content inside the offcanvas */
+    .offcanvas-header {
+      padding: 20px 25px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .offcanvas-header h2 {
+      margin: 0;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .offcanvas-body {
+      padding: 25px;
+      flex: 1;
+    }
+
+    /* Product content */
+    .product-image {
+      width: 100%;
+      height: 250px;
+      background-color: #f0f0f0;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .offcanvas.active .product-image img {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .product-title {
+      font-size: 24px;
+      margin: 0 0 10px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition-delay: 0.1s;
+    }
+
+    .offcanvas.active .product-title {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-price {
+      font-size: 22px;
+      color: #E71D36;
+      margin: 0 0 15px 0;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition-delay: 0.2s;
+    }
+
+    .offcanvas.active .product-price {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition-delay: 0.3s;
+    }
+
+    .offcanvas.active .product-description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-features {
+      margin: 20px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition-delay: 0.4s;
+    }
+
+    .offcanvas.active .product-features {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: rgba(231, 29, 54, 0.1);
+      color: #E71D36;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-size: 14px;
+    }
+
+    .feature-text {
+      font-size: 15px;
+      color: #555;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition-delay: 0.5s;
+    }
+
+    .offcanvas.active .cta-buttons {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+    }
+
+    .btn-primary {
+      background-color: #E71D36;
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #d01830;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(231, 29, 54, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      border: 1px solid #ddd;
+      color: #555;
+    }
+
+    .btn-secondary:hover {
+      border-color: #bbb;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-area">
+    <h1>Product Details Demo</h1>
+    <p>Click the button below to see the delightful offcanvas animation</p>
+    
+    <!-- Simple button without styling as requested -->
+    <button id="openOffcanvasBtn">View Product Details</button>
+  </div>
+
+  <!-- Overlay background -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Offcanvas element -->
+  <div class="offcanvas" id="productOffcanvas">
+    <button class="close-btn" id="closeOffcanvasBtn">&times;</button>
+    
+    <div class="offcanvas-header">
+      <h2>Product Details</h2>
+    </div>
+    
+    <div class="offcanvas-body">
+      <div class="product-image">
+        <img src="https://via.placeholder.com/400x250" alt="Product Image">
+      </div>
+      
+      <h1 class="product-title">Premium Noise-Cancelling Headphones</h1>
+      <p class="product-price">$249.99</p>
+      
+      <p class="product-description">
+        Experience audio like never before with our premium noise-cancelling headphones. 
+        Designed for comfort and exceptional sound quality, these headphones deliver 
+        immersive audio that brings your music, podcasts, and calls to life.
+      </p>
+      
+      <div class="product-features">
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Active Noise Cancellation</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">30-hour Battery Life</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Bluetooth 5.0 Connectivity</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Comfortable Memory Foam Ear Cushions</div>
+        </div>
+      </div>
+      
+      <div class="cta-buttons">
+        <button class="btn btn-secondary">Add to Wishlist</button>
+        <button class="btn btn-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get DOM elements
+    const openBtn = document.getElementById('openOffcanvasBtn');
+    const closeBtn = document.getElementById('closeOffcanvasBtn');
+    const offcanvas = document.getElementById('productOffcanvas');
+    const overlay = document.getElementById('overlay');
+
+    // Function to open the offcanvas
+    function openOffcanvas() {
+      // Trigger the entrance animation
+      requestAnimationFrame(() => {
+        overlay.classList.add('active');
+        offcanvas.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+      });
+    }
+
+    // Function to close the offcanvas
+    function closeOffcanvas() {
+      overlay.classList.remove('active');
+      offcanvas.classList.remove('active');
+      document.body.style.overflow = ''; // Re-enable scrolling
+    }
+
+    // Event listeners
+    openBtn.addEventListener('click', openOffcanvas);
+    closeBtn.addEventListener('click', closeOffcanvas);
+    overlay.addEventListener('click', closeOffcanvas);
+
+    // Add staggered entrance effect for a more delightful animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const offcanvas = document.getElementById('productOffcanvas');
+      
+      // Add subtle animation when the page loads
+      setTimeout(() => {
+        offcanvas.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+      }, 100);
+    });
+  </script>
+</body>
+</html>

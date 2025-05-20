@@ -2,20 +2,21 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./output.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
-    <script src="schema.js"></script>
-    <title>JAPA Flights</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="flights.css">
+  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+  <script src="schema.js"></script>
+  <title>JAPA Flights</title>
 </head>
 
 <body>
@@ -44,26 +45,225 @@
 
   </nav>
 
-  
+  <!-- Search Section -->
+  <div class="search-hero">
+    <div class="search-hero-inner">
+      <div class="top">
+        <h1>Find Your Next Flight </h1>
+        <p>Discover deals, explore destinations, and fly for less.</p>
+      </div>
+      <div class="bottom">
+        <div class="flight-type-cabin">
+          <div class="flight-type">
+            <button class="round-trip">Round Trip</button>
+            <p class="seperatOr">Or</p>
+            <button class="one-way">One-Way</button>
+          </div>
+
+          <div class="flight-cabin">
+            <select id="cabinClass" name="cabinClass" class="cabindropdown">
+              <option value="Economy">Economy</option>
+              <option value="Business">Business</option>
+              <option value="First Class">First Class</option>
+            </select>
+            <div class="dropdown-arrow"></div>
+          </div>
+        </div>
+        <div class="hero-input-container">
+          <div class="input-contents">
+            <div class="input-wrapper">
+              <input type="text" placeholder="Leaving from" />
+            </div>
+
+            <div class="input-wrapper">
+              <input type="text" placeholder="Going to" />
+            </div>
+
+            <div class="input-wrapper">
+              <input type="text" placeholder="Departure Date"
+                onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
+            </div>
+
+            <div class="input-wrapper">
+              <input type="text" placeholder="Returning Date"
+                onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
+            </div>
+
+            <div class="button-wrapper">
+              <button>
+                Search flights
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Flight Destinations -->
+  <div class="popular-flight-destinations">
+    <div class="flight-destination-top">
+      <h2>Popular Flight Destinations</h2>
+    </div>
+    <div class="flight-destination-bottom">
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div class="destination-card-content">
+          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Flight Deals this Month -->
+  <div class="month-top-flight-deals">
+    <div class="month-top-top">
+      <h2>Explore our Top Flight Deals this Month</h2>
+    </div>
+    <div class="month-top-bottom">
+      <div class="month-top-bottom-inner">
+        <div class="flight-deal-card">
+          <div class="flight-deal-image">
+
+          </div>
+          <div class="flight-deal-right">
+            <div class="flight-deal-right-inner">
+              <div class="top">
+                <p>PRICES FROM</p>
+                <h2>NGN 900K</h2>
+                <h4>NGN 1.4M</h4>
+              </div>
+              <div class="bottom">
+                <div class="flight-discount-percent">
+                  30% OFF
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flight-deal-card">
+          <div class="flight-deal-image">
+
+          </div>
+          <div class="flight-deal-right">
+            <div class="flight-deal-right-inner">
+              <div class="top">
+                <p>PRICES FROM</p>
+                <h2>NGN 900K</h2>
+                <h4>NGN 1.4M</h4>
+              </div>
+              <div class="bottom">
+                <div class="flight-discount-percent">
+                  30% OFF
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-top-bottom">
+      <div class="month-top-bottom-inner">
+        <div class="flight-deal-card">
+          <div class="flight-deal-image">
+
+          </div>
+          <div class="flight-deal-right">
+            <div class="flight-deal-right-inner">
+              <div class="top">
+                <p>PRICES FROM</p>
+                <h2>NGN 900K</h2>
+                <h4>NGN 1.4M</h4>
+              </div>
+              <div class="bottom">
+                <div class="flight-discount-percent">
+                  30% OFF
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flight-deal-card">
+          <div class="flight-deal-image">
+
+          </div>
+          <div class="flight-deal-right">
+            <div class="flight-deal-right-inner">
+              <div class="top">
+                <p>PRICES FROM</p>
+                <h2>NGN 900K</h2>
+                <h4>NGN 1.4M</h4>
+              </div>
+              <div class="bottom">
+                <div class="flight-discount-percent">
+                  30% OFF
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How does JAPA work -->
+  <div class="how-japa-works">
+    <div class="main-container">
+      <div class="inner-container">
+        <div class="bg-img-flights"></div>
+        <div class="left">
+          <div class="left-top">
+            <h3>How does JAPA work?</h3>
+            <p>1. Browse destinations and packages across the world.</p>
+            <p>2. Choose your dates and reserve in minutes—no stress.</p>
+            <p>3. Pack your bags, we handle the rest. Your Japa journey awaits.</p>
+          </div>
+          <div class="left-bottom">
+            <button>JAPA Today</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
 <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
-        authDomain: "japa-269a4.firebaseapp.com",
-        projectId: "japa-269a4",
-        storageBucket: "japa-269a4.firebasestorage.app",
-        messagingSenderId: "736749113389",
-        appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
-    };
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+    authDomain: "japa-269a4.firebaseapp.com",
+    projectId: "japa-269a4",
+    storageBucket: "japa-269a4.firebasestorage.app",
+    messagingSenderId: "736749113389",
+    appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+  };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 </script>

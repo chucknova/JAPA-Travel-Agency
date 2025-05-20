@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="flights.css">
+    <link rel="stylesheet" href="flights-dashboard.css">
+    <link rel="stylesheet" href="passenger-count.css">
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <script src="schema.js"></script>
+    <title>How many passengers are coming</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navcontents">
+            <div class="navcontents-left">
+                <div class="logo">
+                    <img src="assets/logo.png" alt="Logo" class="logo-img">
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="#">Travel Packages</a></li>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="#">Flights</a></li>
+                    <li><a href="#">Tours & Experiences</a></li>
+                    <li><a href="#">Visa</a></li>
+                </ul>
+            </div>
+
+
+            <div class="user-actions">
+                <button class="login-button"><a href="user-auth.html">Log In</a></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Top Section -->
+    <div class="passenger-count-top-section">
+        <div class="passenger-count-top-section-inner">
+            <h1>How many travellers are boarding?</h1>
+            <p>To comply with the TSA Secure Flight program, the traveler information listed here must exactly match the
+                information of the government-issued photo ID that each traveler presents at the airport.</p>
+        </div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="main-passenger-count-section">
+        <div class="passenger-count-form-container">
+            <div class="passenger-count-form-top">
+                <div class="passenger-count-heading">
+                    <h1>Passenger Count</h1>
+                    <p>How many passengers are travelling?</p>
+                </div>
+                <div class="passenger-count-form">
+                    <div class="adult-counter">
+                        <div class="adult-tag-desc">
+                            <h1>Adults</h1>
+                            <p>18 years and above</p>
+                        </div>
+                        <div class="adult-counter-input">
+                            <input placeholder="How many adults" type="number" name="" id="">
+                        </div>
+                    </div>
+
+                    <div class="child-counter">
+                        <div class="child-tag-desc">
+                            <h1>Children</h1>
+                            <p>2 - 17 years</p>
+                        </div>
+                        <div class="child-counter-input">
+                            <input placeholder="How many children" type="number" name="" id="">
+                        </div>
+                    </div>
+
+                    <div class="infant-counter">
+                        <div class="infant-tag-desc">
+                            <h1>Infants</h1>
+                            <p>Under 2</p>
+                        </div>
+                        <div class="infant-counter-input">
+                            <input placeholder="How many infants" type="number" name="" id="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="book-flight-proceed-button">Proceed to book flight</button>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+        authDomain: "japa-269a4.firebaseapp.com",
+        projectId: "japa-269a4",
+        storageBucket: "japa-269a4.firebasestorage.app",
+        messagingSenderId: "736749113389",
+        appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+</script>
