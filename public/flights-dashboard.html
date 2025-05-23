@@ -52,16 +52,16 @@
             <div class="bottom">
                 <div class="flight-type-cabin">
                     <div class="flight-type">
-                        <button class="round-trip">Round Trip</button>
+                        <button onclick="roundTrip()" class="round-trip">Round Trip</button>
                         <p class="seperatOr">Or</p>
-                        <button class="one-way">One-Way</button>
+                        <button onclick="oneWay()" class="one-way">One-Way</button>
                     </div>
 
                     <div class="flight-cabin">
                         <select id="cabinClass" name="cabinClass" class="cabindropdown">
-                            <option value="Economy">Economy</option>
-                            <option value="Business">Business</option>
-                            <option value="First Class">First Class</option>
+                            <option value="economy" selected>Economy</option>
+                            <option value="business">Business</option>
+                            <option value="first">First Class</option>
                         </select>
                         <div class="dropdown-arrow"></div>
                     </div>
@@ -69,25 +69,25 @@
                 <div class="hero-input-container">
                     <div class="input-contents">
                         <div class="input-wrapper">
-                            <input type="text" placeholder="Leaving from" />
+                            <input id="leavingFrom" type="text" placeholder="Leaving from" />
                         </div>
 
                         <div class="input-wrapper">
-                            <input type="text" placeholder="Going to" />
+                            <input id="goingTo" type="text" placeholder="Going to" />
                         </div>
 
                         <div class="input-wrapper">
-                            <input type="text" placeholder="Departure Date"
+                            <input id="departureDate" type="text" placeholder="Departure Date"
                                 onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
                         </div>
 
-                        <div class="input-wrapper">
-                            <input type="text" placeholder="Returning Date"
+                        <div id="returnDateWrapper" class="input-wrapper">
+                            <input id="returnDate" type="text" placeholder="Returning Date"
                                 onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
                         </div>
 
                         <div class="button-wrapper">
-                            <button>
+                            <button id="searchAvailableFlights">
                                 Search flights
                             </button>
                         </div>
@@ -1107,4 +1107,229 @@
             offcanvas.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
         }, 100);
     });
+
+    // Search Auto-Complete
+    function setupAutocomplete(inputId, dataArray, keyToMatch) {
+        const input = document.getElementById(inputId);
+
+        const suggestionBox = document.createElement("div");
+        suggestionBox.classList.add("autocomplete-suggestions");
+        suggestionBox.style.position = "absolute";
+        suggestionBox.style.border = "1px solid #ccc";
+        suggestionBox.style.backgroundColor = "#fff";
+        suggestionBox.style.zIndex = "9999";
+        suggestionBox.style.maxHeight = "150px";
+        suggestionBox.style.overflowY = "auto";
+        suggestionBox.style.width = input.offsetWidth + "px";
+        suggestionBox.style.display = "none";
+
+        input.parentNode.style.position = "relative";
+        input.parentNode.appendChild(suggestionBox);
+
+        input.addEventListener("input", () => {
+            const val = input.value.trim().toLowerCase();
+            suggestionBox.innerHTML = "";
+
+            if (!val) {
+                suggestionBox.style.display = "none";
+                return;
+            }
+
+            const matches = dataArray.filter(item => item[keyToMatch].toLowerCase().includes(val));
+
+            if (matches.length === 0) {
+                suggestionBox.style.display = "none";
+                return;
+            }
+
+            matches.forEach(match => {
+                const div = document.createElement("div");
+                div.textContent = match[keyToMatch];
+                div.style.padding = "8px";
+                div.style.cursor = "pointer";
+
+                div.addEventListener("mousedown", (e) => {
+                    // use mousedown instead of click to catch value before input loses focus
+                    e.preventDefault();
+                    input.value = match[keyToMatch];
+                    suggestionBox.style.display = "none";
+                });
+
+                suggestionBox.appendChild(div);
+            });
+
+            suggestionBox.style.display = "block";
+        });
+
+        document.addEventListener("click", (e) => {
+            if (e.target !== input && !suggestionBox.contains(e.target)) {
+                suggestionBox.style.display = "none";
+            }
+        });
+    }
+
+    // User Searches for Flights
+
+    // Declaring flightSearchQuery Variables
+    const leavingFrom = document.getElementById("leavingFrom");
+    const goingTo = document.getElementById("goingTo");
+    setupAutocomplete("leavingFrom", uniqueAirports, "name");
+    setupAutocomplete("goingTo", uniqueAirports, "name");
+    const departureDate = document.getElementById("departureDate")
+    const returnDateWrapper = document.getElementById("returnDateWrapper")
+    const returnDate = document.getElementById("returnDate")
+    const searchAvailableFlights = document.getElementById("searchAvailableFlights")
+
+    const flightSearchQuery = {
+        tripType: '', // 'one-way' or 'round-trip'
+        departureAirport: '',
+        destinationAirport: '',
+        departureDate: '',
+        returnDate: '',
+        cabinClass: '', // economy, business, first
+    };
+
+    const cabinDropdown = document.getElementById("cabinClass");
+    // ✅ Set default cabin class on load
+    flightSearchQuery.cabinClass = cabinDropdown.value.toLowerCase();
+
+
+    // passing values to flight query
+
+    // passing trip-type
+    function roundTrip() {
+        flightSearchQuery.tripType = "round-trip";
+        console.log("Trip type set to:", flightSearchQuery.tripType);
+        returnDateWrapper.style.display = "block";
+        console.log(flightSearchQuery);
+    }
+    function oneWay() {
+        flightSearchQuery.tripType = "one-way";
+        console.log("Trip type set to:", flightSearchQuery.tripType);
+        returnDateWrapper.style.display = "none";
+        console.log(flightSearchQuery);
+    }
+
+
+    // passing cabinclass
+    cabinDropdown.addEventListener("change", () => {
+        flightSearchQuery.cabinClass = cabinDropdown.value.toLowerCase();
+        console.log("Cabin class selected:", flightSearchQuery.cabinClass);
+        console.log(flightSearchQuery);
+    });
+    // formatting dates to long month
+    function formatDateToLongMonth(dateString) {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+        return `${day} ${month} ${year}`;
+    }
+
+
+    // search available flights function
+    searchAvailableFlights.addEventListener("click", () => {
+        // Update query from inputs at the moment of search
+        flightSearchQuery.departureAirport = leavingFrom.value.trim();
+        flightSearchQuery.destinationAirport = goingTo.value.trim();
+        flightSearchQuery.departureDate = departureDate.value; // Keep as YYYY-MM-DD format
+
+        if (flightSearchQuery.tripType === "round-trip") {
+            flightSearchQuery.returnDate = returnDate.value; // Keep as YYYY-MM-DD format
+        } else {
+            flightSearchQuery.returnDate = ""; // Clear if one-way
+        }
+
+        // Enhanced validation for required fields
+        if (!flightSearchQuery.departureAirport ||
+            !flightSearchQuery.destinationAirport ||
+            !flightSearchQuery.departureDate ||
+            (flightSearchQuery.tripType === "round-trip" && !flightSearchQuery.returnDate)) {
+            alert("Please fill out all required fields.");
+            return;
+        }
+
+        // Search function with corrected logic
+        function searchFlights(flightSearchQuery, availableInventory) {
+            // Helper function to format date for comparison (DD MMM YYYY format)
+            const formatDate = (dateString) => {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+            };
+
+            const filteredFlights = availableInventory.filter(flight => {
+                // Check trip type
+                if (flightSearchQuery.tripType && flight.tripType !== flightSearchQuery.tripType) {
+                    return false;
+                }
+
+                // Check departure airport (using airport name, not name)
+                if (flightSearchQuery.departureAirport &&
+                    flight.departure.airport.name !== flightSearchQuery.departureAirport) {
+                    return false;
+                }
+
+                // Check destination airport (using airport name, not name)
+                if (flightSearchQuery.destinationAirport &&
+                    flight.arrival.airport.name !== flightSearchQuery.destinationAirport) {
+                    return false;
+                }
+
+                // Check departure date
+                if (flightSearchQuery.departureDate) {
+                    const queryDepartureDate = formatDate(flightSearchQuery.departureDate);
+                    if (flight.departure.date !== queryDepartureDate) {
+                        return false;
+                    }
+                }
+
+                // Check return date (only for round-trip flights)
+                if (flightSearchQuery.returnDate && flight.tripType === 'round-trip') {
+                    const queryReturnDate = formatDate(flightSearchQuery.returnDate);
+                    if (!flight.returnFlight ||
+                        flight.returnFlight.legs[0].departureDate !== queryReturnDate) {
+                        return false;
+                    }
+                }
+
+                // Check cabin class availability
+                if (flightSearchQuery.cabinClass) {
+                    const cabin = flight.cabinAvailability[flightSearchQuery.cabinClass];
+                    if (!cabin || cabin.availableSeats <= 0) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
+            // Return results or no flights message
+            if (filteredFlights.length > 0) {
+                return filteredFlights;
+            } else {
+                return "No flights found for this search.";
+            }
+        }
+
+        // Execute the search
+        const searchResults = searchFlights(flightSearchQuery, availableInventory);
+        console.log(searchResults);
+
+        // Display results (you'll want to add your display logic here)
+        if (typeof searchResults === 'string') {
+            // No flights found
+            console.log(searchResults);
+            // Show "no results" message to user
+        } else {
+            // Flights found
+            console.log(`Found ${searchResults.length} flight(s):`, searchResults);
+            // Display the flights to user
+        }
+    });
+
 </script>

@@ -36,6 +36,10 @@ body {
     top: 0;
 }
 
+.autocomplete-suggestions div:hover {
+    background-color: #f0f0f0;
+}
+
 .filters {
     display: flex;
     flex-direction: column;
@@ -1153,8 +1157,9 @@ body {
 
 .book-flight-btn {
     display: flex;
-    padding: 12px 28px;\
-    justify-content: center;
+    padding: 12px 28px;
+    \
+ justify-content: center;
     align-items: center;
     gap: 12px;
     align-self: stretch;

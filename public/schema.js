@@ -2,65 +2,69 @@
 const availableInventory = [
     {
         flightId: "EMIR123",
-        tripType: "round-trip", // or "one-way"
+        tripType: "round-trip",
         airline: {
             name: "Emirates",
             logo: "emirates-logo.png"
         },
         departure: {
-            date: "2025-06-05",
-            time: "07:00",
+            date: "30 May 2025",
+            time: "21:45",
             airport: {
                 code: "LOS",
                 name: "Lagos Murtala Muhammed"
             }
         },
         arrival: {
-            date: "2025-06-25",
-            time: "06:00",
+            date: "31 May 2025",
+            time: "15:15",
             airport: {
                 code: "IAD",
                 name: "Washington Dulles Intl"
             }
         },
-        flightDuration: "12h 30m",
+        flightDuration: "18h 30m",
 
         outboundFlight: {
             stops: 1,
             stopDetails: [
                 {
-                    stopLocation: "London Heathrow",
-                    layoverTime: "2h 30m"
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
                 }
             ],
             legs: [
                 {
-                    airplane: "Boeing 787-8 Dreamliner",
+                    airplane: "Boeing 777",
                     from: {
                         code: "LOS",
                         name: "Lagos Murtala Muhammed"
                     },
                     to: {
-                        code: "LHR",
-                        name: "London Heathrow"
+                        code: "DXB",
+                        name: "Dubai International"
                     },
-                    departureTime: "2025-06-05T07:00:00Z",
-                    arrivalTime: "2025-06-05T13:30:00Z",
-                    travelTime: "6h 30m"
+                    departureDate: "30 May 2025",
+                    departureTime: "21:45",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "06:00",
+                    travelTime: "6h 15m"
                 },
                 {
-                    airplane: "Boeing 787-8 Dreamliner",
+                    airplane: "Boeing 777",
                     from: {
-                        code: "LHR",
-                        name: "London Heathrow"
+                        code: "DXB",
+                        name: "Dubai International"
                     },
                     to: {
                         code: "IAD",
                         name: "Washington Dulles Intl"
                     },
-                    departureTime: "2025-06-05T16:00:00Z",
-                    arrivalTime: "2025-06-05T22:30:00Z",
-                    travelTime: "6h 30m"
+                    departureDate: "31 May 2025",
+                    departureTime: "09:45",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "15:15",
+                    travelTime: "13h 30m"
                 }
             ]
         },
@@ -69,8 +73,8 @@ const availableInventory = [
             stops: 1,
             stopDetails: [
                 {
-                    stopLocation: "Dubai",
-                    layoverTime: "2h 00m"
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 00m"
                 }
             ],
             legs: [
@@ -84,9 +88,11 @@ const availableInventory = [
                         code: "DXB",
                         name: "Dubai International"
                     },
-                    departureTime: "2025-06-20T10:00:00Z",
-                    arrivalTime: "2025-06-20T18:00:00Z",
-                    travelTime: "8h"
+                    departureDate: "10 Jun 2025",
+                    departureTime: "22:30",
+                    arrivalDate: "12 Jun 2025",
+                    arrivalTime: "19:15",
+                    travelTime: "12h 45m"
                 },
                 {
                     airplane: "Boeing 777",
@@ -98,17 +104,17 @@ const availableInventory = [
                         code: "LOS",
                         name: "Lagos Murtala Muhammed"
                     },
-                    departureTime: "2025-06-21T08:00:00Z",
-                    arrivalTime: "2025-06-21T14:00:00Z",
-                    travelTime: "6h"
+                    departureDate: "12 Jun 2025",
+                    departureTime: "22:15",
+                    arrivalDate: "13 Jun 2025",
+                    arrivalTime: "02:00",
+                    travelTime: "7h 45m"
                 }
             ]
         },
 
-        // Removed redundant cabin field
-        // New simplified cabin availability structure
         cabinAvailability: {
-            Economy: {
+            economy: {
                 totalSeats: 180,
                 availableSeats: 30,
                 price: {
@@ -116,7 +122,7 @@ const availableInventory = [
                     amount: 150000
                 }
             },
-            Business: {
+            business: {
                 totalSeats: 24,
                 availableSeats: 8,
                 price: {
@@ -124,7 +130,7 @@ const availableInventory = [
                     amount: 450000
                 }
             },
-            First: {
+            first: {
                 totalSeats: 8,
                 availableSeats: 2,
                 price: {
@@ -143,10 +149,9 @@ const availableInventory = [
             "Carry-on bag included",
             "2 checked bags included (50 lbs each)",
             "No refunds"
-        ],
+        ]
     },
 
-    // Add one-way flight for example
     {
         flightId: "DL100",
         tripType: "one-way",
@@ -155,22 +160,23 @@ const availableInventory = [
             logo: "delta-logo.png"
         },
         departure: {
-            date: "2025-06-10",
-            time: "09:00",
+            date: "30 May 2025",
+            time: "22:50",
             airport: {
                 code: "ACC",
                 name: "Accra Kotoka Intl"
             }
         },
         arrival: {
-            date: "2025-06-10",
-            time: "17:00",
+            date: "31 May 2025",
+            time: "05:50",
             airport: {
                 code: "JFK",
                 name: "New York JFK"
             }
         },
-        flightDuration: "10h",
+        flightDuration: "11h",
+
         outboundFlight: {
             stops: 0,
             stopDetails: [],
@@ -185,15 +191,17 @@ const availableInventory = [
                         code: "JFK",
                         name: "New York JFK"
                     },
-                    departureTime: "2025-06-10T09:00:00Z",
-                    arrivalTime: "2025-06-10T17:00:00Z",
-                    travelTime: "10h"
+                    departureDate: "30 May 2025",
+                    departureTime: "22:50",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50",
+                    travelTime: "11h"
                 }
             ]
         },
-        // New simplified cabin availability structure
+
         cabinAvailability: {
-            Economy: {
+            economy: {
                 totalSeats: 250,
                 availableSeats: 45,
                 price: {
@@ -201,7 +209,7 @@ const availableInventory = [
                     amount: 800
                 }
             },
-            Business: {
+            business: {
                 totalSeats: 48,
                 availableSeats: 12,
                 price: {
@@ -209,7 +217,7 @@ const availableInventory = [
                     amount: 1200
                 }
             },
-            First: {
+            first: {
                 totalSeats: 12,
                 availableSeats: 4,
                 price: {
@@ -231,11 +239,28 @@ const availableInventory = [
     }
 ];
 
+
+
+// Extract unique airport names from availableInventory
+const airports = [];
+
+availableInventory.forEach(flight => {
+    if (flight.departure?.airport?.name) {
+        airports.push({ name: flight.departure.airport.name });
+    }
+    if (flight.arrival?.airport?.name) {
+        airports.push({ name: flight.arrival.airport.name });
+    }
+});
+
+const uniqueAirports = Array.from(new Set(airports.map(a => a.name)))
+    .map(name => ({ name }));
+
+
 console.log(availableInventory);
 
 
 
-console.log(availableInventory);
 
 
 // Passenger Count
@@ -294,24 +319,12 @@ const fareSummary = {
     grandTotal: 1880
 };
 
-// User Searches for Flights
-const flightSearchQuery = {
-    tripType: 'round-trip', // 'one-way' or 'round-trip'
-    departureAirport: 'LOS', // IATA code
-    departureAirportName: 'Lagos, Nigeria',
-    destinationAirport: 'JFK',
-    destinationAirportName: 'New York, USA',
-    departureDate: '23/05/2025',
-    returnDate: '28/05/2025',
-    cabinClass: 'economy', // economy, business, first
-};
-
 // Booking Session
-const flightBookingSession = {
-    flightSearchQuery,
-    passengers,
-    passengerDetails, 
-    fareSummary
-};
+// const flightBookingSession = {
+//     flightSearchQuery,
+//     passengers,
+//     passengerDetails, 
+//     fareSummary
+// };
 
-console.log(flightBookingSession);
+// console.log(flightBookingSession);
