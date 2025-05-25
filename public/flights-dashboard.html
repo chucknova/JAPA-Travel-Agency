@@ -61,7 +61,7 @@
                         <select id="cabinClass" name="cabinClass" class="cabindropdown">
                             <option value="economy" selected>Economy</option>
                             <option value="business">Business</option>
-                            <option value="first">First Class</option>
+                            <option value="firstclass">First Class</option>
                         </select>
                         <div class="dropdown-arrow"></div>
                     </div>
@@ -103,7 +103,7 @@
         <!-- Left-Panel -->
         <div class="left-flight-panel">
             <div class="filters">
-                <h3 class="showing-flight-result-no">5 of 40 flights (See all)</h3>
+                <h3 id="flightResultCount" class="showing-flight-result-no">5 of 40 flights (See all)</h3>
                 <div class="main-filter-and-filter-button">
                     <div class="main-filter">
                         <div class="filter-component">
@@ -233,7 +233,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flight-card-renders">
+            <div id="flight-card-renders" class="flight-card-renders">
                 <!-- Round-Trip-Cards -->
                 <div class="round-trip-card">
                     <div class="inner-card">
@@ -345,266 +345,6 @@
                 <!-- Round-Trip Cards -->
 
                 <!-- One-Way-Trip-Cards -->
-                <div class="round-trip-card ONE-WAY-TRIP-CARD">
-                    <div class="inner-card">
-                        <div class="top-card">
-                            <div class="departure-arrival-snapshot">
-                                <div class="departure-snapshot">
-                                    <div class="departure-snapshot-left">
-                                        <img src="assets/images (4).png" alt="" class="airline-logo">
-                                        <div class="departure-time-airport-airline">
-                                            <div class="departure-time-airport">
-                                                <div class="depart-time-left">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                                <div class="airplane-facing-right">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <path
-                                                            d="M23 11V13H22V14H15V15H14V17H13V18H12V20H11V21H10V22H7V19H8V16H9V14H5V15H4V16H3V17H1V14H2V10H1V7H3V8H4V9H5V10H9V8H8V5H7V2H10V3H11V4H12V6H13V7H14V9H15V10H22V11H23Z"
-                                                            fill="#E71D36" />
-                                                    </svg>
-                                                </div>
-                                                <div class="arrive-time-right">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                            </div>
-                                            <p class="departure-airport">
-                                                Emirates
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="departure-snapshot-right">
-                                        <div class="flight-duration-and-stops">
-                                            <h3 class="flight-duration">7h 30m</h3>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <path
-                                                    d="M12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C13.11 14 14 13.11 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10Z"
-                                                    fill="black" />
-                                            </svg>
-                                            <h3 class="stops">1 Stop</h3>
-                                        </div>
-                                        <h4 class="cabinClass">Economy</h4>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="price-snapshot">
-                                <h1>NGN 1,500,000</h1>
-                                <p>Price per traveller</p>
-                            </div>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="travel-baggage-addons">
-                                <div class="addon-chip">Seat-Choice Included</div>
-                                <div class="addon-chip">Carry-On Bag Included</div>
-                            </div>
-                            <div class="actions">
-                                <button class="view-flight-details" id="openOffcanvasBtn">Flight
-                                    Details</button>
-                                <button class="book-flight">Book Flight</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="round-trip-card ONE-WAY-TRIP-CARD">
-                    <div class="inner-card">
-                        <div class="top-card">
-                            <div class="departure-arrival-snapshot">
-                                <div class="departure-snapshot">
-                                    <div class="departure-snapshot-left">
-                                        <img src="assets/images (4).png" alt="" class="airline-logo">
-                                        <div class="departure-time-airport-airline">
-                                            <div class="departure-time-airport">
-                                                <div class="depart-time-left">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                                <div class="airplane-facing-right">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <path
-                                                            d="M23 11V13H22V14H15V15H14V17H13V18H12V20H11V21H10V22H7V19H8V16H9V14H5V15H4V16H3V17H1V14H2V10H1V7H3V8H4V9H5V10H9V8H8V5H7V2H10V3H11V4H12V6H13V7H14V9H15V10H22V11H23Z"
-                                                            fill="#E71D36" />
-                                                    </svg>
-                                                </div>
-                                                <div class="arrive-time-right">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                            </div>
-                                            <p class="departure-airport">
-                                                Emirates
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="departure-snapshot-right">
-                                        <div class="flight-duration-and-stops">
-                                            <h3 class="flight-duration">7h 30m</h3>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <path
-                                                    d="M12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C13.11 14 14 13.11 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10Z"
-                                                    fill="black" />
-                                            </svg>
-                                            <h3 class="stops">1 Stop</h3>
-                                        </div>
-                                        <h4 class="cabinClass">Economy</h4>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="price-snapshot">
-                                <h1>NGN 1,500,000</h1>
-                                <p>Price per traveller</p>
-                            </div>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="travel-baggage-addons">
-                                <div class="addon-chip">Seat-Choice Included</div>
-                                <div class="addon-chip">Carry-On Bag Included</div>
-                            </div>
-                            <div class="actions">
-                                <button class="view-flight-details" id="openOffcanvasBtn">Flight
-                                    Details</button>
-                                <button class="book-flight">Book Flight</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="round-trip-card ONE-WAY-TRIP-CARD">
-                    <div class="inner-card">
-                        <div class="top-card">
-                            <div class="departure-arrival-snapshot">
-                                <div class="departure-snapshot">
-                                    <div class="departure-snapshot-left">
-                                        <img src="assets/images (4).png" alt="" class="airline-logo">
-                                        <div class="departure-time-airport-airline">
-                                            <div class="departure-time-airport">
-                                                <div class="depart-time-left">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                                <div class="airplane-facing-right">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <path
-                                                            d="M23 11V13H22V14H15V15H14V17H13V18H12V20H11V21H10V22H7V19H8V16H9V14H5V15H4V16H3V17H1V14H2V10H1V7H3V8H4V9H5V10H9V8H8V5H7V2H10V3H11V4H12V6H13V7H14V9H15V10H22V11H23Z"
-                                                            fill="#E71D36" />
-                                                    </svg>
-                                                </div>
-                                                <div class="arrive-time-right">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                            </div>
-                                            <p class="departure-airport">
-                                                Emirates
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="departure-snapshot-right">
-                                        <div class="flight-duration-and-stops">
-                                            <h3 class="flight-duration">7h 30m</h3>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <path
-                                                    d="M12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C13.11 14 14 13.11 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10Z"
-                                                    fill="black" />
-                                            </svg>
-                                            <h3 class="stops">1 Stop</h3>
-                                        </div>
-                                        <h4 class="cabinClass">Economy</h4>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="price-snapshot">
-                                <h1>NGN 1,500,000</h1>
-                                <p>Price per traveller</p>
-                            </div>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="travel-baggage-addons">
-                                <div class="addon-chip">Seat-Choice Included</div>
-                                <div class="addon-chip">Carry-On Bag Included</div>
-                            </div>
-                            <div class="actions">
-                                <button class="view-flight-details" id="openOffcanvasBtn">Flight
-                                    Details</button>
-                                <button class="book-flight">Book Flight</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="round-trip-card ONE-WAY-TRIP-CARD">
-                    <div class="inner-card">
-                        <div class="top-card">
-                            <div class="departure-arrival-snapshot">
-                                <div class="departure-snapshot">
-                                    <div class="departure-snapshot-left">
-                                        <img src="assets/images (4).png" alt="" class="airline-logo">
-                                        <div class="departure-time-airport-airline">
-                                            <div class="departure-time-airport">
-                                                <div class="depart-time-left">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                                <div class="airplane-facing-right">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <path
-                                                            d="M23 11V13H22V14H15V15H14V17H13V18H12V20H11V21H10V22H7V19H8V16H9V14H5V15H4V16H3V17H1V14H2V10H1V7H3V8H4V9H5V10H9V8H8V5H7V2H10V3H11V4H12V6H13V7H14V9H15V10H22V11H23Z"
-                                                            fill="#E71D36" />
-                                                    </svg>
-                                                </div>
-                                                <div class="arrive-time-right">
-                                                    <h1>7:00AM</h1>
-                                                    <p>LOS</p>
-                                                </div>
-                                            </div>
-                                            <p class="departure-airport">
-                                                Emirates
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="departure-snapshot-right">
-                                        <div class="flight-duration-and-stops">
-                                            <h3 class="flight-duration">7h 30m</h3>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <path
-                                                    d="M12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C13.11 14 14 13.11 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10Z"
-                                                    fill="black" />
-                                            </svg>
-                                            <h3 class="stops">1 Stop</h3>
-                                        </div>
-                                        <h4 class="cabinClass">Economy</h4>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="price-snapshot">
-                                <h1>NGN 1,500,000</h1>
-                                <p>Price per traveller</p>
-                            </div>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="travel-baggage-addons">
-                                <div class="addon-chip">Seat-Choice Included</div>
-                                <div class="addon-chip">Carry-On Bag Included</div>
-                            </div>
-                            <div class="actions">
-                                <button class="view-flight-details" id="openOffcanvasBtn">Flight
-                                    Details</button>
-                                <button class="book-flight">Book Flight</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="round-trip-card ONE-WAY-TRIP-CARD">
                     <div class="inner-card">
                         <div class="top-card">
@@ -1179,6 +919,8 @@
     const returnDateWrapper = document.getElementById("returnDateWrapper")
     const returnDate = document.getElementById("returnDate")
     const searchAvailableFlights = document.getElementById("searchAvailableFlights")
+    const renderFlights = document.getElementById("flight-card-renders")
+    flightResultCount.innerHTML = ``;
 
     const flightSearchQuery = {
         tripType: '', // 'one-way' or 'round-trip'
@@ -1251,6 +993,7 @@
             return;
         }
 
+
         // Search function with corrected logic
         function searchFlights(flightSearchQuery, availableInventory) {
             // Helper function to format date for comparison (DD MMM YYYY format)
@@ -1322,13 +1065,204 @@
 
         // Display results (you'll want to add your display logic here)
         if (typeof searchResults === 'string') {
-            // No flights found
             console.log(searchResults);
-            // Show "no results" message to user
+            // No flights found
+            flightResultCount.innerHTML = `Found 0 flights`;
+            renderFlights.innerHTML = ``
+            renderFlights.innerHTML = "No flights found"
         } else {
             // Flights found
-            console.log(`Found ${searchResults.length} flight(s):`, searchResults);
-            // Display the flights to user
+            flightResultCount.innerHTML = `Found ${searchResults.length} flight(s)`;
+            // Display the Flight Cards UI
+            renderFlights.innerHTML = ``
+
+            // Render One-Way Flights
+            if (flightSearchQuery.tripType === "one-way") {
+                searchResults.forEach(flight => {
+                    const addonsHTML = flight.travelBaggageAddons
+                        .map(addon => `<div class="addon-chip">${addon}</div>`)
+                        .join('');
+                    renderFlights.innerHTML += `<div class="round-trip-card">
+                    <div class="inner-card">
+                        <div class="top-card">
+                            <div class="departure-arrival-snapshot">
+                                <div class="departure-snapshot">
+                                    <div class="departure-snapshot-left">
+                                        <img src="assets/images (4).png" alt="" class="airline-logo">
+                                        <div class="departure-time-airport-airline">
+                                            <div class="departure-time-airport">
+                                                <div class="depart-time-left">
+                                                    <h1>${flight.departure.time}</h1>
+                                                    <p>${flight.departure.airport.code}</p>
+                                                </div>
+                                                <div class="airplane-facing-right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path
+                                                            d="M23 11V13H22V14H15V15H14V17H13V18H12V20H11V21H10V22H7V19H8V16H9V14H5V15H4V16H3V17H1V14H2V10H1V7H3V8H4V9H5V10H9V8H8V5H7V2H10V3H11V4H12V6H13V7H14V9H15V10H22V11H23Z"
+                                                            fill="#E71D36" />
+                                                    </svg>
+                                                </div>
+                                                <div class="arrive-time-right">
+                                                    <h1>${flight.arrival.time}</h1>
+                                                    <p>${flight.arrival.airport.code}</p>
+                                                </div>
+                                            </div>
+                                            <p class="departure-airport">
+                                                ${flight.airline.name}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="departure-snapshot-right">
+                                        <div class="flight-duration-and-stops">
+                                            <h3 class="flight-duration">${flight.flightDuration}</h3>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C13.11 14 14 13.11 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10Z"
+                                                    fill="black" />
+                                            </svg>
+                                            <h3 class="stops">${flight.outboundFlight.stops} Stop</h3>
+                                        </div>
+                                        <h4 class="cabinClass">${flightSearchQuery.cabinClass.charAt(0).toUpperCase() + flightSearchQuery.cabinClass.slice(1)}</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="price-snapshot">
+                                <h1>NGN ${flight.cabinAvailability[flightSearchQuery.cabinClass].price.amount.toLocaleString()}</h1>
+                                <p>Price per traveller</p>
+                            </div>
+                        </div>
+                        <div class="bottom-card">
+                            <div class="travel-baggage-addons">
+                                ${addonsHTML}
+                            </div>
+                            <div class="actions">
+                                <button class="view-flight-details" id="openOffcanvasBtn">Flight
+                                    Details</button>
+                                <button class="book-flight">Book Flight</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+
+                });
+            }
+            // Render Round-Trip Flights
+            else if (flightSearchQuery.tripType === "round-trip") {
+                searchResults.forEach(flight => {
+                    const addonsHTML = flight.travelBaggageAddons
+                        .map(addon => `<div class="addon-chip">${addon}</div>`)
+                        .join('');
+                    renderFlights.innerHTML += `<div class="round-trip-card">
+                    <div class="inner-card">
+                        <div class="top-card">
+                            <div class="departure-arrival-snapshot">
+                                <div class="departure-snapshot">
+                                    <div class="departure-snapshot-left">
+                                        <img src="assets/images (4).png" alt="" class="airline-logo">
+                                        <div class="departure-time-airport-airline">
+                                            <div class="departure-time-airport">
+                                                <div class="depart-time-left">
+                                                    <h1>${flight.departure.time}</h1>
+                                                    <p>${flight.departure.airport.code}</p>
+                                                </div>
+                                                <div class="airplane-facing-right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path
+                                                            d="M23 11V13H22V14H15V15H14V17H13V18H12V20H11V21H10V22H7V19H8V16H9V14H5V15H4V16H3V17H1V14H2V10H1V7H3V8H4V9H5V10H9V8H8V5H7V2H10V3H11V4H12V6H13V7H14V9H15V10H22V11H23Z"
+                                                            fill="#E71D36" />
+                                                    </svg>
+                                                </div>
+                                                <div class="arrive-time-right">
+                                                    <h1>${flight.arrival.time}</h1>
+                                                    <p>${flight.arrival.airport.code}</p>
+                                                </div>
+                                            </div>
+                                            <p class="departure-airport">
+                                                ${flight.airline.name}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="departure-snapshot-right">
+                                        <div class="flight-duration-and-stops">
+                                            <h3 class="flight-duration">${flight.outboundFlight.flightDuration}</h3>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C13.11 14 14 13.11 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10Z"
+                                                    fill="black" />
+                                            </svg>
+                                            <h3 class="stops">${flight.outboundFlight.stops} Stop</h3>
+                                        </div>
+                                        <h4 class="cabinClass">${flightSearchQuery.cabinClass.charAt(0).toUpperCase() + flightSearchQuery.cabinClass.slice(1)}</h4>
+                                    </div>
+                                </div>
+
+                                <div class="departure-snapshot ARRIVAL">
+                                    <div class="departure-snapshot-left">
+                                        <img src="assets/images (4).png" alt="" class="airline-logo">
+                                        <div class="departure-time-airport-airline">
+                                            <div class="departure-time-airport">
+                                                <div class="depart-time-left">
+                                                    <h1>${flight.returnFlight.legs[(flight.returnFlight.legs.length - 1)].arrivalTime}</h1>
+                                                    <p>${flight.returnFlight.legs[(flight.returnFlight.legs.length - 1)].to.code}</p>                                                    
+                                                </div>
+                                                <div class="airplane-facing-right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path
+                                                            d="M1 11V13H2V14H9V15H10V17H11V18H12V20H13V21H14V22H17V19H16V16H15V14H19V15H20V16H21V17H23V14H22V10H23V7H21V8H20V9H19V10H15V8H16V5H17V2H14V3H13V4H12V6H11V7H10V9H9V10H2V11H1Z"
+                                                            fill="#E71D36" />
+                                                    </svg>
+                                                </div>
+                                                <div class="arrive-time-right">
+                                                    <h1>${flight.returnFlight.legs[0].departureTime}</h1>
+                                                    <p>${flight.returnFlight.legs[0].from.code}</p>
+                                                </div>
+                                            </div>
+                                            <p class="departure-airport">
+                                                ${flight.airline.name}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="departure-snapshot-right">
+                                        <div class="flight-duration-and-stops">
+                                            <h3 class="flight-duration">${flight.returnFlight.flightDuration}</h3>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C13.11 14 14 13.11 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10Z"
+                                                    fill="black" />
+                                            </svg>
+                                            <h3 class="stops">${flight.outboundFlight.stops} Stop</h3>
+                                        </div>
+                                        <h4 class="cabinClass">${flightSearchQuery.cabinClass.charAt(0).toUpperCase() + flightSearchQuery.cabinClass.slice(1)}</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="price-snapshot">
+                                <h1>NGN ${flight.cabinAvailability[flightSearchQuery.cabinClass].price.amount.toLocaleString()}</h1>
+                                <p>Price per traveller</p>
+                            </div>
+                        </div>
+                        <div class="bottom-card">
+                            <div class="travel-baggage-addons">
+                                ${addonsHTML}
+                            </div>
+                            <div class="actions">
+                                <button class="view-flight-details" id="openOffcanvasBtn">Flight
+                                    Details</button>
+                                <button class="book-flight">Book Flight</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+                });
+            }
         }
     });
 

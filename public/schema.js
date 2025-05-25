@@ -9,7 +9,7 @@ const availableInventory = [
         },
         departure: {
             date: "30 May 2025",
-            time: "21:45",
+            time: "9:45 PM",
             airport: {
                 code: "LOS",
                 name: "Lagos Murtala Muhammed"
@@ -17,15 +17,15 @@ const availableInventory = [
         },
         arrival: {
             date: "31 May 2025",
-            time: "15:15",
+            time: "3:15 PM",
             airport: {
                 code: "IAD",
                 name: "Washington Dulles Intl"
             }
         },
-        flightDuration: "18h 30m",
 
         outboundFlight: {
+            flightDuration: "18h 30m",
             stops: 1,
             stopDetails: [
                 {
@@ -45,9 +45,9 @@ const availableInventory = [
                         name: "Dubai International"
                     },
                     departureDate: "30 May 2025",
-                    departureTime: "21:45",
+                    departureTime: "9:45 PM",
                     arrivalDate: "31 May 2025",
-                    arrivalTime: "06:00",
+                    arrivalTime: "06:00 AM",
                     travelTime: "6h 15m"
                 },
                 {
@@ -61,15 +61,16 @@ const availableInventory = [
                         name: "Washington Dulles Intl"
                     },
                     departureDate: "31 May 2025",
-                    departureTime: "09:45",
+                    departureTime: "09:45 AM",
                     arrivalDate: "31 May 2025",
-                    arrivalTime: "15:15",
+                    arrivalTime: "3:15 PM",
                     travelTime: "13h 30m"
                 }
             ]
         },
 
         returnFlight: {
+            flightDuration: "18h 45m",
             stops: 1,
             stopDetails: [
                 {
@@ -89,9 +90,9 @@ const availableInventory = [
                         name: "Dubai International"
                     },
                     departureDate: "10 Jun 2025",
-                    departureTime: "22:30",
+                    departureTime: "10:30 AM",
                     arrivalDate: "12 Jun 2025",
-                    arrivalTime: "19:15",
+                    arrivalTime: "7:15 PM",
                     travelTime: "12h 45m"
                 },
                 {
@@ -105,9 +106,9 @@ const availableInventory = [
                         name: "Lagos Murtala Muhammed"
                     },
                     departureDate: "12 Jun 2025",
-                    departureTime: "22:15",
+                    departureTime: "10:15 PM",
                     arrivalDate: "13 Jun 2025",
-                    arrivalTime: "02:00",
+                    arrivalTime: "02:00 PM",
                     travelTime: "7h 45m"
                 }
             ]
@@ -130,7 +131,7 @@ const availableInventory = [
                     amount: 450000
                 }
             },
-            first: {
+            firstclass: {
                 totalSeats: 8,
                 availableSeats: 2,
                 price: {
@@ -153,6 +154,161 @@ const availableInventory = [
     },
 
     {
+        flightId: "EMIR123",
+        tripType: "round-trip",
+        airline: {
+            name: "Emirates",
+            logo: "emirates-logo.png"
+        },
+        departure: {
+            date: "30 May 2025",
+            time: "9:45 PM",
+            airport: {
+                code: "LOS",
+                name: "Lagos Murtala Muhammed"
+            }
+        },
+        arrival: {
+            date: "31 May 2025",
+            time: "3:15 PM",
+            airport: {
+                code: "IAD",
+                name: "Washington Dulles Intl"
+            }
+        },
+
+        outboundFlight: {
+            flightDuration: "18h 30m",
+            stops: 1,
+            stopDetails: [
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
+                }
+            ],
+            legs: [
+                {
+                    airplane: "Boeing 777",
+                    from: {
+                        code: "LOS",
+                        name: "Lagos Murtala Muhammed"
+                    },
+                    to: {
+                        code: "DXB",
+                        name: "Dubai International"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "9:45 PM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "06:00 AM",
+                    travelTime: "6h 15m"
+                },
+                {
+                    airplane: "Boeing 777",
+                    from: {
+                        code: "DXB",
+                        name: "Dubai International"
+                    },
+                    to: {
+                        code: "IAD",
+                        name: "Washington Dulles Intl"
+                    },
+                    departureDate: "31 May 2025",
+                    departureTime: "09:45 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "3:15 PM",
+                    travelTime: "13h 30m"
+                }
+            ]
+        },
+
+        returnFlight: {
+            flightDuration: "18h 45m",
+            stops: 1,
+            stopDetails: [
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 00m"
+                }
+            ],
+            legs: [
+                {
+                    airplane: "Boeing 777",
+                    from: {
+                        code: "IAD",
+                        name: "Washington Dulles Intl"
+                    },
+                    to: {
+                        code: "DXB",
+                        name: "Dubai International"
+                    },
+                    departureDate: "10 Jun 2025",
+                    departureTime: "10:30 AM",
+                    arrivalDate: "12 Jun 2025",
+                    arrivalTime: "7:15 PM",
+                    travelTime: "12h 45m"
+                },
+                {
+                    airplane: "Boeing 777",
+                    from: {
+                        code: "DXB",
+                        name: "Dubai International"
+                    },
+                    to: {
+                        code: "LOS",
+                        name: "Lagos Murtala Muhammed"
+                    },
+                    departureDate: "12 Jun 2025",
+                    departureTime: "10:15 PM",
+                    arrivalDate: "13 Jun 2025",
+                    arrivalTime: "02:00 PM",
+                    travelTime: "7h 45m"
+                }
+            ]
+        },
+
+        cabinAvailability: {
+            economy: {
+                totalSeats: 180,
+                availableSeats: 30,
+                price: {
+                    currency: "NGN",
+                    amount: 150000
+                }
+            },
+            business: {
+                totalSeats: 24,
+                availableSeats: 8,
+                price: {
+                    currency: "NGN",
+                    amount: 450000
+                }
+            },
+            firstclass: {
+                totalSeats: 8,
+                availableSeats: 2,
+                price: {
+                    currency: "NGN",
+                    amount: 2500000
+                }
+            }
+        },
+        travelBaggageAddons: [
+            "Seat choice included",
+            "Personal item included",
+            "Carry-on bag included"
+        ],
+        fareBreakdown: [
+            "Seat choice included",
+            "Personal item included",
+            "Carry-on bag included",
+            "2 checked bags included (50 lbs each)",
+            "No refunds"
+        ]
+    },
+
+
+    {
         flightId: "DL100",
         tripType: "one-way",
         airline: {
@@ -161,7 +317,7 @@ const availableInventory = [
         },
         departure: {
             date: "30 May 2025",
-            time: "22:50",
+            time: "10:50 AM",
             airport: {
                 code: "ACC",
                 name: "Accra Kotoka Intl"
@@ -169,7 +325,7 @@ const availableInventory = [
         },
         arrival: {
             date: "31 May 2025",
-            time: "05:50",
+            time: "05:50 AM",
             airport: {
                 code: "JFK",
                 name: "New York JFK"
@@ -192,9 +348,9 @@ const availableInventory = [
                         name: "New York JFK"
                     },
                     departureDate: "30 May 2025",
-                    departureTime: "22:50",
+                    departureTime: "10:50 AM",
                     arrivalDate: "31 May 2025",
-                    arrivalTime: "05:50",
+                    arrivalTime: "05:50 AM",
                     travelTime: "11h"
                 }
             ]
@@ -217,7 +373,7 @@ const availableInventory = [
                     amount: 1200
                 }
             },
-            first: {
+            firstclass: {
                 totalSeats: 12,
                 availableSeats: 4,
                 price: {
