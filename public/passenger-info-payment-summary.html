@@ -58,115 +58,8 @@
 
     <!-- Main Section -->
     <div class="main-passenger-count-section flex-this">
-        <div class="inputs-right-container">
-            <!-- Traveler-Info-Input -->
-            <div class="traveler-info-input">
-                <div class="traveler-info-input-inner">
-                    <div class="traveler-info-input-heading">
-                        <h1>Passenger 1</h1>
-                        <p>All fields required unless noted</p>
-                    </div>
-                    <div class="traveler-info-input-wrapper">
-                        <div class="top-input-wrapper">
-                            <input placeholder="First Name" type="text" name="first-name" id="" required>
-                            <input placeholder="Middle Name" type="text" name="middle-name" id="">
-                            <input placeholder="Last Name" type="text" name="last-name" id="" required>
-                            <select id="suffix" name="suffix" class="suffix">
-                                <option value="Mr">Mr</option>
-                                <option value="Mrs">Mrs</option>
-                                <option value="Ms">Ms</option>
-                            </select>
-                        </div>
-                        <div class="bottom-input-wrapper">
-                            <input class="travelerDob" type="text" placeholder="Date of Birth"
-                                onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
-                            <select id="genderTraveler" name="genderTraveler" class="genderTraveler">
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Traveler-Info-Input -->
-            <div class="traveler-info-input">
-                <div class="traveler-info-input-inner">
-                    <div class="traveler-info-input-heading">
-                        <h1>Passenger 2</h1>
-                        <p>All fields required unless noted</p>
-                    </div>
-                    <div class="traveler-info-input-wrapper">
-                        <div class="top-input-wrapper">
-                            <input placeholder="First Name" type="text" name="first-name" id="" required>
-                            <input placeholder="Middle Name" type="text" name="middle-name" id="">
-                            <input placeholder="Last Name" type="text" name="last-name" id="" required>
-                            <select id="suffix" name="suffix" class="suffix">
-                                <option value="Mr">Mr</option>
-                                <option value="Mrs">Mrs</option>
-                                <option value="Ms">Ms</option>
-                            </select>
-                        </div>
-                        <div class="bottom-input-wrapper">
-                            <input class="travelerDob" type="text" placeholder="Date of Birth"
-                                onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
-                            <select id="genderTraveler" name="genderTraveler" class="genderTraveler">
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Traveler-Info-Input -->
-            <div class="traveler-info-input">
-                <div class="traveler-info-input-inner">
-                    <div class="traveler-info-input-heading">
-                        <h1>Passenger 3</h1>
-                        <p>All fields required unless noted</p>
-                    </div>
-                    <div class="traveler-info-input-wrapper">
-                        <div class="top-input-wrapper">
-                            <input placeholder="First Name" type="text" name="first-name" id="" required>
-                            <input placeholder="Middle Name" type="text" name="middle-name" id="">
-                            <input placeholder="Last Name" type="text" name="last-name" id="" required>
-                            <select id="suffix" name="suffix" class="suffix">
-                                <option value="Mr">Mr</option>
-                                <option value="Mrs">Mrs</option>
-                                <option value="Ms">Ms</option>
-                            </select>
-                        </div>
-                        <div class="bottom-input-wrapper">
-                            <input class="travelerDob" type="text" placeholder="Date of Birth"
-                                onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
-                            <select id="genderTraveler" name="genderTraveler" class="genderTraveler">
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Contact-Info-Input -->
-            <div class="traveler-info-input">
-                <div class="traveler-info-input-inner">
-                    <div class="traveler-info-input-heading">
-                        <h1>Contact Info.</h1>
-                        <p>Who we should contact just in case</p>
-                    </div>
-                    <div class="traveler-info-input-wrapper">
-                        <div class="top-input-wrapper">
-                            <input placeholder="Email Address" type="email" name="email" id="" required>
-                            <input placeholder="Phone Number" type="tel" name="phone-number" id="" required>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="inputs-right-container" id="passengerFormContainer">
+            <!-- Content Generated in JS -->
         </div>
         <div class="payment-summary-card">
             <div class="payment-summary-inner">
@@ -178,31 +71,31 @@
                     <div class="fare-summary-item-frame">
                         <div class="fare-summary-item-frame-inner">
                             <h2 class="frame-summary-label">No. of Passengers</h2>
-                            <h2 class="frame-summary-value">3 Passengers</h2>
+                            <h2 class="frame-summary-value" id="passengerNo"></h2>
                         </div>
                     </div>
 
                     <div class="fare-summary-item-frame">
                         <div class="fare-summary-item-frame-inner">
                             <h2 class="frame-summary-label">Flights Total</h2>
-                            <h2 class="frame-summary-value">NGN 4,500,000</h2>
+                            <h2 class="frame-summary-value" id="flights-total"></h2>
                         </div>
                     </div>
 
                     <div class="fare-summary-item-frame">
                         <div class="fare-summary-item-frame-inner">
                             <h2 class="frame-summary-label">Taxes, Fees & Charges</h2>
-                            <h2 class="frame-summary-value">NGN 495,000</h2>
+                            <h2 class="frame-summary-value" id="taxFees"></h2>
                         </div>
                     </div>
                 </div>
 
                 <div class="fare-summary-amount-due-wrapper">
                     <h4 class="amount-due-label">Amount Due</h4>
-                    <h2 class="amount-due-value">NGN 4,995,000</h2>
+                    <h2 class="amount-due-value" id="totalAmtDue"></h2>
                 </div>
 
-                <button class="pay-for-flight-button">Pay & Book Flight Now</button>
+                <button class="pay-for-flight-button" id="payforflight">Pay & Book Flight Now</button>
             </div>
         </div>
     </div>
@@ -229,4 +122,178 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+
+    const bookedFlight = JSON.parse(localStorage.getItem('bookedFlight'));
+    const passengerCount = JSON.parse(localStorage.getItem('passengers'));
+    const flightSearchQuery = JSON.parse(localStorage.getItem('flightSearchQuery'))
+    const totalPassengers = passengerCount.Adults + passengerCount.Children + passengerCount.Infants;
+
+    // Passenger Number DOM
+    const passengerNo = document.getElementById("passengerNo")
+    passengerNo.innerHTML = `${totalPassengers} Passengers`
+
+    // Flights Total DOM
+    const flightsTotal = document.getElementById("flights-total")
+    // to get flight total calculation
+    let queryCabinClass = flightSearchQuery.cabinClass
+    let basePrice = bookedFlight.cabinAvailability[queryCabinClass].price.amount
+    let baseCurrency = bookedFlight.cabinAvailability[queryCabinClass].price.currency
+    console.log(basePrice);
+    const totalFlightPrice = basePrice * totalPassengers
+    const formattedPrice = totalFlightPrice.toLocaleString();
+    flightsTotal.innerHTML = `${baseCurrency} ${formattedPrice}`
+
+    // Tax Fees DOM
+    const taxFees = document.getElementById("taxFees")
+    const taxCalculation = Math.round(totalFlightPrice * 0.00015)
+    taxFees.innerHTML = `${baseCurrency} ${taxCalculation}`
+
+    // Total Amount Due DOM
+    const totalAmtDue = document.getElementById("totalAmtDue")
+    const totalAmtDueCalculation = totalFlightPrice + taxCalculation
+    const formattedTotalAmtDue = totalAmtDueCalculation.toLocaleString()
+    totalAmtDue.innerHTML = `${baseCurrency} ${formattedTotalAmtDue}`
+
+    const container = document.getElementById("passengerFormContainer");
+
+    if (bookedFlight && passengerCount) {
+        console.log('Retrieved flight:', bookedFlight, 'Retrieved passenger-count:', passengerCount, 'Flight Search Query:', flightSearchQuery);
+
+
+
+
+        // ✅ Insert Contact Info Form ONCE
+        const contactInfoHTML = `
+        <div class="traveler-info-input">
+            <div class="traveler-info-input-inner">
+                <div class="traveler-info-input-heading">
+                    <h1>Contact Info.</h1>
+                    <p>Who we should contact just in case</p>
+                </div>
+                <div class="traveler-info-input-wrapper">
+                    <div class="top-input-wrapper">
+                        <input placeholder="Email Address" type="email" name="email" required>
+                        <input placeholder="Phone Number" type="tel" name="phone-number" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+        container.insertAdjacentHTML('beforeend', contactInfoHTML);
+
+        // ✅ Loop through and insert passenger forms
+        for (let i = 1; i <= totalPassengers; i++) {
+            const formHTML = `
+            <div class="traveler-info-input">
+                <div class="traveler-info-input-inner">
+                    <div class="traveler-info-input-heading">
+                        <h1>Passenger ${i}</h1>
+                        <p>All fields required unless noted</p>
+                    </div>
+                    <div class="traveler-info-input-wrapper">
+                        <div class="top-input-wrapper">
+                            <input placeholder="First Name" type="text" name="first-name-${i}" required>
+                            <input placeholder="Middle Name" type="text" name="middle-name-${i}">
+                            <input placeholder="Last Name" type="text" name="last-name-${i}" required>
+                            <select name="suffix-${i}" class="suffix">
+                                <option value="Mr">Mr</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Ms">Ms</option>
+                            </select>
+                        </div>
+                        <div class="bottom-input-wrapper">
+                            <input class="travelerDob" type="text" placeholder="Date of Birth"
+                                onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" name="dob-${i}" />
+                            <select name="genderTraveler-${i}" class="genderTraveler">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+            container.insertAdjacentHTML('beforeend', formHTML);
+        }
+    } else {
+        console.log('No booked flight or passenger data found');
+    }
+
+
+    // To pay and book for flight
+    document.getElementById('payforflight').addEventListener('click', () => {
+        const passengerCount = JSON.parse(localStorage.getItem('passengers'));
+
+        if (!passengerCount) {
+            alert("No passenger data found.");
+            return;
+        }
+
+
+        const mainDetails = [];
+        let travelerIndex = 1;
+
+        const types = [
+            { type: 'Adult', count: passengerCount.Adults },
+            { type: 'Child', count: passengerCount.Children },
+            { type: 'Infant', count: passengerCount.Infants }
+        ];
+
+        for (const group of types) {
+            for (let i = 0; i < group.count; i++) {
+                const suffix = document.querySelector(`[name="suffix-${travelerIndex}"]`);
+                const firstName = document.querySelector(`[name="first-name-${travelerIndex}"]`);
+                const middleName = document.querySelector(`[name="middle-name-${travelerIndex}"]`);
+                const lastName = document.querySelector(`[name="last-name-${travelerIndex}"]`);
+                const dob = document.querySelector(`[name="dob-${travelerIndex}"]`);
+                const gender = document.querySelector(`[name="genderTraveler-${travelerIndex}"]`);
+
+                // 🚨 Validate required fields
+                if (!suffix.value || !firstName.value.trim() || !lastName.value.trim() || !dob.value || !gender.value) {
+                    alert(`Please fill out all required fields for Passenger ${travelerIndex}.`);
+                    return;
+                }
+
+                mainDetails.push({
+                    travelerType: group.type,
+                    title: suffix.value,
+                    firstName: firstName.value.trim(),
+                    middleName: middleName.value.trim() || '',
+                    lastName: lastName.value.trim(),
+                    dob: dob.value,
+                    gender: gender.value
+                });
+
+                travelerIndex++;
+            }
+        }
+
+        // ✅ Validate Contact Info
+        const emailField = document.querySelector(`[name="email"]`);
+        const phoneField = document.querySelector(`[name="phone-number"]`);
+        const countryCode = '+234'; // Use dynamic input if needed
+
+        if (!emailField.value.trim() || !phoneField.value.trim()) {
+            alert("Please provide both an email address and phone number in Contact Info.");
+            return;
+        }
+
+        const passengerDetails = {
+            mainDetails: mainDetails,
+            contactDetails: {
+                countryCode: countryCode,
+                emailAddress: emailField.value.trim(),
+                phoneNumber: phoneField.value.trim()
+            }
+        };
+
+        localStorage.setItem('passengerDetails', JSON.stringify(passengerDetails));
+
+        console.log("Passenger details collected and validated:", passengerDetails);
+        // Optionally redirect
+        // window.location.href = "confirmation-page.html";
+    });
+
+
 </script>

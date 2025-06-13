@@ -334,10 +334,51 @@ const availableInventory = [
         flightDuration: "11h",
 
         outboundFlight: {
-            stops: 0,
-            stopDetails: [],
+            stops: 2,
+            stopDetails: [
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
+                },
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
+                }
+            ],
             legs: [
                 {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                },
+                 {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                },
+                 {
                     airplane: "Airbus A350",
                     from: {
                         code: "ACC",

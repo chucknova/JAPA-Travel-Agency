@@ -70,7 +70,7 @@
                             <p>18 years and above</p>
                         </div>
                         <div class="adult-counter-input">
-                            <input placeholder="How many adults" type="number" name="" id="">
+                            <input placeholder="How many adults" type="number" name="" id="adultPassengers">
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@
                             <p>2 - 17 years</p>
                         </div>
                         <div class="child-counter-input">
-                            <input placeholder="How many children" type="number" name="" id="">
+                            <input placeholder="How many children" type="number" name="" id="childrenPassengers">
                         </div>
                     </div>
 
@@ -90,12 +90,12 @@
                             <p>Under 2</p>
                         </div>
                         <div class="infant-counter-input">
-                            <input placeholder="How many infants" type="number" name="" id="">
+                            <input placeholder="How many infants" type="number" name="" id="infantPassengers">
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="book-flight-proceed-button">Proceed to book flight</button>
+            <button class="book-flight-proceed-button" id="bookPassengerFlight">Proceed to book flight</button>
         </div>
     </div>
 
@@ -121,4 +121,57 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+
+    const adultPassengers = document.getElementById("adultPassengers");
+    const childrenPassengers = document.getElementById("childrenPassengers");
+    const infantPassengers = document.getElementById("infantPassengers");
+    const continueButton = document.getElementById("bookPassengerFlight");
+
+    const bookedFlight = JSON.parse(localStorage.getItem('bookedFlight'));
+
+
+    if (bookedFlight) {
+        console.log('Retrieved flight:', bookedFlight);
+    } else {
+        console.log('No booked flight found');
+    }
+
+    continueButton.addEventListener('click', function () {
+        const adultCount = parseInt(adultPassengers.value, 10);
+        const childCount = parseInt(childrenPassengers.value, 10);
+        const infantCount = parseInt(infantPassengers.value, 10);
+
+        // ✅ Validation: At least 1 adult
+        if (isNaN(adultCount) || adultCount < 1) {
+            alert("At least 1 adult passenger is required.");
+            adultPassengers.focus();
+            return;
+        }
+
+        // Optional: Add more validation if needed
+        if (infantCount > adultCount) {
+            alert("Each infant must be accompanied by an adult.");
+            infantPassengers.focus();
+            return;
+        }
+
+        // If all is good, proceed
+        console.log("Passenger input is valid!");
+
+        // Store Passenger Count in Local Storage
+        const passengers = {
+            Adults: adultCount,
+            Children: childCount,
+            Infants: infantCount
+        };
+        console.log(passengers);
+
+        localStorage.setItem('passengers', JSON.stringify(passengers));
+        window.location.href = "passenger-info-payment-summary.html"
+
+
+        // You can save to localStorage or move to next step here
+    });
+
+
 </script>
