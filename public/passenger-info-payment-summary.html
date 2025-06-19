@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="flights-dashboard.css">
     <link rel="stylesheet" href="passenger-count.css">
     <link rel="stylesheet" href="passenger-info.css">
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
     <script src="schema.js"></script>
@@ -95,7 +96,7 @@
                     <h2 class="amount-due-value" id="totalAmtDue"></h2>
                 </div>
 
-                <button class="pay-for-flight-button" id="payforflight">Pay & Book Flight Now</button>
+                <button type="button" id="payButton" class="pay-for-flight-button">Pay & Book Flight Now</button>
             </div>
         </div>
     </div>
@@ -145,7 +146,7 @@
 
     // Tax Fees DOM
     const taxFees = document.getElementById("taxFees")
-    const taxCalculation = Math.round(totalFlightPrice * 0.00015)
+    const taxCalculation = Math.round(totalFlightPrice * 0.01)
     taxFees.innerHTML = `${baseCurrency} ${taxCalculation}`
 
     // Total Amount Due DOM
@@ -220,9 +221,11 @@
         console.log('No booked flight or passenger data found');
     }
 
+    // Add event listener instead of inline onclick
+    document.getElementById('payButton').addEventListener('click', makePayment);
 
     // To pay and book for flight
-    document.getElementById('payforflight').addEventListener('click', () => {
+    function makePayment() {
         const passengerCount = JSON.parse(localStorage.getItem('passengers'));
 
         if (!passengerCount) {
@@ -291,9 +294,41 @@
         localStorage.setItem('passengerDetails', JSON.stringify(passengerDetails));
 
         console.log("Passenger details collected and validated:", passengerDetails);
-        // Optionally redirect
-        // window.location.href = "confirmation-page.html";
-    });
 
+        // Flutterwave Paywall
+
+        FlutterwaveCheckout({
+            public_key: "FLWPUBK_TEST-d48b809523c31187a8a9f7d2edcd6272-X",
+            tx_ref: "flight-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9),
+            amount: totalAmtDueCalculation, // Ensure this is a number
+            currency: "NGN", // or whatever currency you're using
+            payment_options: "card,mobilemoney,ussd",
+            customer: {
+                email: emailField.value.trim(),
+                phone_number: phoneField.value.trim(),
+                name: `${mainDetails[0].firstName} ${mainDetails[0].lastName}`,
+            },
+            customizations: {
+                title: "Flight Booking",
+                description: "Payment for flight booking",
+                logo: "https://your-logo-url.com/logo.png", // Optional
+            },
+            callback: function (data) {
+                console.log("Payment callback:", data);
+                if (data.status === "successful") {
+                    setTimeout(() => {
+                        window.location.href = "payment-successful.html"
+                    }, 3000);
+
+                }
+            },
+            onclose: function () {
+                window.location.href = "payment-successful.html"
+            },
+        });
+    }
+
+
+    window.makePayment = makePayment;
 
 </script>
