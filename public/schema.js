@@ -152,7 +152,6 @@ const availableInventory = [
             "No refunds"
         ]
     },
-
     {
         flightId: "EMIR123",
         tripType: "round-trip",
@@ -289,13 +288,12 @@ const availableInventory = [
                 availableSeats: 2,
                 price: {
                     currency: "NGN",
-                    amount: 2500000
+                    amount: 850000
                 }
             }
         },
         travelBaggageAddons: [
             "Seat choice included",
-            "Personal item included",
             "Carry-on bag included"
         ],
         fareBreakdown: [
@@ -306,7 +304,6 @@ const availableInventory = [
             "No refunds"
         ]
     },
-
 
     {
         flightId: "DL100",
@@ -362,7 +359,7 @@ const availableInventory = [
                     arrivalTime: "05:50 AM",
                     travelTime: "11h"
                 },
-                 {
+                {
                     airplane: "Airbus A350",
                     from: {
                         code: "ACC",
@@ -378,7 +375,7 @@ const availableInventory = [
                     arrivalTime: "05:50 AM",
                     travelTime: "11h"
                 },
-                 {
+                {
                     airplane: "Airbus A350",
                     from: {
                         code: "ACC",
@@ -433,7 +430,260 @@ const availableInventory = [
             "2 checked bags",
             "Full refund available before 24h"
         ]
-    }
+    },
+
+    {
+        flightId: "DL100",
+        tripType: "one-way",
+        airline: {
+            name: "Delta Airlines",
+            logo: "delta-logo.png"
+        },
+        departure: {
+            date: "30 May 2025",
+            time: "10:50 AM",
+            airport: {
+                code: "ACC",
+                name: "Accra Kotoka Intl"
+            }
+        },
+        arrival: {
+            date: "31 May 2025",
+            time: "05:50 AM",
+            airport: {
+                code: "JFK",
+                name: "New York JFK"
+            }
+        },
+        flightDuration: "11h",
+
+        outboundFlight: {
+            stops: 2,
+            stopDetails: [
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
+                },
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
+                }
+            ],
+            legs: [
+                {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                },
+                {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                },
+                {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                }
+            ]
+        },
+
+        cabinAvailability: {
+            economy: {
+                totalSeats: 250,
+                availableSeats: 45,
+                price: {
+                    currency: "USD",
+                    amount: 800
+                }
+            },
+            business: {
+                totalSeats: 48,
+                availableSeats: 12,
+                price: {
+                    currency: "USD",
+                    amount: 1200
+                }
+            },
+            firstclass: {
+                totalSeats: 12,
+                availableSeats: 4,
+                price: {
+                    currency: "USD",
+                    amount: 2500
+                }
+            }
+        },
+        travelBaggageAddons: [
+            "Priority boarding",
+            "Carry-on bag included",
+            "Lounge access"
+        ],
+        fareBreakdown: [
+            "Seat choice included",
+            "2 checked bags",
+            "Full refund available before 24h"
+        ]
+    },
+    {
+        flightId: "DL100",
+        tripType: "one-way",
+        airline: {
+            name: "Delta Airlines",
+            logo: "delta-logo.png"
+        },
+        departure: {
+            date: "30 May 2025",
+            time: "10:50 AM",
+            airport: {
+                code: "ACC",
+                name: "Accra Kotoka Intl"
+            }
+        },
+        arrival: {
+            date: "31 May 2025",
+            time: "05:50 AM",
+            airport: {
+                code: "JFK",
+                name: "New York JFK"
+            }
+        },
+        flightDuration: "11h",
+
+        outboundFlight: {
+            stops: 2,
+            stopDetails: [
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
+                },
+                {
+                    stopLocation: "Dubai International",
+                    layoverTime: "3h 45m"
+                }
+            ],
+            legs: [
+                {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                },
+                {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                },
+                {
+                    airplane: "Airbus A350",
+                    from: {
+                        code: "ACC",
+                        name: "Accra Kotoka Intl"
+                    },
+                    to: {
+                        code: "JFK",
+                        name: "New York JFK"
+                    },
+                    departureDate: "30 May 2025",
+                    departureTime: "10:50 AM",
+                    arrivalDate: "31 May 2025",
+                    arrivalTime: "05:50 AM",
+                    travelTime: "11h"
+                }
+            ]
+        },
+
+        cabinAvailability: {
+            economy: {
+                totalSeats: 250,
+                availableSeats: 45,
+                price: {
+                    currency: "USD",
+                    amount: 800
+                }
+            },
+            business: {
+                totalSeats: 48,
+                availableSeats: 12,
+                price: {
+                    currency: "USD",
+                    amount: 1200
+                }
+            },
+            firstclass: {
+                totalSeats: 12,
+                availableSeats: 4,
+                price: {
+                    currency: "USD",
+                    amount: 2500
+                }
+            }
+        },
+        travelBaggageAddons: [
+            "Priority boarding",
+            "Carry-on bag included",
+            "Lounge access"
+        ],
+        fareBreakdown: [
+            "Seat choice included",
+            "2 checked bags",
+            "Full refund available before 24h"
+        ]
+    },
 ];
 
 

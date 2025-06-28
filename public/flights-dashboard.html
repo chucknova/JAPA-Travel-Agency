@@ -815,7 +815,7 @@
                             </div>
                             <div class="actions">
                          <button class="view-flight-details" data-flight-index="${index}">Flight Details</button>
-                        <button class="book-flight" id="bookFlight-${index}">Book Flight</button>
+                       <button class="book-oneway-flight" data-flight-index="${index}">Book Flight</button>
                             </div>
                         </div>
                     </div>
@@ -939,7 +939,7 @@
             </div>
 
             <div class="book-flight-inner-right-outer">
-                <button class="book-flight-btn" id="bookFlight-${index}">BOOK NOW</button>
+                <button class="book-flight-btn book-flight" id="bookFlight-${index}">BOOK NOW</button>
             </div>
         </div>
     </div>
@@ -950,15 +950,17 @@
 
 
                     // Book-One Way Flight
-                    const bookOneWayFlight = document.getElementById(`bookFlight-${index}`);
-
-                    bookOneWayFlight.addEventListener('click', function () {
-                        // Save flight details to local storage
-                        localStorage.setItem('bookedFlight', JSON.stringify(flight));
-
-                        // Redirect to passenger count page
-                        window.location.href = "passenger-count.html";
+                    document.querySelectorAll('.book-oneway-flight').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const flightIndex = this.getAttribute('data-flight-index');
+                            const selectedFlight = searchResults[flightIndex];
+                            localStorage.setItem('bookedFlight', JSON.stringify(selectedFlight));
+                            window.location.href = "passenger-count.html";
+                            // console.log(selectedFlight);
+                            
+                        });
                     });
+
 
 
                 });
@@ -1231,7 +1233,7 @@
                 </div>
                 <div class="actions">
                     <button class="view-flight-details" data-flight-index="${index}">Flight Details</button>
-                    <button class="book-flight">Book Flight</button>
+                    <button class="book-roundtrip-flight book-flight" data-flight-index= "${index}">Book Flight</button>
                 </div>
             </div>
         </div>
@@ -1367,6 +1369,18 @@
 </div>
 <!-- Flight Details Off-Canvas -->
             `;
+
+                    // Book Round -Trip Flight
+                     // Book-One Way Flight
+                    document.querySelectorAll('.book-roundtrip-flight').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const flightIndex = this.getAttribute('data-flight-index');
+                            const selectedFlight = searchResults[flightIndex];
+                            localStorage.setItem('bookedFlight', JSON.stringify(selectedFlight));
+                            window.location.href = "passenger-count.html";
+                        });
+                    });
+
                 });
 
                 // Initialize Off-Canvas functionality after all flight cards are rendered
