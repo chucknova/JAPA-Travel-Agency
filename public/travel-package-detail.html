@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="travelpackages.css">
+    <link rel="stylesheet" href="flights.css">
+    <link rel="stylesheet" href="travel-details.css">
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <title>Travel Package Details || JAPA</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navcontents">
+            <div class="navcontents-left">
+                <div class="logo">
+                    <img src="assets/logo.png" alt="Logo" class="logo-img">
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="#">Travel Packages</a></li>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="flights.html">Flights</a></li>
+                    <li><a href="#">Tours & Experiences</a></li>
+                    <li><a href="#">Visa</a></li>
+                </ul>
+            </div>
+
+
+            <div class="user-actions">
+                <button class="login-button"><a href="user-auth.html">Log In</a></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Upper -->
+    <div class="upper-component">
+
+        <!-- Travel Name and Short Details -->
+        <div class="travel-name-short-details">
+            <h1 class="package-name">Bali Bliss Retreat: 7 Days of Culture, Nature & Luxury</h1>
+            <h1 class="package-short-details">From $1,499 per person · 5 Days · Max 12 people · Starts In: Denpasar,
+                Bali · Ends In: Denpasar, Bali</h1>
+        </div>
+
+        <!-- Travel Gallery -->
+        <div class="travel-gallery">
+            <img src="./assets/phone-call-airport-black-woman-with-ticket-travel-luggage-suitcase-global-holiday-plane-transport-communication-girl-with-smartphone-schedule-talking-flight-details.jpg"
+                alt="Beach resort in Maldives" class="grid-1">
+            <div class="right-grid-images">
+                <img src="assets/high-angle-friends-spending-time-together.jpg" alt="Friends spending time together"
+                    class="grid-2">
+                <img src="./assets/heres-everlasting-love-shot-young-couple-making-toast-while-picnic-lakeside.jpg"
+                    alt="Friends spending time together" class="grid-3">
+                <img src="./assets/nature-holiday-travel-relaxation-resort.jpg" alt="Friends spending time together"
+                    class="grid-4">
+                <img src="./assets/heres-everlasting-love-shot-young-couple-making-toast-while-picnic-lakeside.jpg"
+                    alt="Friends spending time together" class="grid-5">
+            </div>
+        </div>
+    </div>
+
+    <!-- Travel Details Nav -->
+    <div class="travel-details-nav">
+        <div class="nav-item">Overview</div>
+        <div class="nav-item">Itinerary Details</div>
+        <div class="nav-item">What's Included</div>
+        <div class="nav-item">Where you'll stay</div>
+        <div class="nav-item">Reviews</div>
+    </div>
+
+    <!-- Middle -->
+    <div class="middle-component">
+        <!-- Main Details left -->
+        <div class="main-details-left">
+            <!-- What's this package about? -->
+            <div class="what-package-is-about">
+                <h3>What’s this package about?</h3>
+                <p>Discover Bali like never before — from tranquil temples and terraced rice fields to vibrant beach
+                    clubs and healing spa rituals. This carefully curated journey blends local culture, adventure, and
+                    indulgent comfort for the soul-seeking traveler. Discover Bali like never before — from tranquil
+                    temples and terraced rice fields to vibrant beach clubs and healing spa rituals. This carefully
+                    curated journey blends local culture, adventure, and indulgent comfort for the soul-seeking
+                    traveler.</p>
+                <button>Read more</button>
+            </div>
+
+            <!-- Day by day itinerary -->
+            <div class="day-by-day-itinerary">
+                <h3>Day-by-Day Itinerary</h3>
+                <div class="itinerary-accordion">
+                    <div class="accordion-inner">
+                        <!-- Accordion Component -->
+                        <div class="accordion-component">
+                            <div class="title-and-arrow">
+                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
+                                    Dinner</p>
+                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                        viewBox="0 0 32 32" fill="none">
+                                        <g clip-path="url(#clip0_4704_34058)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M16.9444 11.0575C16.6944 10.8076 16.3553 10.6671 16.0018 10.6671C15.6482 10.6671 15.3091 10.8076 15.0591 11.0575L7.51643 18.6002C7.38908 18.7232 7.2875 18.8703 7.21762 19.033C7.14775 19.1957 7.11096 19.3706 7.10943 19.5477C7.10789 19.7247 7.14162 19.9003 7.20866 20.0641C7.27571 20.228 7.37471 20.3769 7.4999 20.5021C7.62509 20.6272 7.77396 20.7262 7.93782 20.7933C8.10168 20.8603 8.27726 20.8941 8.45429 20.8925C8.63133 20.891 8.80629 20.8542 8.96897 20.7843C9.13164 20.7145 9.27876 20.6129 9.40176 20.4855L16.0018 13.8855L22.6018 20.4855C22.8532 20.7284 23.19 20.8628 23.5396 20.8598C23.8892 20.8567 24.2236 20.7165 24.4709 20.4693C24.7181 20.2221 24.8583 19.8877 24.8613 19.5381C24.8644 19.1885 24.73 18.8517 24.4871 18.6002L16.9444 11.0575Z"
+                                                fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4704_34058">
+                                                <rect width="32" height="32" fill="white"
+                                                    transform="matrix(1 0 0 -1 0 32)" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg></div>
+                            </div>
+                            <p class="accordion-component-subtext">
+                                Arrive at Denpasar International Airport and be welcomed with fresh frangipani garlands
+                                and a cool drink. You'll be escorted to your eco-luxury villa in Ubud. Unwind by your
+                                private plunge pool or explore the nearby artisan village. In the evening, join the
+                                group for a welcome dinner overlooking lush rice paddies.
+                            </p>
+                        </div>
+                        <!-- Accordion Component -->
+                        <div class="accordion-component">
+                            <div class="title-and-arrow">
+                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
+                                    Dinner</p>
+                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                        viewBox="0 0 32 32" fill="none">
+                                        <g clip-path="url(#clip0_4704_34066)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
+                                                fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4704_34066">
+                                                <rect width="32" height="32" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg></div>
+                            </div>
+                        </div>
+                        <!-- Accordion Component -->
+                        <div class="accordion-component">
+                            <div class="title-and-arrow">
+                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
+                                    Dinner</p>
+                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                        viewBox="0 0 32 32" fill="none">
+                                        <g clip-path="url(#clip0_4704_34066)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
+                                                fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4704_34066">
+                                                <rect width="32" height="32" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg></div>
+                            </div>
+                        </div>
+                        <!-- Accordion Component -->
+                        <div class="accordion-component">
+                            <div class="title-and-arrow">
+                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
+                                    Dinner</p>
+                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                        viewBox="0 0 32 32" fill="none">
+                                        <g clip-path="url(#clip0_4704_34066)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
+                                                fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4704_34066">
+                                                <rect width="32" height="32" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg></div>
+                            </div>
+                        </div>
+                        <!-- Accordion Component -->
+                        <div class="accordion-component">
+                            <div class="title-and-arrow">
+                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
+                                    Dinner</p>
+                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                        viewBox="0 0 32 32" fill="none">
+                                        <g clip-path="url(#clip0_4704_34066)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
+                                                fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4704_34066">
+                                                <rect width="32" height="32" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What's included in this package? -->
+            <div class="package-included">
+                <h3 class="package-included-heading">What’s Included in this package?</h3>
+                <div class="package-included-grid">
+                    <!-- Package Included -->
+                    <div class="package-included-card">
+                        <div class="inner-package-card">
+                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
+                            <div class="japa-package-inclusion-badge"><img
+                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
+                        </div>
+                    </div>
+                    <!-- Package Included -->
+                    <div class="package-included-card">
+                        <div class="inner-package-card">
+                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
+                            <div class="japa-package-inclusion-badge"><img
+                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
+                        </div>
+                    </div>
+                    <!-- Package Included -->
+                    <div class="package-included-card">
+                        <div class="inner-package-card">
+                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
+                            <div class="japa-package-inclusion-badge"><img
+                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
+                        </div>
+                    </div>
+                    <!-- Package Included -->
+                    <div class="package-included-card">
+                        <div class="inner-package-card">
+                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
+                            <div class="japa-package-inclusion-badge"><img
+                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
+                        </div>
+                    </div>
+                    <!-- Package Included -->
+                    <div class="package-included-card">
+                        <div class="inner-package-card">
+                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
+                            <div class="japa-package-inclusion-badge"><img
+                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
+                        </div>
+                    </div>
+                    <!-- Package Included -->
+                    <div class="package-included-card">
+                        <div class="inner-package-card">
+                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
+                            <div class="japa-package-inclusion-badge"><img
+                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Where you will stay -->
+            <div class="where-you-will-stay">
+                <h3 class="heading">Where you will stay</h3>
+                <!-- Accomodations Grid -->
+                <div class="accomodations-grid">
+                    <!-- Accomodation Card -->
+                    <div class="accomodation-card">
+                        <img src="./assets/side-view-breakfast-omelet-with-mushrooms-juice-croissants-room-service-hotel-with-amazing-sea-view.jpg"
+                            alt="" class="accomodation-thumbnail">
+                        <div class="accomodation-name-desc">
+                            <h3 class="name">Kamandalu Resort – Ubud (3 Nights)</h3>
+                            <p class="desc">An eco-chic hideaway overlooking lush rice terraces. Each villa features a
+                                private outdoor bath and infinity pool.</p>
+                        </div>
+                    </div>
+                    <!-- Accomodation Card -->
+                    <div class="accomodation-card">
+                        <img src="./assets/side-view-breakfast-omelet-with-mushrooms-juice-croissants-room-service-hotel-with-amazing-sea-view.jpg"
+                            alt="" class="accomodation-thumbnail">
+                        <div class="accomodation-name-desc">
+                            <h3 class="name">Kamandalu Resort – Ubud (3 Nights)</h3>
+                            <p class="desc">An eco-chic hideaway overlooking lush rice terraces. Each villa features a
+                                private outdoor bath and infinity pool.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book a spot bar -->
+        <div class="book-spot-bar-right">
+            <div class="book-spot-inner">
+                <div class="book-spot-header">
+                    <h3>Book your spot now</h3>
+                    <div class="spots-left-counter">12 of 36 spots left</div>
+                </div>
+
+                <div class="book-spot-main-content">
+                    <div class="spot-price">
+                        <div class="spot-price-inner">
+                            <p>Starting at</p>
+                            <h2>NGN 3,500,000 / person</h2>
+                        </div>
+                    </div>
+
+                    <div class="traveler-count-bs">
+                        <div class="traveler-count-inner-bs">
+                            <div class="inputs-section-traveler-count">
+                                <!-- Input Subsection -->
+                                <div class="input-subsection">
+                                    <div class="who-agedesc">
+                                        <h2>Who's Travelling?</h2>
+                                        <p>Select all that apply</p>
+                                    </div>
+                                    <input placeholder="How many people" type="number" name="" id="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="traveler-info-bs">
+                        <div class="traveler-info-inner">
+                            <div class="heading-bs">
+                                <h2>Traveler Information</h2>
+                                <p>Enter required information</p>
+                            </div>
+
+                            <div class="inputs-section-traveler-info">
+                                <div class="inputs-subsection-traveler-info">
+                                    <input placeholder="First Name" type="text" name="" id="">
+                                    <input placeholder="Last Name" type="text" name="" id="">
+                                </div>
+                                <div class="inputs-subsection-traveler-info">
+                                    <input placeholder="Email Address" type="email" name="" id="">
+                                    <input placeholder="Phone Number" type="tel" name="" id="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-ons-bs">
+                        <div class="heading-bs">
+                            <h2>Want to Add More Magic?</h2>
+                            <p>Select these add-ons (Optional)</p>
+                        </div>
+
+                        <div class="add-ons-container">
+                            <!-- Add-On-Component -->
+                            <div class="add-on-component">
+                                <div class="add-on-component-inner">
+                                    <div class="add-on-name-price">
+                                        <h2>Mount Batur Sunrise Hike</h2>
+                                        <h3>NGN 70,000</h3>
+                                    </div>
+                                    <button>Add to package</button>
+                                </div>
+                            </div>
+                            <!-- Add-On-Component -->
+                            <div class="add-on-component">
+                                <div class="add-on-component-inner">
+                                    <div class="add-on-name-price">
+                                        <h2>Mount Batur Sunrise Hike</h2>
+                                        <h3>NGN 70,000</h3>
+                                    </div>
+                                    <button>Add to package</button>
+                                </div>
+                            </div>
+                            <!-- Add-On-Component -->
+                            <div class="add-on-component">
+                                <div class="add-on-component-inner">
+                                    <div class="add-on-name-price">
+                                        <h2>Mount Batur Sunrise Hike</h2>
+                                        <h3>NGN 70,000</h3>
+                                    </div>
+                                    <button>Add to package</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="package-total-price">
+                        <p>Total Amount to pay</p>
+                        <h2>NGN 4,500,000</h2>
+                    </div>
+                </div>
+
+                <!-- Button to pay & reserve spot -->
+                <button class="reserve-spot-btn">Pay NGN 4,995,000 & reserve my spot</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom (Testimonials)-->
+    <div class="bottom-component">
+        <div class="ratings">
+            <div class="star-ratings-avg">
+                <div class="star-rating-icon"><img src="./assets/Vector.svg" alt="" srcset=""></div>
+                <div class="ratings-avg">4.85</div>
+            </div>
+            <div class="ratings-placeholder">OVERALL RATING</div>
+        </div>
+
+        <div class="review-grid">
+            <!-- User review card -->
+            <div class="user-review-card">
+                <div class="user-pfp-name-timestamp">
+                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                        alt="" class="user-review-pfp">
+                    <div class="name-timestamp">
+                        <h3>Liam Rowland</h3>
+                        <p>3 weeks ago</p>
+                    </div>
+                </div>
+                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
+                    I can't wait to go back!"</p>
+            </div>
+            <!-- User review card -->
+            <div class="user-review-card">
+                <div class="user-pfp-name-timestamp">
+                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                        alt="" class="user-review-pfp">
+                    <div class="name-timestamp">
+                        <h3>Liam Rowland</h3>
+                        <p>3 weeks ago</p>
+                    </div>
+                </div>
+                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
+                    I can't wait to go back!"</p>
+            </div>
+            <!-- User review card -->
+            <div class="user-review-card">
+                <div class="user-pfp-name-timestamp">
+                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                        alt="" class="user-review-pfp">
+                    <div class="name-timestamp">
+                        <h3>Liam Rowland</h3>
+                        <p>3 weeks ago</p>
+                    </div>
+                </div>
+                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
+                    I can't wait to go back!"</p>
+            </div>
+            <!-- User review card -->
+            <div class="user-review-card">
+                <div class="user-pfp-name-timestamp">
+                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                        alt="" class="user-review-pfp">
+                    <div class="name-timestamp">
+                        <h3>Liam Rowland</h3>
+                        <p>3 weeks ago</p>
+                    </div>
+                </div>
+                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
+                    I can't wait to go back!"</p>
+            </div>
+            <!-- User review card -->
+            <div class="user-review-card">
+                <div class="user-pfp-name-timestamp">
+                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                        alt="" class="user-review-pfp">
+                    <div class="name-timestamp">
+                        <h3>Liam Rowland</h3>
+                        <p>3 weeks ago</p>
+                    </div>
+                </div>
+                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
+                    I can't wait to go back!"</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+</html>

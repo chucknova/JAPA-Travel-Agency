@@ -1,0 +1,199 @@
+.success-container {
+    display: flex;
+    padding: 64px 160px;
+    align-items: flex-start;
+    gap: 24px;
+    background-color: white;
+}
+
+.left-message-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 36px;
+    flex: 1 0 0;
+}
+
+.payment-made-animation {
+    width: 150px;
+    height: 150px;
+    aspect-ratio: 1/1;
+    box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 16px;
+}
+
+.confirmation-message-ps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.confirmation-message-ps h1 {
+    color: #1B0E06;
+    font-family: "IBM Plex Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    align-self: stretch;
+}
+
+.confirmation-message-ps p {
+    color: var(--Main-text, #1B0E06);
+    font-family: "IBM Plex Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    /* 150% */
+}
+
+.left-message-cta button {
+    display: flex;
+    height: 56px;
+    padding: 16px 32px;
+    align-items: center;
+    gap: 12px;
+    border-radius: 6px;
+    background: var(--Pink, #E71D36);
+    color: var(--White, #FFF);
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 145%;
+    cursor: pointer;
+    /* 23.2px */
+}
+
+.right-trip-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    flex: 1 0 0;
+}
+
+.right-trip-summary h2 {
+    align-self: stretch;
+    color: #1B0E06;
+    font-family: "IBM Plex Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.trip-summary {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    border-radius: 16px;
+    background: #F6F6F6;
+}
+
+.trip-summary-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+}
+
+.trip-detail-booking-id {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+    border-radius: 12px;
+    background: #FFF;
+}
+
+.trip-detail-booking-id-inner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.trip-detail-booking-id-inner h3 {
+    display: flex;
+    height: 32px;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 0 0;
+    color: #1B0E06;
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+    /* 25.6px */
+}
+
+.booking-id-badge {
+    display: flex;
+    padding: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    color: #E71D36;
+    font-family: "IBM Plex Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    border-radius: 4px;
+    background: rgba(231, 29, 54, 0.10);
+    /* 100% */
+    letter-spacing: 1px;
+}
+
+.trip-detail {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+    border-radius: 12px;
+    background: #FFF;
+    cursor: pointer;
+}
+
+.trip-detail-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.trip-detail-inner h3 {
+    color: #1B0E06;
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+    /* 25.6px */
+}
+
+.trip-detail-inner h4 {
+    color: rgba(27, 14, 6, 0.90);
+    text-align: right;
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+    /* 25.6px */
+    flex: 1 0 0;
+}

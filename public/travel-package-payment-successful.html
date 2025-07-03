@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="travel-package-payment-successful.css">
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <title>Payment Successful || JAPA</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navcontents">
+            <div class="navcontents-left">
+                <div class="logo">
+                    <img src="assets/logo.png" alt="Logo" class="logo-img">
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="#">Travel Packages</a></li>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="flights.html">Flights</a></li>
+                    <li><a href="#">Tours & Experiences</a></li>
+                    <li><a href="#">Visa</a></li>
+                </ul>
+            </div>
+
+
+            <div class="user-actions">
+                <button class="login-button"><a href="user-auth.html">Log In</a></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="success-container">
+        <div class="left-message-cta">
+            <img src="./assets/payment made!.gif" alt="" class="payment-made-animation">
+            <div class="confirmation-message-ps">
+                <h1>Woohoo! 🎉 You're all set for Bali. JAPA Successful</h1>
+                <p>A copy of your booking and receipt has been sent to akinbotetemiloluwa9@gmail.com</p>
+            </div>
+            <button>Download Receipt here</button>
+        </div>
+        
+        <div class="right-trip-summary">
+            <h2>Your Trip Summary</h2>
+            <div class="trip-summary">
+                <div class="trip-summary-inner">
+                    <!-- Trip Detail for Booking ID -->
+                    <div class="trip-detail-booking-id">
+                        <div class="trip-detail-booking-id-inner">
+                            <h3>Booking ID</h3>
+                            <div class="booking-id-badge">#JPX983457</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trip Detail -->
+                    <div class="trip-detail">
+                        <div class="trip-detail-inner">
+                            <h3>Destination</h3>
+                            <h4>Santorini, Greece</h4>
+                        </div>
+                    </div>
+
+                    <!-- Trip Detail -->
+                    <div class="trip-detail">
+                        <div class="trip-detail-inner">
+                            <h3>Travel Package Name</h3>
+                            <h4>Greek Isles Honeymoon Experience</h4>
+                        </div>
+                    </div>
+
+                    <!-- Trip Detail -->
+                    <div class="trip-detail">
+                        <div class="trip-detail-inner">
+                            <h3>Duration</h3>
+                            <h4>5 Days (Sept 2–Sept 7, 2025)</h4>
+                        </div>
+                    </div>
+
+                    <!-- Trip Detail -->
+                    <div class="trip-detail">
+                        <div class="trip-detail-inner">
+                            <h3>Number of Travelers</h3>
+                            <h4>5</h4>
+                        </div>
+                    </div>
+
+                    <!-- Trip Detail -->
+                    <div class="trip-detail">
+                        <div class="trip-detail-inner">
+                            <h3>Total Paid</h3>
+                            <h4>NGN 4,500,000</h4>
+                        </div>
+                    </div>
+
+                    <!-- Trip Detail -->
+                    <div class="trip-detail">
+                        <div class="trip-detail-inner">
+                            <h3>Booking Date</h3>
+                            <h4>June 24, 2025</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
