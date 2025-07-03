@@ -481,6 +481,21 @@
     </div>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script type="module">
+    import travelPackages from './travel-package-schema.js'
+    console.log(travelPackages);
+
+    const targetSubPackages = travelPackages.map(pkg => pkg.packages);
+    // console.log(targetSubPackages);
+
+
+    //Coming from the sub-travel-packages.html page
+    const urlParams = new URLSearchParams(window.location.search);
+    const packageId = urlParams.get('packageId');
+    const selectedPackage = targetSubPackages[0][packageId];
+
+    console.log("selected package:", selectedPackage);
+
+</script>
 
 </html>
