@@ -47,22 +47,18 @@
     </nav>
 
     <!-- Hero -->
-    <div class="hero-section-tp"
-        style="background-image: url('assets/side-view-breakfast-omelet-with-mushrooms-juice-croissants-room-service-hotel-with-amazing-sea-view.jpg');">
-        <div class="hero-content-tp">
-            <h1 class="hero-header-tp">All-Inclusive Vacations</h1>
-            <p class="hero-subtext-tp" style="font-weight: 500;">Our all-inclusive getaways mean zero stress, full
-                enjoyment. You just pack vibes,
-                we’ll handle the rest.</p>
-        </div>
+    <div id="heroo">
+        <!-- Inserted automatically from dom manipulation -->
+    </div>
     </div>
 
     <!-- Travel Package -->
     <div class="travel-packages">
         <div class="top" style="margin-bottom: 20px;">
             <div class="top-left">
-                <h3 class="travel-package-top-left-header-tp" style="font-size: 28px; font-weight: 600;">Top
-                    All-Inclusive Packages at JAPA this month</h3>
+                <h3 id="tp-header" class="travel-package-top-left-header-tp" style="font-size: 28px; font-weight: 600;">
+                    <!-- Inserted Automatically from dom manipulation -->
+                </h3>
                 <p class="travel-package-top-left-subheader-tp" style="font-size: 16px;">Find the perfect package
                     that suits you today</p>
             </div>
@@ -71,9 +67,9 @@
                 <div class="sort-by">
                     <select id="sortBy" name="sortBy" class="sort-dropdown">
                         <option value="">Sort By</option>
-                        <option value="price">Cheapest</option>
-                        <option value="departure-time">Best</option>
-                        <option value="arrival-time">Fastest</option>
+                        <option value="price">Price</option>
+                        <option value="departure-time">Duration</option>
+                        <option value="arrival-time">Ratings</option>
                     </select>
                 </div>
             </div>
@@ -116,32 +112,106 @@
     console.log("selected package:", selectedPackage);
     let subPackages = selectedPackage.packages
 
-    // Function to render packages
-    function renderPackages() {
+    // Function to render hero
+    function renderHero() {
         // Mapping through the travelPackage database to render on the DOM
-        const displaySubPk = subPackages.map((subPkg, index) => {
-            return `  <!-- Travel Package Card -->
-            <div class="travel-package-card-tp" id="pkgIndex-${index}" data-package-index="${index}">
-                <div class="travel-package-upper"
-                    style="background-image: url(${subPkg.packageThumbnail});">
-                    <div class="duration-tag">
-                    ${subPkg.duration.days} days
-                    </div>
-                </div>
-                <div class="travel-package-lower">
-                    <div class="package-location-name-desc">
-                        <p class="pk-location">${subPkg.destination}</p>
-                        <p class="pk-name">${subPkg.name}</p>
-                        <p class="pk-desc">${subPkg.shortDesc}
-                        </p>
-                    </div>
+        const displayHero = ` <div class="hero-section-tp"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${selectedPackage.categoryThumbnail});">
+        <div class="hero-content-tp">
+            <h1 class="hero-header-tp">${selectedPackage.categoryName}</h1>
+            <p class="hero-subtext-tp" style="font-weight: 500;">${selectedPackage.description}</p>
+        </div>`
 
-                    <div class="package-price-ratings">
-                        <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount}</h3>
-                        <P class="pk-ratings">⭐ 4.8 (152 reviews)</P>
-                    </div>
+        // Rendering travel packages in the DOM
+        document.getElementById("heroo").innerHTML = displayHero
+    }
+    // Calling the function so it runs
+    renderHero()
+
+    // Function to render category header name
+    function renderHeaderName() {
+        // Mapping through the travelPackage database to render on the DOM
+        const displayHeaderName = `Top ${selectedPackage.categoryName} Packages at JAPA this month`
+
+        // Rendering travel packages in the DOM
+        document.getElementById("tp-header").innerHTML = displayHeaderName
+    }
+    // Calling the function so it runs
+    renderHeaderName()
+
+    // Function to sort packages based on selected criteria
+    function sortPackages(sortBy) {
+        let sortedPackages = [...subPackages]; // Create a copy to avoid mutating original array
+
+        switch (sortBy) {
+            case 'price':
+                sortedPackages.sort((a, b) => {
+                    // Convert price to number for comparison (assuming price.amount is a string like "299")
+                    const priceA = parseFloat(a.price.amount.replace(/,/g, ''));
+                    const priceB = parseFloat(b.price.amount.replace(/,/g, ''));
+                    return priceA - priceB; // Sort ascending (lowest to highest)
+                });
+                break;
+
+            case 'departure-time': // Duration
+                sortedPackages.sort((a, b) => {
+                    // Sort by duration days
+                    return a.duration.days - b.duration.days; // Sort ascending (shortest to longest)
+                });
+                break;
+
+            case 'arrival-time': // Ratings
+                sortedPackages.sort((a, b) => {
+                    // Since ratings are hardcoded as 4.8, you might want to add actual ratings to your data
+                    // For now, this will sort by package name alphabetically as a placeholder
+                    // You should replace this with actual rating data from your subPackages
+
+                    // If you have actual ratings in your data structure, use:
+                    // return b.rating - a.rating; // Sort descending (highest to lowest)
+
+                    // Placeholder: sort by destination name
+                    return a.destination.localeCompare(b.destination);
+                });
+                break;
+
+            default:
+                // No sorting, return original order
+                sortedPackages = [...subPackages];
+                break;
+        }
+
+        return sortedPackages;
+    }
+
+    // Updated renderPackages function to accept sorted data
+    function renderPackages(packagesToRender = subPackages) {
+        // Mapping through the provided packages to render on the DOM
+        const displaySubPk = packagesToRender.map((subPkg, index) => {
+            // Find the original index for routing purposes
+            const originalIndex = subPackages.findIndex(pkg => pkg === subPkg);
+
+            return `  <!-- Travel Package Card -->
+        <div class="travel-package-card-tp" id="pkgIndex-${originalIndex}" data-package-index="${originalIndex}">
+            <div class="travel-package-upper"
+                style="background-image: url(${subPkg.packageThumbnail});">
+                <div class="duration-tag">
+                ${subPkg.duration.days} days
                 </div>
-            </div>`
+            </div>
+            <div class="travel-package-lower">
+                <div class="package-location-name-desc">
+                    <p class="pk-location">${subPkg.destination}</p>
+                    <p class="pk-name">${subPkg.name}</p>
+                    <p class="pk-desc">${subPkg.shortDesc}
+                    </p>
+                </div>
+
+                <div class="package-price-ratings">
+                    <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount}</h3>
+                    <P class="pk-ratings">⭐ 4.8 (152 reviews)</P>
+                </div>
+            </div>
+        </div>`
         })
 
         // Rendering travel packages in the DOM
@@ -150,9 +220,10 @@
         // Function to route user to sub travel packages page
         function routeToDetails(packageIndex) {
             console.log("Selected package index:", packageIndex);
-            // Routing logic here
             console.log("Selected Package:", subPackages[packageIndex]);
-            window.location.href = `travel-package-detail.html?packageId=${packageIndex}`;
+            console.log("test parent PackageId:", packageId);
+            
+            window.location.href = `travel-package-detail.html?parentPackageID=${packageId}&packageId=${packageIndex}`;
         }
 
         // Add click event listeners to all package cards
@@ -163,8 +234,34 @@
             });
         });
     }
-    // Calling the function so it runs
-    renderPackages()
+
+    // Event listener for sort dropdown
+    document.getElementById('sortBy').addEventListener('change', function () {
+        const sortBy = this.value;
+        const sortedPackages = sortPackages(sortBy);
+        renderPackages(sortedPackages);
+    });
+
+    // Initial render
+    renderPackages();
+
+    // Optional: Add loading state during sorting
+    function handleSortWithLoading() {
+        const sortBy = document.getElementById('sortBy').value;
+
+        // Show loading state (optional)
+        document.getElementById("bottom-pk").innerHTML = '<div class="loading">Sorting packages...</div>';
+
+        // Small delay to show loading (optional, remove in production)
+        setTimeout(() => {
+            const sortedPackages = sortPackages(sortBy);
+            renderPackages(sortedPackages);
+        }, 100);
+    }
+
+    // Alternative event listener with loading state
+    // document.getElementById('sortBy').addEventListener('change', handleSortWithLoading);
+
 
 </script>
 

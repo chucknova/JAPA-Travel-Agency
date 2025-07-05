@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="travelpackages.css">
     <link rel="stylesheet" href="flights.css">
     <link rel="stylesheet" href="travel-details.css">
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
     <title>Travel Package Details || JAPA</title>
@@ -49,64 +50,353 @@
     <div class="upper-component">
 
         <!-- Travel Name and Short Details -->
-        <div class="travel-name-short-details">
-            <h1 class="package-name">Bali Bliss Retreat: 7 Days of Culture, Nature & Luxury</h1>
-            <h1 class="package-short-details">From $1,499 per person · 5 Days · Max 12 people · Starts In: Denpasar,
-                Bali · Ends In: Denpasar, Bali</h1>
+        <div class="travel-name-short-details" id="name-details">
+            <!-- Inserted automatically from dom manipulation -->
         </div>
 
         <!-- Travel Gallery -->
-        <div class="travel-gallery">
-            <img src="./assets/phone-call-airport-black-woman-with-ticket-travel-luggage-suitcase-global-holiday-plane-transport-communication-girl-with-smartphone-schedule-talking-flight-details.jpg"
-                alt="Beach resort in Maldives" class="grid-1">
-            <div class="right-grid-images">
-                <img src="assets/high-angle-friends-spending-time-together.jpg" alt="Friends spending time together"
-                    class="grid-2">
-                <img src="./assets/heres-everlasting-love-shot-young-couple-making-toast-while-picnic-lakeside.jpg"
-                    alt="Friends spending time together" class="grid-3">
-                <img src="./assets/nature-holiday-travel-relaxation-resort.jpg" alt="Friends spending time together"
-                    class="grid-4">
-                <img src="./assets/heres-everlasting-love-shot-young-couple-making-toast-while-picnic-lakeside.jpg"
-                    alt="Friends spending time together" class="grid-5">
+        <div class="travel-gallery" id="travel-gallery">
+            <!-- Inserted automatically from dom manipulation -->
+        </div>
+
+        <!-- Travel Details Nav -->
+        <div class="travel-details-nav">
+            <div class="nav-item active" data-target="overview">Overview</div>
+            <div class="nav-item" data-target="itinerary">Itinerary Details</div>
+            <div class="nav-item" data-target="included">What's Included</div>
+            <div class="nav-item" data-target="accommodation">Where you'll stay</div>
+            <div class="nav-item" data-target="reviews">Reviews</div>
+        </div>
+
+        <!-- Middle -->
+        <div class="middle-component" style="padding: 0px;">
+            <!-- Main Details left -->
+            <div class="main-details-left">
+                <!-- What's this package about? -->
+                <div class="what-package-is-about content-section" id="package-details">
+                    <!-- Inserted automatically by dom manipulation -->
+                </div>
+
+                <!-- Day by day itinerary -->
+                <div class="day-by-day-itinerary content-section">
+                    <h3>Day-by-Day Itinerary</h3>
+                    <div class="itinerary-accordion">
+                        <div class="accordion-inner" id="accordion-inner">
+                            <!-- Inserted automatically by dom manipulation -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What's included in this package? -->
+                <div class="package-included content-section">
+                    <h3 class="package-included-heading">What’s Included in this package?</h3>
+                    <div class="package-included-grid" id="inclusion-grid">
+                        <!-- Package Card inserted here automatically by dom manipulation -->
+                    </div>
+                </div>
+
+                <!-- Where you will stay -->
+                <div class="where-you-will-stay content-section">
+                    <h3 class="heading">Where you will stay</h3>
+                    <!-- Accomodations Grid -->
+                    <div class="accomodations-grid" id="accomodation-grid">
+                        <!-- Inserted automatically by dom manipulation -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book a spot bar -->
+            <div class="book-spot-bar-right">
+                <div class="book-spot-inner">
+                    <div class="book-spot-header">
+                        <h3>Book your spot now</h3>
+                        <div class="spots-left-counter" id="spots-left">
+                            <!-- Inserted automatically by dom manipulation -->
+                        </div>
+                    </div>
+
+                    <div class="book-spot-main-content">
+                        <div class="spot-price">
+                            <div class="spot-price-inner">
+                                <p>Starting at</p>
+                                <h2 id="price-of-package">
+                                    <!-- Inserted automatically by dom manipulation -->
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div class="traveler-count-bs">
+                            <div class="traveler-count-inner-bs">
+                                <div class="inputs-section-traveler-count">
+                                    <!-- Input Subsection -->
+                                    <div class="input-subsection">
+                                        <div class="who-agedesc">
+                                            <h2>Who's Travelling?</h2>
+                                            <p>Select all that apply</p>
+                                        </div>
+                                        <input placeholder="How many people" type="number" name="" id="traveler-count">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="traveler-info-bs">
+                            <div class="traveler-info-inner">
+                                <div class="heading-bs">
+                                    <h2>Traveler Information</h2>
+                                    <p>Enter required information</p>
+                                </div>
+
+                                <div class="inputs-section-traveler-info">
+                                    <div class="inputs-subsection-traveler-info">
+                                        <input placeholder="First Name" type="text" name="" id="first-name">
+                                        <input placeholder="Last Name" type="text" name="" id="last-name">
+                                    </div>
+                                    <div class="inputs-subsection-traveler-info">
+                                        <input placeholder="Email Address" type="email" name="" id="email">
+                                        <input placeholder="Phone Number" type="tel" name="" id="phone">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="add-ons-bs">
+                            <div class="heading-bs">
+                                <h2>Want to Add More Magic?</h2>
+                                <p>Select these add-ons (Optional)</p>
+                            </div>
+
+                            <div class="add-ons-container" id="addon-container">
+                                <!-- Inserted automatically by dom manipulation -->
+                            </div>
+
+                        </div>
+
+                        <div class="package-total-price">
+                            <p>Total Amount to pay</p>
+                            <h2 id="totalAmt"></h2>
+                        </div>
+                    </div>
+
+                    <!-- Button to pay & reserve spot -->
+                    <button id="payForPackage" class="reserve-spot-btn" style="cursor: pointer;">Reserve my
+                        spot</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Travel Details Nav -->
-    <div class="travel-details-nav">
-        <div class="nav-item">Overview</div>
-        <div class="nav-item">Itinerary Details</div>
-        <div class="nav-item">What's Included</div>
-        <div class="nav-item">Where you'll stay</div>
-        <div class="nav-item">Reviews</div>
-    </div>
-
-    <!-- Middle -->
-    <div class="middle-component">
-        <!-- Main Details left -->
-        <div class="main-details-left">
-            <!-- What's this package about? -->
-            <div class="what-package-is-about">
-                <h3>What’s this package about?</h3>
-                <p>Discover Bali like never before — from tranquil temples and terraced rice fields to vibrant beach
-                    clubs and healing spa rituals. This carefully curated journey blends local culture, adventure, and
-                    indulgent comfort for the soul-seeking traveler. Discover Bali like never before — from tranquil
-                    temples and terraced rice fields to vibrant beach clubs and healing spa rituals. This carefully
-                    curated journey blends local culture, adventure, and indulgent comfort for the soul-seeking
-                    traveler.</p>
-                <button>Read more</button>
+        <!-- Bottom (Testimonials)-->
+        <div class="bottom-component content-section" style="padding: 0px; margin-top: 44px;">
+            <div class="ratings">
+                <div class="star-ratings-avg">
+                    <div class="star-rating-icon"><img src="./assets/Vector.svg" alt="" srcset=""></div>
+                    <div class="ratings-avg">4.85</div>
+                </div>
+                <div class="ratings-placeholder">OVERALL RATING</div>
             </div>
 
-            <!-- Day by day itinerary -->
-            <div class="day-by-day-itinerary">
-                <h3>Day-by-Day Itinerary</h3>
-                <div class="itinerary-accordion">
-                    <div class="accordion-inner">
-                        <!-- Accordion Component -->
-                        <div class="accordion-component">
-                            <div class="title-and-arrow">
-                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
-                                    Dinner</p>
+            <div class="review-grid" style="padding: 0px; margin-top: 36px;">
+                <!-- User review card -->
+                <div class="user-review-card">
+                    <div class="user-pfp-name-timestamp">
+                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                            alt="" class="user-review-pfp">
+                        <div class="name-timestamp">
+                            <h3>Liam Rowland</h3>
+                            <p>3 weeks ago</p>
+                        </div>
+                    </div>
+                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
+                        adventure.
+                        I can't wait to go back!"</p>
+                </div>
+                <!-- User review card -->
+                <div class="user-review-card">
+                    <div class="user-pfp-name-timestamp">
+                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                            alt="" class="user-review-pfp">
+                        <div class="name-timestamp">
+                            <h3>Liam Rowland</h3>
+                            <p>3 weeks ago</p>
+                        </div>
+                    </div>
+                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
+                        adventure.
+                        I can't wait to go back!"</p>
+                </div>
+                <!-- User review card -->
+                <div class="user-review-card">
+                    <div class="user-pfp-name-timestamp">
+                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                            alt="" class="user-review-pfp">
+                        <div class="name-timestamp">
+                            <h3>Liam Rowland</h3>
+                            <p>3 weeks ago</p>
+                        </div>
+                    </div>
+                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
+                        adventure.
+                        I can't wait to go back!"</p>
+                </div>
+                <!-- User review card -->
+                <div class="user-review-card">
+                    <div class="user-pfp-name-timestamp">
+                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                            alt="" class="user-review-pfp">
+                        <div class="name-timestamp">
+                            <h3>Liam Rowland</h3>
+                            <p>3 weeks ago</p>
+                        </div>
+                    </div>
+                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
+                        adventure.
+                        I can't wait to go back!"</p>
+                </div>
+                <!-- User review card -->
+                <div class="user-review-card">
+                    <div class="user-pfp-name-timestamp">
+                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
+                            alt="" class="user-review-pfp">
+                        <div class="name-timestamp">
+                            <h3>Liam Rowland</h3>
+                            <p>3 weeks ago</p>
+                        </div>
+                    </div>
+                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
+                        adventure.
+                        I can't wait to go back!"</p>
+                </div>
+            </div>
+        </div>
+</body>
+<script type="module">
+    import travelPackages from './travel-package-schema.js'
+    console.log(travelPackages);
+
+    const targetSubPackages = travelPackages.map(pkg => pkg.packages);
+    // console.log(targetSubPackages);
+
+
+    //Coming from the sub-travel-packages.html page
+    const urlParams = new URLSearchParams(window.location.search);
+    const packageId = urlParams.get('packageId');
+    const parentPackageId = urlParams.get('parentPackageID');
+    console.log("packageID:", packageId);
+    console.log("parentPackageId:", parentPackageId);
+
+    const selectedPackage = targetSubPackages[parentPackageId][packageId];
+
+
+    console.log("selected package:", selectedPackage);
+    document.getElementById("traveler-count").addEventListener("input", renderTotalPrice);
+
+    // 1. Function to render travel name and short details
+    function renderNameandDetails() {
+        // Mapping through the travelPackage database to render on the DOM
+        const displayNameandDetails =
+            `<h1 class="package-name">${selectedPackage.name}</h1>
+            <h1 class="package-short-details">From ${selectedPackage.price.currency} ${selectedPackage.price.amount} ${selectedPackage.price.priceType} · ${selectedPackage.duration.days} Days · Max ${selectedPackage.groupSize.max} people · Starts In: ${selectedPackage.startAndEndLocation.startsAt},
+                 · Ends In: ${selectedPackage.startAndEndLocation.endsAt}</h1>`
+
+
+        // Rendering travel packages in the DOM
+        document.getElementById("name-details").innerHTML = displayNameandDetails
+    }
+
+    // Calling the function so it runs
+    renderNameandDetails()
+
+    // 2. Function to render travel gallery
+    function renderTravelGallery() {
+        // Mapping through the travelPackage database to render on the DOM
+        const displayTravelGallery =
+            `<img src=${selectedPackage.tourGallery[0]}
+                alt="Beach resort in Maldives" class="grid-1">
+            <div class="right-grid-images">
+                <img src=${selectedPackage.tourGallery[1]} alt="Friends spending time together"
+                    class="grid-2">
+                <img src=${selectedPackage.tourGallery[2]}
+                    alt="Friends spending time together" class="grid-3">
+                <img src=${selectedPackage.tourGallery[3]} alt="Friends spending time together"
+                    class="grid-4">
+                <img src=${selectedPackage.tourGallery[4]}
+                    alt="Friends spending time together" class="grid-5">
+            </div>
+        </div>`
+
+
+        // Rendering travel packages in the DOM
+        document.getElementById("travel-gallery").innerHTML = displayTravelGallery
+    }
+
+    // Calling the function so it runs
+    renderTravelGallery()
+
+    // Function to render Package Details
+    function renderPackageDetails() {
+        const displayPackageDetails = `
+                <h3>What's this package about?</h3>
+                <p>${selectedPackage.aboutPackage}</p>
+                <button class="read-more" onclick="openModal()">Read more</button>
+                
+                <!-- Custom Modal -->
+                <div class="modal-overlay" id="modalOverlay">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h1 class="modal-title">About this travel package</h1>
+                            <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="modal-body" style = "padding-bottom: 44px">
+                            ${selectedPackage.aboutPackage}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+        // Rendering travel packages in the DOM
+        document.getElementById("package-details").innerHTML = displayPackageDetails;
+    }
+
+    // Function to open modal
+    window.openModal = function () {
+        const modal = document.getElementById('modalOverlay');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    // Function to close modal
+    window.closeModal = function () {
+        const modal = document.getElementById('modalOverlay');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
+    // Close modal when clicking outside of it
+    document.addEventListener('click', function (e) {
+        const modal = document.getElementById('modalOverlay');
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Calling the function so it runs
+    renderPackageDetails();
+
+    // 4. Function to render Itinerary
+    function renderItinerary() {
+        // Mapping through the travelPackage database to render on the DOM
+        const itineraryComponent = selectedPackage.itinerary
+        const displayItinerary = itineraryComponent.map((itinerary, index) => {
+            return `<!-- Accordion Component -->
+                        <div class="accordion-component" data-index="${index}">
+                            <div class="title-and-arrow accordion-header">
+                                <p class="accordion-component-title">${itinerary.itineraryTitle}</p>
                                 <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                         viewBox="0 0 32 32" fill="none">
                                         <g clip-path="url(#clip0_4704_34058)">
@@ -122,379 +412,496 @@
                                         </defs>
                                     </svg></div>
                             </div>
-                            <p class="accordion-component-subtext">
-                                Arrive at Denpasar International Airport and be welcomed with fresh frangipani garlands
-                                and a cool drink. You'll be escorted to your eco-luxury villa in Ubud. Unwind by your
-                                private plunge pool or explore the nearby artisan village. In the evening, join the
-                                group for a welcome dinner overlooking lush rice paddies.
-                            </p>
-                        </div>
-                        <!-- Accordion Component -->
-                        <div class="accordion-component">
-                            <div class="title-and-arrow">
-                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
-                                    Dinner</p>
-                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                        viewBox="0 0 32 32" fill="none">
-                                        <g clip-path="url(#clip0_4704_34066)">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
-                                                fill="black" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_4704_34066">
-                                                <rect width="32" height="32" fill="white" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg></div>
+                            <div class="accordion-content">
+                                <p class="accordion-component-subtext">${itinerary.itineraryDetails}</p>
                             </div>
-                        </div>
-                        <!-- Accordion Component -->
-                        <div class="accordion-component">
-                            <div class="title-and-arrow">
-                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
-                                    Dinner</p>
-                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                        viewBox="0 0 32 32" fill="none">
-                                        <g clip-path="url(#clip0_4704_34066)">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
-                                                fill="black" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_4704_34066">
-                                                <rect width="32" height="32" fill="white" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg></div>
-                            </div>
-                        </div>
-                        <!-- Accordion Component -->
-                        <div class="accordion-component">
-                            <div class="title-and-arrow">
-                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
-                                    Dinner</p>
-                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                        viewBox="0 0 32 32" fill="none">
-                                        <g clip-path="url(#clip0_4704_34066)">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
-                                                fill="black" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_4704_34066">
-                                                <rect width="32" height="32" fill="white" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg></div>
-                            </div>
-                        </div>
-                        <!-- Accordion Component -->
-                        <div class="accordion-component">
-                            <div class="title-and-arrow">
-                                <p class="accordion-component-title"> Day 1: Welcome to Bali – Airport Transfer & Sunset
-                                    Dinner</p>
-                                <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                        viewBox="0 0 32 32" fill="none">
-                                        <g clip-path="url(#clip0_4704_34066)">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M16.9444 20.9425C16.6944 21.1924 16.3553 21.3329 16.0018 21.3329C15.6482 21.3329 15.3091 21.1924 15.0591 20.9425L7.51643 13.3998C7.38908 13.2768 7.2875 13.1297 7.21762 12.967C7.14775 12.8043 7.11096 12.6294 7.10943 12.4523C7.10789 12.2753 7.14162 12.0997 7.20866 11.9359C7.27571 11.772 7.37471 11.6231 7.4999 11.4979C7.62509 11.3728 7.77396 11.2738 7.93782 11.2067C8.10168 11.1397 8.27726 11.1059 8.45429 11.1075C8.63133 11.109 8.80629 11.1458 8.96897 11.2157C9.13164 11.2855 9.27876 11.3871 9.40176 11.5145L16.0018 18.1145L22.6018 11.5145C22.8532 11.2716 23.19 11.1372 23.5396 11.1402C23.8892 11.1433 24.2236 11.2835 24.4709 11.5307C24.7181 11.7779 24.8583 12.1123 24.8613 12.4619C24.8644 12.8115 24.73 13.1483 24.4871 13.3998L16.9444 20.9425Z"
-                                                fill="black" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_4704_34066">
-                                                <rect width="32" height="32" fill="white" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </div>`
+        })
 
-            <!-- What's included in this package? -->
-            <div class="package-included">
-                <h3 class="package-included-heading">What’s Included in this package?</h3>
-                <div class="package-included-grid">
-                    <!-- Package Included -->
-                    <div class="package-included-card">
-                        <div class="inner-package-card">
-                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
-                            <div class="japa-package-inclusion-badge"><img
-                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
-                        </div>
-                    </div>
-                    <!-- Package Included -->
-                    <div class="package-included-card">
-                        <div class="inner-package-card">
-                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
-                            <div class="japa-package-inclusion-badge"><img
-                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
-                        </div>
-                    </div>
-                    <!-- Package Included -->
-                    <div class="package-included-card">
-                        <div class="inner-package-card">
-                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
-                            <div class="japa-package-inclusion-badge"><img
-                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
-                        </div>
-                    </div>
-                    <!-- Package Included -->
-                    <div class="package-included-card">
-                        <div class="inner-package-card">
-                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
-                            <div class="japa-package-inclusion-badge"><img
-                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
-                        </div>
-                    </div>
-                    <!-- Package Included -->
-                    <div class="package-included-card">
-                        <div class="inner-package-card">
-                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
-                            <div class="japa-package-inclusion-badge"><img
-                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
-                        </div>
-                    </div>
-                    <!-- Package Included -->
-                    <div class="package-included-card">
-                        <div class="inner-package-card">
-                            <h3 class="package-included-name">Daily Breakfast + 3 Dinners</h3>
-                            <div class="japa-package-inclusion-badge"><img
-                                    src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset=""></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // Rendering travel packages in the DOM
+        document.getElementById("accordion-inner").innerHTML = displayItinerary.join('')
 
-            <!-- Where you will stay -->
-            <div class="where-you-will-stay">
-                <h3 class="heading">Where you will stay</h3>
-                <!-- Accomodations Grid -->
-                <div class="accomodations-grid">
-                    <!-- Accomodation Card -->
-                    <div class="accomodation-card">
-                        <img src="./assets/side-view-breakfast-omelet-with-mushrooms-juice-croissants-room-service-hotel-with-amazing-sea-view.jpg"
-                            alt="" class="accomodation-thumbnail">
-                        <div class="accomodation-name-desc">
-                            <h3 class="name">Kamandalu Resort – Ubud (3 Nights)</h3>
-                            <p class="desc">An eco-chic hideaway overlooking lush rice terraces. Each villa features a
-                                private outdoor bath and infinity pool.</p>
-                        </div>
-                    </div>
-                    <!-- Accomodation Card -->
-                    <div class="accomodation-card">
-                        <img src="./assets/side-view-breakfast-omelet-with-mushrooms-juice-croissants-room-service-hotel-with-amazing-sea-view.jpg"
-                            alt="" class="accomodation-thumbnail">
-                        <div class="accomodation-name-desc">
-                            <h3 class="name">Kamandalu Resort – Ubud (3 Nights)</h3>
-                            <p class="desc">An eco-chic hideaway overlooking lush rice terraces. Each villa features a
-                                private outdoor bath and infinity pool.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        // Add event listeners after rendering
+        addAccordionEventListeners()
+    }
 
-        <!-- Book a spot bar -->
-        <div class="book-spot-bar-right">
-            <div class="book-spot-inner">
-                <div class="book-spot-header">
-                    <h3>Book your spot now</h3>
-                    <div class="spots-left-counter">12 of 36 spots left</div>
-                </div>
+    // Function to add event listeners to accordion headers
+    function addAccordionEventListeners() {
+        const accordionHeaders = document.querySelectorAll('.accordion-header')
 
-                <div class="book-spot-main-content">
-                    <div class="spot-price">
-                        <div class="spot-price-inner">
-                            <p>Starting at</p>
-                            <h2>NGN 3,500,000 / person</h2>
-                        </div>
-                    </div>
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function () {
+                const accordionComponent = this.parentElement
+                const accordionContent = accordionComponent.querySelector('.accordion-content')
+                const arrow = this.querySelector('.arrow')
 
-                    <div class="traveler-count-bs">
-                        <div class="traveler-count-inner-bs">
-                            <div class="inputs-section-traveler-count">
-                                <!-- Input Subsection -->
-                                <div class="input-subsection">
-                                    <div class="who-agedesc">
-                                        <h2>Who's Travelling?</h2>
-                                        <p>Select all that apply</p>
+                // Toggle the active class
+                accordionComponent.classList.toggle('active')
+
+                // Toggle content visibility
+                if (accordionComponent.classList.contains('active')) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px'
+                    arrow.style.transform = 'rotate(180deg)'
+                } else {
+                    accordionContent.style.maxHeight = '0px'
+                    arrow.style.transform = 'rotate(0deg)'
+                }
+            })
+        })
+    }
+
+    // Calling the function so it runs
+    renderItinerary()
+
+    // 5. Function to render Inclusions
+    function renderInclusions() {
+        // Mapping through the travelPackage database to render on the DOM
+        const inclusionComponent = selectedPackage.inclusions
+        const displayItinerary = inclusionComponent.map((inclusion, index) => {
+            return `<!-- Package Included Container -->
+                    <div class="package-included-card-container">
+                        <div class="package-included-card-flip">
+                            <!-- Front Face -->
+                            <div class="package-included-card card-front" id="back-card">
+                                <div class="inner-package-card">
+                                    <h3 class="package-included-name" style= "width: 20px; ">${inclusion.inclusionTitle}</h3>
+                                 <div class="japa-package-inclusion-badge">
+                                        <img src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset="">
                                     </div>
-                                    <input placeholder="How many people" type="number" name="" id="">
+                                </div>
+                            </div>
+                            
+                            <!-- Back Face -->
+                            <div class="package-included-card card-back">
+                                <div class="inner-package-card">
+                                    <h3 class="package-included-name" style="font-weight: 450; font-size: 16px; line-height: 1.6;">
+                                        ${inclusion.inclusionDetails}
+                                    </h3>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>`
+        })
+        // Rendering travel packages in the DOM
+        document.getElementById("inclusion-grid").innerHTML = displayItinerary.join('')
+    }
 
-                    <div class="traveler-info-bs">
-                        <div class="traveler-info-inner">
-                            <div class="heading-bs">
-                                <h2>Traveler Information</h2>
-                                <p>Enter required information</p>
+    // Calling the function so it runs
+    renderInclusions()
+
+    // 6. Function to render Accomodations
+    function renderAccomodation() {
+        // Mapping through the travelPackage database to render on the DOM
+        const accomodationComponent = selectedPackage.accomodation
+        const displayAccomodation = accomodationComponent.map((accomodation, index) => {
+            return `     <!-- Accomodation Card -->
+                        <div class="accomodation-card">
+                            <img src=${accomodation.accomodationThumbnail}
+                                alt="" class="accomodation-thumbnail">
+                            <div class="accomodation-name-desc">
+                                <h3 class="name">${accomodation.accomodationName} (${accomodation.noOfNights} Nights)</h3>
+                                <p class="desc">${accomodation.accomodationDesc}</p>
                             </div>
+                        </div>`
+        })
+        // Rendering travel packages in the DOM
+        document.getElementById("accomodation-grid").innerHTML = displayAccomodation.join('')
+    }
 
-                            <div class="inputs-section-traveler-info">
-                                <div class="inputs-subsection-traveler-info">
-                                    <input placeholder="First Name" type="text" name="" id="">
-                                    <input placeholder="Last Name" type="text" name="" id="">
-                                </div>
-                                <div class="inputs-subsection-traveler-info">
-                                    <input placeholder="Email Address" type="email" name="" id="">
-                                    <input placeholder="Phone Number" type="tel" name="" id="">
-                                </div>
-                            </div>
-                        </div>
+    // Calling the function so it runs
+    renderAccomodation()
+
+    // 7. Function to render spots left
+    function renderSpotsLeft() {
+        const displaySpotsLeft = `${selectedPackage.totalPackages.remaining} of ${selectedPackage.totalPackages.totalCount} left`
+        // Rendering travel packages in the DOM
+        document.getElementById("spots-left").innerHTML = displaySpotsLeft
+    }
+
+    // Calling the function so it runs
+    renderSpotsLeft()
+
+    // 8. Function to render price per type
+    function renderPricebyType() {
+        const displayPricebyType = `${selectedPackage.price.currency} ${selectedPackage.price.amount.toLocaleString()} ${selectedPackage.price.priceType}`
+        // Rendering travel packages in the DOM
+        document.getElementById("price-of-package").innerHTML = displayPricebyType
+    }
+
+    // Calling the function so it runs
+    renderPricebyType()
+
+
+    // 5. Function to render Add-ons
+    function renderAddonsn() {
+        const addonComponent = selectedPackage.addons;
+
+        const displayAddon = addonComponent.map((addon, index) => {
+            return `
+            <div class="add-on-component">
+                <div class="add-on-component-inner">
+                    <div class="add-on-name-price">
+                        <h2>${addon.addonName}</h2>
+                        <h3>${selectedPackage.price.currency} ${addon.addonPrice.toLocaleString()}</h3>
                     </div>
-
-                    <div class="add-ons-bs">
-                        <div class="heading-bs">
-                            <h2>Want to Add More Magic?</h2>
-                            <p>Select these add-ons (Optional)</p>
-                        </div>
-
-                        <div class="add-ons-container">
-                            <!-- Add-On-Component -->
-                            <div class="add-on-component">
-                                <div class="add-on-component-inner">
-                                    <div class="add-on-name-price">
-                                        <h2>Mount Batur Sunrise Hike</h2>
-                                        <h3>NGN 70,000</h3>
-                                    </div>
-                                    <button>Add to package</button>
-                                </div>
-                            </div>
-                            <!-- Add-On-Component -->
-                            <div class="add-on-component">
-                                <div class="add-on-component-inner">
-                                    <div class="add-on-name-price">
-                                        <h2>Mount Batur Sunrise Hike</h2>
-                                        <h3>NGN 70,000</h3>
-                                    </div>
-                                    <button>Add to package</button>
-                                </div>
-                            </div>
-                            <!-- Add-On-Component -->
-                            <div class="add-on-component">
-                                <div class="add-on-component-inner">
-                                    <div class="add-on-name-price">
-                                        <h2>Mount Batur Sunrise Hike</h2>
-                                        <h3>NGN 70,000</h3>
-                                    </div>
-                                    <button>Add to package</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="package-total-price">
-                        <p>Total Amount to pay</p>
-                        <h2>NGN 4,500,000</h2>
-                    </div>
+                    <button class="addon-btn" id="add-addonToOrder-${index}">Add to package</button>
                 </div>
+            </div>`;
+        });
 
-                <!-- Button to pay & reserve spot -->
-                <button class="reserve-spot-btn">Pay NGN 4,995,000 & reserve my spot</button>
-            </div>
-        </div>
-    </div>
+        document.getElementById("addon-container").innerHTML = displayAddon.join('');
 
-    <!-- Bottom (Testimonials)-->
-    <div class="bottom-component">
-        <div class="ratings">
-            <div class="star-ratings-avg">
-                <div class="star-rating-icon"><img src="./assets/Vector.svg" alt="" srcset=""></div>
-                <div class="ratings-avg">4.85</div>
-            </div>
-            <div class="ratings-placeholder">OVERALL RATING</div>
-        </div>
+        addonComponent.forEach((addon, index) => {
+            const button = document.getElementById(`add-addonToOrder-${index}`);
+            button.addEventListener('click', function () {
+                addonToOrder(addon, button);
+            });
+        });
+    }
 
-        <div class="review-grid">
-            <!-- User review card -->
-            <div class="user-review-card">
-                <div class="user-pfp-name-timestamp">
-                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                        alt="" class="user-review-pfp">
-                    <div class="name-timestamp">
-                        <h3>Liam Rowland</h3>
-                        <p>3 weeks ago</p>
-                    </div>
-                </div>
-                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
-                    I can't wait to go back!"</p>
-            </div>
-            <!-- User review card -->
-            <div class="user-review-card">
-                <div class="user-pfp-name-timestamp">
-                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                        alt="" class="user-review-pfp">
-                    <div class="name-timestamp">
-                        <h3>Liam Rowland</h3>
-                        <p>3 weeks ago</p>
-                    </div>
-                </div>
-                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
-                    I can't wait to go back!"</p>
-            </div>
-            <!-- User review card -->
-            <div class="user-review-card">
-                <div class="user-pfp-name-timestamp">
-                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                        alt="" class="user-review-pfp">
-                    <div class="name-timestamp">
-                        <h3>Liam Rowland</h3>
-                        <p>3 weeks ago</p>
-                    </div>
-                </div>
-                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
-                    I can't wait to go back!"</p>
-            </div>
-            <!-- User review card -->
-            <div class="user-review-card">
-                <div class="user-pfp-name-timestamp">
-                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                        alt="" class="user-review-pfp">
-                    <div class="name-timestamp">
-                        <h3>Liam Rowland</h3>
-                        <p>3 weeks ago</p>
-                    </div>
-                </div>
-                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
-                    I can't wait to go back!"</p>
-            </div>
-            <!-- User review card -->
-            <div class="user-review-card">
-                <div class="user-pfp-name-timestamp">
-                    <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                        alt="" class="user-review-pfp">
-                    <div class="name-timestamp">
-                        <h3>Liam Rowland</h3>
-                        <p>3 weeks ago</p>
-                    </div>
-                </div>
-                <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an adventure.
-                    I can't wait to go back!"</p>
-            </div>
-        </div>
-    </div>
+    // Confetti Animation
+    function triggerConfetti(button) {
+        const confetti = document.createElement('span');
+        confetti.textContent = '🎉';
+        confetti.className = 'mini-confetti';
+        button.appendChild(confetti);
 
-</body>
-<script type="module">
-    import travelPackages from './travel-package-schema.js'
-    console.log(travelPackages);
+        setTimeout(() => {
+            confetti.remove();
+        }, 1000);
+    }
 
-    const targetSubPackages = travelPackages.map(pkg => pkg.packages);
-    // console.log(targetSubPackages);
+    // My addonToOrder function
+    const selectedAddons = []
+    function addonToOrder(addon, button) {
+        const index = selectedAddons.findIndex(item => item.addonName === addon.addonName);
+
+        if (index > -1) {
+            selectedAddons.splice(index, 1);
+            button.classList.remove('added');
+            button.textContent = "Add to package";
+        } else {
+            selectedAddons.push(addon);
+            button.classList.add('added');
+            button.textContent = "Added";
+            triggerConfetti(button);
+        }
+
+        renderTotalPrice(); // Update total price after selection
+    }
 
 
-    //Coming from the sub-travel-packages.html page
-    const urlParams = new URLSearchParams(window.location.search);
-    const packageId = urlParams.get('packageId');
-    const selectedPackage = targetSubPackages[0][packageId];
+    // Calling the function so it runs
+    renderAddonsn()
 
-    console.log("selected package:", selectedPackage);
+    // Travel Details Navigation with Smooth Scroll
+    document.addEventListener('DOMContentLoaded', function () {
+        const navItems = document.querySelectorAll('.travel-details-nav .nav-item');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        // Section mapping - maps nav targets to actual section IDs/classes
+        const sectionMap = {
+            'overview': '.what-package-is-about',
+            'itinerary': '.day-by-day-itinerary',
+            'included': '.package-included',
+            'accommodation': '.where-you-will-stay',
+            'reviews': '.bottom-component' // Add this section if it exists
+        };
+
+        // Handle navigation clicks
+        navItems.forEach(navItem => {
+            navItem.addEventListener('click', function () {
+                const target = this.getAttribute('data-target');
+                const targetSelector = sectionMap[target];
+
+                if (targetSelector) {
+                    const targetElement = document.querySelector(targetSelector);
+
+                    if (targetElement) {
+                        // Remove active class from all nav items
+                        navItems.forEach(item => item.classList.remove('active'));
+
+                        // Add active class to clicked nav item
+                        this.classList.add('active');
+
+                        // Smooth scroll to target section
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Optional: Update active nav item based on scroll position
+        function updateActiveNavOnScroll() {
+            const scrollPosition = window.scrollY + 100; // Offset for better UX
+
+            // Find which section is currently in view
+            let currentSection = null;
+
+            Object.entries(sectionMap).forEach(([key, selector]) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    const elementTop = element.offsetTop;
+                    const elementHeight = element.offsetHeight;
+
+                    if (scrollPosition >= elementTop && scrollPosition < elementTop + elementHeight) {
+                        currentSection = key;
+                    }
+                }
+            });
+
+            // Update active nav item
+            if (currentSection) {
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-target') === currentSection) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        // Throttle scroll event for better performance
+        let scrollTimeout;
+        window.addEventListener('scroll', function () {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            scrollTimeout = setTimeout(updateActiveNavOnScroll, 50);
+        });
+
+        // Initialize active state on page load
+        updateActiveNavOnScroll();
+    });
+
+
+    // 9. Render pricing global scope
+    renderPricebyType()
+    function renderTotalPrice() {
+        const travelerCount = parseInt(document.getElementById("traveler-count").value.trim()) || 1;
+
+        const basePrice = selectedPackage.price.amount;
+        const addonTotal = selectedAddons.reduce((sum, addon) => sum + addon.addonPrice, 0);
+
+        const totalAmtdue = (travelerCount * basePrice) + addonTotal;
+
+        document.getElementById('totalAmt').innerHTML =
+            `${selectedPackage.price.currency} ${totalAmtdue.toLocaleString()}`;
+    }
+    document.getElementById('payForPackage').addEventListener('click', function () {
+        // Collect form input values
+        const travelerCount = document.getElementById("traveler-count").value.trim();
+        const firstName = document.getElementById("first-name").value.trim();
+        const lastName = document.getElementById("last-name").value.trim();
+        const emailAddress = document.getElementById("email").value.trim();
+        const phoneNumber = document.getElementById("phone").value.trim();
+
+        // Validation function
+        function validateForm() {
+            const errors = [];
+
+            // Validate traveler count
+            if (!travelerCount) {
+                errors.push("Traveler count is required");
+            } else if (travelerCount > selectedPackage.groupSize.max || travelerCount < selectedPackage.groupSize.min) {
+                errors.push(`For this Package, Traveler minimum count is ${selectedPackage.groupSize.min} and maximum count is ${selectedPackage.groupSize.max} `)
+            } else if (travelerCount > selectedPackage.totalPackages.remaining) {
+                errors.push(`Sorry, Traveler count has exceeded the available packages left`)
+            }
+
+            // Validate first name
+            if (!firstName) {
+                errors.push("First name is required");
+            } else if (firstName.length < 2 || firstName.length > 50) {
+                errors.push("First name must be between 2 and 50 characters");
+            } else if (!/^[a-zA-Z\s'-]+$/.test(firstName)) {
+                errors.push("First name can only contain letters, spaces, hyphens, and apostrophes");
+            }
+
+            // Validate last name
+            if (!lastName) {
+                errors.push("Last name is required");
+            } else if (lastName.length < 2 || lastName.length > 50) {
+                errors.push("Last name must be between 2 and 50 characters");
+            } else if (!/^[a-zA-Z\s'-]+$/.test(lastName)) {
+                errors.push("Last name can only contain letters, spaces, hyphens, and apostrophes");
+            }
+
+            // Validate email
+            if (!emailAddress) {
+                errors.push("Email address is required");
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailAddress)) {
+                    errors.push("Please enter a valid email address");
+                } else if (emailAddress.length > 254) {
+                    errors.push("Email address is too long");
+                }
+            }
+
+            // Validate phone number
+            if (!phoneNumber) {
+                errors.push("Phone number is required");
+            } else {
+                // Remove all non-digit characters for validation
+                const digitsOnly = phoneNumber.replace(/\D/g, '');
+                if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+                    errors.push("Phone number must be between 10 and 15 digits");
+                }
+                // Optional: Check for valid phone number format
+                const phoneRegex = /^[\+]?[\d\s\-\(\)\.]{10,}$/;
+                if (!phoneRegex.test(phoneNumber)) {
+                    errors.push("Please enter a valid phone number");
+                }
+            }
+
+            return errors;
+        }
+
+        // Clear previous error messages
+        clearErrorMessages();
+
+        // Validate form
+        const validationErrors = validateForm();
+
+        if (validationErrors.length > 0) {
+            // Display errors
+            displayErrors(validationErrors);
+            return; // Stop execution if validation fails
+        }
+
+        // If validation passes, create user info object
+
+        // Adding total addons price
+        const addonsPrice = selectedAddons.map((addon => {
+            return addon.addonPrice
+        }))
+        const totalAddonsPrice = addonsPrice.reduce((sum, num) => sum + num, 0);
+
+
+
+
+        const userInfo = {
+            travelerCount: parseInt(travelerCount),
+            firstName,
+            lastName,
+            emailAddress: emailAddress.toLowerCase(), // Normalize email
+            phoneNumber,
+            selectedAddons: selectedAddons,
+            amounts: {
+                basePrice: selectedPackage.price.amount,
+                addonsPrice: totalAddonsPrice
+            }
+        };
+        // Total Amount Calculation
+        const totalAmtdue = Number((userInfo.travelerCount) * (userInfo.amounts.basePrice)) + Number(userInfo.amounts.addonsPrice);
+        //Function to render total price
+        function renderTotalPrice() {
+            document.getElementById('totalAmt').innerHTML = `${selectedPackage.price.currency} ${totalAmtdue}` || `${selectedPackage.price.amount}`
+        }
+
+        renderTotalPrice()
+        // Debugging: log to console
+        console.log("Form validated successfully:", userInfo);
+
+        // Continue with your payment processing logic here
+        // processPayment(userInfo);
+
+        // Flutterwave Paywall
+
+        FlutterwaveCheckout({
+            public_key: "FLWPUBK_TEST-d48b809523c31187a8a9f7d2edcd6272-X",
+            tx_ref: "japatravelPackage-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9),
+            amount: totalAmtdue, // Ensure this is a number
+            currency: "NGN", // or whatever currency you're using
+            payment_options: "card,mobilemoney,ussd",
+            customer: {
+                email: userInfo.emailAddress,
+                phone_number: userInfo.phoneNumber,
+                name: `${userInfo.firstName} ${userInfo.lastName}`,
+            },
+            customizations: {
+                title: `Booking for ${selectedPackage.name}`,
+                description: "Payment for ${selectedPackage.name}",
+                logo: "https://your-logo-url.com/logo.png", // Optional
+            },
+            callback: function (data) {
+                console.log("Payment callback:", data);
+                if (data.status === "successful") {
+                    setTimeout(() => {
+                        window.location.href = "travel-package-payment-successful.html"
+                    }, 3000);
+
+                }
+            },
+            onclose: function () {
+                console.log("Closed");
+
+            },
+        });
+
+        selectedPackage.totalPackages.remaining -= userInfo.travelerCount
+
+        renderSpotsLeft()
+        console.log(selectedPackage.totalPackages);
+
+    });
+
+    // Helper function to display errors
+    function displayErrors(errors) {
+        // Remove existing error display
+        const existingErrorDiv = document.getElementById('validation-errors');
+        if (existingErrorDiv) {
+            existingErrorDiv.remove();
+        }
+
+        // Create error display element
+        const errorDiv = document.createElement('div');
+        errorDiv.id = 'validation-errors';
+        errorDiv.style.cssText = `
+        background-color: #fee;
+        color: #c00;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-size: 16px;
+    `;
+
+        // Add error messages
+        const errorList = document.createElement('ul');
+        errorList.style.margin = '0';
+        errorList.style.paddingLeft = '20px';
+
+        errors.forEach(error => {
+            const errorItem = document.createElement('li');
+            errorItem.textContent = error;
+            errorList.appendChild(errorItem);
+        });
+
+        errorDiv.appendChild(errorList);
+
+        // Insert error div before the form or payment button
+        const payButton = document.getElementById('payForPackage');
+        payButton.parentNode.insertBefore(errorDiv, payButton);
+
+        // Scroll to error display
+        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Helper function to clear error messages
+    function clearErrorMessages() {
+        const errorDiv = document.getElementById('validation-errors');
+        if (errorDiv) {
+            errorDiv.remove();
+        }
+    }
+
+    renderAddonsn();     // your existing function
+    renderTotalPrice();  // update total price right after DOM is ready
+
 
 </script>
 
