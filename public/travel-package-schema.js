@@ -117,7 +117,7 @@ const travelPackages = [
             {
                 //Level 1
                 id: "beach_002",
-                name: "Santorini Sunset: 5-Day Greek Island Romance",
+                name: "Philadelphia Sunset: 5-Day Greek Island Romance",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=600&fit=crop',
                 shortDesc: "Discover Santorini's dramatic cliffs, volcanic beaches, and world-famous sunsets",
@@ -582,7 +582,7 @@ const travelPackages = [
             // Package 1 - Maldives
             {
                 //Level 1
-                id: "beach_001",
+                id: "allinclusive_001",
                 name: "Maldives Paradise: 7-Day Overwater Villa Escape",
                 duration: { days: 7 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&h=600&fit=crop',
@@ -691,7 +691,7 @@ const travelPackages = [
             // Package 2 - Santorini
             {
                 //Level 1
-                id: "beach_002",
+                id: "allinclusive_002",
                 name: "Santorini Sunset: 5-Day Greek Island Romance",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=600&fit=crop',
@@ -801,7 +801,7 @@ const travelPackages = [
             // Package 3 - Seychelles
             {
                 //Level 1
-                id: "beach_003",
+                id: "allinclusive_003",
                 name: "Seychelles Discovery: 8-Day Island Paradise",
                 duration: { days: 8 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop',
@@ -928,7 +928,7 @@ const travelPackages = [
             // Package 4 - Costa Rica
             {
                 //Level 1
-                id: "beach_004",
+                id: "allinclusive_004",
                 name: "Costa Rica Beach & Adventure: 6-Day Eco Paradise",
                 duration: { days: 6 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=800&h=600&fit=crop',
@@ -1041,7 +1041,7 @@ const travelPackages = [
             // Package 5 - Barbados
             {
                 //Level 1
-                id: "beach_005",
+                id: "allinclusive_005",
                 name: "Barbados Cultural Beach: 5-Day Caribbean Heritage",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=800&h=600&fit=crop',
@@ -1157,7 +1157,7 @@ const travelPackages = [
             // Package 1 - Maldives
             {
                 //Level 1
-                id: "beach_001",
+                id: "romantic_001",
                 name: "Maldives Paradise: 7-Day Overwater Villa Escape",
                 duration: { days: 7 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&h=600&fit=crop',
@@ -1266,7 +1266,7 @@ const travelPackages = [
             // Package 2 - Santorini
             {
                 //Level 1
-                id: "beach_002",
+                id: "romantic_002",
                 name: "Santorini Sunset: 5-Day Greek Island Romance",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=600&fit=crop',
@@ -1376,7 +1376,7 @@ const travelPackages = [
             // Package 3 - Seychelles
             {
                 //Level 1
-                id: "beach_003",
+                id: "romantic_003",
                 name: "Seychelles Discovery: 8-Day Island Paradise",
                 duration: { days: 8 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop',
@@ -1503,7 +1503,7 @@ const travelPackages = [
             // Package 4 - Costa Rica
             {
                 //Level 1
-                id: "beach_004",
+                id: "romantic_004",
                 name: "Costa Rica Beach & Adventure: 6-Day Eco Paradise",
                 duration: { days: 6 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=800&h=600&fit=crop',
@@ -1616,7 +1616,7 @@ const travelPackages = [
             // Package 5 - Barbados
             {
                 //Level 1
-                id: "beach_005",
+                id: "romantic_005",
                 name: "Barbados Cultural Beach: 5-Day Caribbean Heritage",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=800&h=600&fit=crop',
@@ -1732,7 +1732,7 @@ const travelPackages = [
             // Package 1 - Maldives
             {
                 //Level 1
-                id: "beach_001",
+                id: "family_001",
                 name: "Maldives Paradise: 7-Day Overwater Villa Escape",
                 duration: { days: 7 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&h=600&fit=crop',
@@ -1841,7 +1841,7 @@ const travelPackages = [
             // Package 2 - Santorini
             {
                 //Level 1
-                id: "beach_002",
+                id: "family_002",
                 name: "Santorini Sunset: 5-Day Greek Island Romance",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=600&fit=crop',
@@ -1951,7 +1951,7 @@ const travelPackages = [
             // Package 3 - Seychelles
             {
                 //Level 1
-                id: "beach_003",
+                id: "family_003",
                 name: "Seychelles Discovery: 8-Day Island Paradise",
                 duration: { days: 8 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop',
@@ -2078,7 +2078,7 @@ const travelPackages = [
             // Package 4 - Costa Rica
             {
                 //Level 1
-                id: "beach_004",
+                id: "family_004",
                 name: "Costa Rica Beach & Adventure: 6-Day Eco Paradise",
                 duration: { days: 6 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=800&h=600&fit=crop',
@@ -2191,7 +2191,7 @@ const travelPackages = [
             // Package 5 - Barbados
             {
                 //Level 1
-                id: "beach_005",
+                id: "family_005",
                 name: "Barbados Cultural Beach: 5-Day Caribbean Heritage",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=800&h=600&fit=crop',
@@ -2308,7 +2308,7 @@ const travelPackages = [
             // Package 1 - Maldives
             {
                 //Level 1
-                id: "beach_001",
+                id: "cheap_001",
                 name: "Maldives Paradise: 7-Day Overwater Villa Escape",
                 duration: { days: 7 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&h=600&fit=crop',
@@ -2417,7 +2417,7 @@ const travelPackages = [
             // Package 2 - Santorini
             {
                 //Level 1
-                id: "beach_002",
+                id: "cheap_002",
                 name: "Santorini Sunset: 5-Day Greek Island Romance",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=600&fit=crop',
@@ -2527,7 +2527,7 @@ const travelPackages = [
             // Package 3 - Seychelles
             {
                 //Level 1
-                id: "beach_003",
+                id: "cheap_003",
                 name: "Seychelles Discovery: 8-Day Island Paradise",
                 duration: { days: 8 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop',
@@ -2654,7 +2654,7 @@ const travelPackages = [
             // Package 4 - Costa Rica
             {
                 //Level 1
-                id: "beach_004",
+                id: "cheap_004",
                 name: "Costa Rica Beach & Adventure: 6-Day Eco Paradise",
                 duration: { days: 6 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=800&h=600&fit=crop',
@@ -2767,7 +2767,7 @@ const travelPackages = [
             // Package 5 - Barbados
             {
                 //Level 1
-                id: "beach_005",
+                id: "cheap_005",
                 name: "Barbados Cultural Beach: 5-Day Caribbean Heritage",
                 duration: { days: 5 },
                 packageThumbnail: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=800&h=600&fit=crop',

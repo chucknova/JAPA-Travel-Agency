@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-icon lucide-bookmark">
+  <defs>
+    <linearGradient id="glossyFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="white" stop-opacity="0.7"></stop>
+      <stop offset="50%" stop-color="white" stop-opacity="0.2"></stop>
+      <stop offset="100%" stop-color="white" stop-opacity="0.05"></stop>
+    </linearGradient>
+  </defs>
+  <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" fill="url(#glossyFill)"></path>
+</svg>

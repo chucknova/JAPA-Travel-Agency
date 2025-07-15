@@ -1,0 +1,121 @@
+.gallery-trigger {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-trigger:hover {
+    transform: scale(1.02);
+}
+
+.gallery-trigger img {
+    display: block;
+    width: 650px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-trigger:hover .overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 16px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* The holy darkness */
+.modal-hotel-doom {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 56px;
+    /* small space around image */
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Show modal when summoned */
+.modal-hotel-doom:not(.poofed) {
+    display: flex;
+}
+
+/* Image of glory (subtle transition) */
+.hero-shot {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    transition: opacity 0.4s ease-in-out, transform 0.3s ease-in-out;
+    opacity: 1;
+}
+
+/* Transition in/out effect */
+.hero-shot.fade-out {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Button of escape */
+.bye-bye-button {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+}
+
+/* Control center */
+.button-flickers {
+    margin-top: 20px;
+}
+
+/* Ye Olde Arrows */
+.fat-arrow {
+    background: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 24px;
+    margin: 0 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.fat-arrow:hover {
+    background: #eee;
+}

@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="travelpackages.css">
     <link rel="stylesheet" href="flights.css">
     <link rel="stylesheet" href="travel-details.css">
+    <link rel="stylesheet" href="loadingstate.css">
+    <link rel="stylesheet" href="morepictures.css">
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
@@ -48,7 +50,8 @@
 
     <!-- Upper -->
     <div class="upper-component">
-
+        <!-- Travel Package Card -->
+         
         <!-- Travel Name and Short Details -->
         <div class="travel-name-short-details" id="name-details">
             <!-- Inserted automatically from dom manipulation -->
@@ -72,6 +75,7 @@
         <div class="middle-component" style="padding: 0px;">
             <!-- Main Details left -->
             <div class="main-details-left">
+                <input type="text">
                 <!-- What's this package about? -->
                 <div class="what-package-is-about content-section" id="package-details">
                     <!-- Inserted automatically by dom manipulation -->
@@ -268,6 +272,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="loading-container hidden" id="loadingState">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading</div>
+            <div class="loading-dots">Please wait<span class="dots"></span></div>
+        </div>
+
+        <div class="overlay hidden" id="overlay"></div>
 </body>
 <script type="module">
     import travelPackages from './travel-package-schema.js'
@@ -289,6 +301,66 @@
 
     console.log("selected package:", selectedPackage);
     document.getElementById("traveler-count").addEventListener("input", renderTotalPrice);
+    const allBookingIDs = [];
+    const allBookingSessions = [];
+
+    const today = new Date();
+
+    const formattedDate = today.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    function simulateAction() {
+        const loadingState = document.getElementById('loadingState');
+        const overlay = document.getElementById('overlay');
+
+        // Safety check to ensure elements exist
+        if (!loadingState || !overlay) {
+            console.warn('Missing #loadingState or #overlay in the DOM.');
+            return;
+        }
+
+        // Show overlay and loading state
+        overlay.classList.remove('hidden');
+        loadingState.classList.remove('hidden');
+
+        // Hide them after exactly 6 seconds (6000 ms)
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            loadingState.classList.add('hidden');
+        }, 6000);
+    }
+
+
+    let currentImageIndex = 0;
+    let galleryImages = [];
+
+    function openCarousel(index = 0) {
+        currentImageIndex = index;
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        modal.classList.remove("poofed");
+        document.body.style.overflow = "hidden";
+        modalImg.src = galleryImages[currentImageIndex];
+    }
+
+    function closeCarousel() {
+        document.getElementById("imageModal").classList.add("poofed");
+        document.body.style.overflow = "";
+    }
+
+    function nextImage() {
+        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+        document.getElementById("modalImage").src = galleryImages[currentImageIndex];
+    }
+
+    function prevImage() {
+        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        document.getElementById("modalImage").src = galleryImages[currentImageIndex];
+    }
 
     // 1. Function to render travel name and short details
     function renderNameandDetails() {
@@ -306,31 +378,47 @@
     // Calling the function so it runs
     renderNameandDetails()
 
-    // 2. Function to render travel gallery
     function renderTravelGallery() {
-        // Mapping through the travelPackage database to render on the DOM
-        const displayTravelGallery =
-            `<img src=${selectedPackage.tourGallery[0]}
-                alt="Beach resort in Maldives" class="grid-1">
-            <div class="right-grid-images">
-                <img src=${selectedPackage.tourGallery[1]} alt="Friends spending time together"
-                    class="grid-2">
-                <img src=${selectedPackage.tourGallery[2]}
-                    alt="Friends spending time together" class="grid-3">
-                <img src=${selectedPackage.tourGallery[3]} alt="Friends spending time together"
-                    class="grid-4">
-                <img src=${selectedPackage.tourGallery[4]}
-                    alt="Friends spending time together" class="grid-5">
-            </div>
-        </div>`
+        // Set the global gallery images
+        galleryImages = selectedPackage.tourGallery;
 
+        // Render gallery and modal to DOM
+        const displayTravelGallery = `
+    <img src="${galleryImages[0]}" alt="Beach resort in Maldives" class="grid-1">
+    <div class="right-grid-images">
+      <img src="${galleryImages[1]}" alt="Friends spending time together" class="grid-2">
+      <img src="${galleryImages[2]}" alt="Friends spending time together" class="grid-3">
+      <img src="${galleryImages[3]}" alt="Friends spending time together" class="grid-4">
+      <div class="gallery-trigger" id="gallery-trigger">
+        <img src="${galleryImages[4]}" alt="Friends spending time together">
+        <div class="overlay">
+          <div class="overlay-text">See all photos</div>
+        </div>
+      </div>
+    </div>
 
-        // Rendering travel packages in the DOM
-        document.getElementById("travel-gallery").innerHTML = displayTravelGallery
+    <div id="imageModal" class="modal-hotel-doom poofed">
+  <span id="close-modal" class="bye-bye-button">&times;</span>
+  <img id="modalImage" class="hero-shot">
+  <div class="button-flickers">
+    <button id="prev-btn" class="fat-arrow">⟨</button>
+    <button id="next-btn" class="fat-arrow">⟩</button>
+  </div>
+</div>
+
+  `;
+
+        document.getElementById("travel-gallery").innerHTML = displayTravelGallery;
+
+        // Attach JS event listeners AFTER DOM is rendered
+        document.getElementById("gallery-trigger").addEventListener("click", () => openCarousel(0));
+        document.getElementById("close-modal").addEventListener("click", closeCarousel);
+        document.getElementById("next-btn").addEventListener("click", nextImage);
+        document.getElementById("prev-btn").addEventListener("click", prevImage);
     }
 
-    // Calling the function so it runs
-    renderTravelGallery()
+    // Call the function
+    renderTravelGallery();
 
     // Function to render Package Details
     function renderPackageDetails() {
@@ -812,41 +900,62 @@
 
         // Flutterwave Paywall
 
-        FlutterwaveCheckout({
-            public_key: "FLWPUBK_TEST-d48b809523c31187a8a9f7d2edcd6272-X",
-            tx_ref: "japatravelPackage-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9),
-            amount: totalAmtdue, // Ensure this is a number
-            currency: "NGN", // or whatever currency you're using
-            payment_options: "card,mobilemoney,ussd",
-            customer: {
-                email: userInfo.emailAddress,
-                phone_number: userInfo.phoneNumber,
-                name: `${userInfo.firstName} ${userInfo.lastName}`,
-            },
-            customizations: {
-                title: `Booking for ${selectedPackage.name}`,
-                description: "Payment for ${selectedPackage.name}",
-                logo: "https://your-logo-url.com/logo.png", // Optional
-            },
-            callback: function (data) {
-                console.log("Payment callback:", data);
-                if (data.status === "successful") {
-                    setTimeout(() => {
-                        window.location.href = "travel-package-payment-successful.html"
-                    }, 3000);
-
-                }
-            },
-            onclose: function () {
-                console.log("Closed");
-
-            },
-        });
-
         selectedPackage.totalPackages.remaining -= userInfo.travelerCount
 
         renderSpotsLeft()
         console.log(selectedPackage.totalPackages);
+
+        // What Happens after payment success
+
+        // 1. Generate a unique booking ID
+
+        function generateBookingID() {
+            const prefix = "#JPX";
+            const randomNumber = Math.floor(100000 + Math.random() * 900000); // Ensures 6 digits
+            return `${prefix}${randomNumber}`;
+        }
+
+        function generateUniqueBookingID() {
+            let bookingID;
+            do {
+                bookingID = generateBookingID();
+            } while (allBookingIDs.includes(bookingID)); // Keep trying until unique
+
+            allBookingIDs.push(bookingID); // Store the new unique ID
+            return bookingID;
+        }
+        const newBookingID = generateUniqueBookingID();
+        console.log(newBookingID); // e.g., "#JPX983457"
+
+        // 2. Create the receipt
+
+        let userBookingSession = {
+            bookingId: newBookingID,
+            travelerName: `${firstName} ${lastName}`,
+            travelerEmail: emailAddress,
+            destination: selectedPackage.destination,
+            packageName: selectedPackage.name,
+            duration: selectedPackage.duration.days,
+            travelerNo: parseInt(travelerCount),
+            totalAmtPaid: `${selectedPackage.price.currency} ${totalAmtdue.toLocaleString()}`,
+            bookingDate: formattedDate,
+            receipt: []
+        }
+
+        console.log(userBookingSession);
+        allBookingSessions.push(userBookingSession)
+
+        // Convert the object to a JSON string, then URL-encode it
+        sessionStorage.setItem('bookingSession', JSON.stringify(userBookingSession));
+        // Routing the user to the payment successful page
+
+        simulateAction()
+
+        setTimeout(() => {
+            // redirect after 6 seconds
+            window.location.href = `travel-package-payment-successful.html?bookingID=${newBookingID}`;
+        }, 6000);
+
 
     });
 

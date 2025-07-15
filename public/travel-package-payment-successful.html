@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +15,10 @@
     <link rel="stylesheet" href="travel-package-payment-successful.css">
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.1/jspdf.umd.min.js"></script>
     <title>Payment Successful || JAPA</title>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
@@ -41,17 +44,49 @@
         </div>
     </nav>
 
-    <div class="success-container">
-        <div class="left-message-cta">
+    <div id="success-container" class="success-container">
+        <!-- Automatically Inserted from dom manipulation -->
+    </div>
+
+    <img id="logo-img" src="/public/assets/japalogosvg.svg" alt="JAPA Logo" style="display: none;">
+
+</body>
+
+<script>
+    const bookingID = new URLSearchParams(window.location.search).get('bookingID');
+    const bookingSession = JSON.parse(sessionStorage.getItem('bookingSession'));
+
+    console.log(bookingID);        // e.g. JPX251841
+    console.log(bookingSession);   // Object with booking data
+
+    // Storing receipts
+    // Step 1: Get existing receipts from localStorage or start fresh
+    const receiptsDatabase = JSON.parse(localStorage.getItem("japaReceipts")) || {};
+
+    // Step 2: Create a new receipt entry
+    receiptsDatabase[bookingSession.bookingId] = {
+        customer: bookingSession.travelerName,
+        destination: bookingSession.destination,
+        amountPaid: bookingSession.totalAmtPaid,
+        date: bookingSession.bookingDate,
+        bookingID: bookingSession.bookingId,
+    };
+
+    // Step 3: Save the updated object back to localStorage
+    localStorage.setItem("japaReceipts", JSON.stringify(receiptsDatabase));
+
+
+    document.getElementById('success-container').innerHTML = `
+    <div class="left-message-cta">
             <img src="./assets/payment made!.gif" alt="" class="payment-made-animation">
             <div class="confirmation-message-ps">
-                <h1>Woohoo! 🎉 You're all set for Bali. JAPA Successful</h1>
+                <h1>Woohoo! 🎉 You're all set for ${bookingSession.destination}. JAPA Successful</h1>
                 <p>A copy of your booking and receipt has been sent to akinbotetemiloluwa9@gmail.com</p>
             </div>
-            <button>Download Receipt here</button>
+            <button id = "generateReceipt">Download Receipt here</button>
         </div>
-        
-        <div class="right-trip-summary">
+
+         <div id="trip-summary" class="right-trip-summary">
             <h2>Your Trip Summary</h2>
             <div class="trip-summary">
                 <div class="trip-summary-inner">
@@ -59,15 +94,15 @@
                     <div class="trip-detail-booking-id">
                         <div class="trip-detail-booking-id-inner">
                             <h3>Booking ID</h3>
-                            <div class="booking-id-badge">#JPX983457</div>
+                            <div class="booking-id-badge">${bookingSession.bookingId}</div>
                         </div>
                     </div>
-                    
+
                     <!-- Trip Detail -->
                     <div class="trip-detail">
                         <div class="trip-detail-inner">
                             <h3>Destination</h3>
-                            <h4>Santorini, Greece</h4>
+                            <h4>${bookingSession.destination}</h4>
                         </div>
                     </div>
 
@@ -75,7 +110,7 @@
                     <div class="trip-detail">
                         <div class="trip-detail-inner">
                             <h3>Travel Package Name</h3>
-                            <h4>Greek Isles Honeymoon Experience</h4>
+                            <h4>${bookingSession.packageName}</h4>
                         </div>
                     </div>
 
@@ -83,7 +118,7 @@
                     <div class="trip-detail">
                         <div class="trip-detail-inner">
                             <h3>Duration</h3>
-                            <h4>5 Days (Sept 2–Sept 7, 2025)</h4>
+                            <h4>${bookingSession.duration} Days (Sept 2–Sept 7, 2025)</h4>
                         </div>
                     </div>
 
@@ -91,7 +126,7 @@
                     <div class="trip-detail">
                         <div class="trip-detail-inner">
                             <h3>Number of Travelers</h3>
-                            <h4>5</h4>
+                            <h4>${bookingSession.travelerNo}</h4>
                         </div>
                     </div>
 
@@ -99,7 +134,7 @@
                     <div class="trip-detail">
                         <div class="trip-detail-inner">
                             <h3>Total Paid</h3>
-                            <h4>NGN 4,500,000</h4>
+                            <h4>${bookingSession.totalAmtPaid}</h4>
                         </div>
                     </div>
 
@@ -107,13 +142,125 @@
                     <div class="trip-detail">
                         <div class="trip-detail-inner">
                             <h3>Booking Date</h3>
-                            <h4>June 24, 2025</h4>
+                            <h4>${bookingSession.bookingDate}</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-</body>
+    `
+    generateReceipt.addEventListener("click", async () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const logo = document.getElementById("logo-img");
+
+        // Convert logo to base64 using canvas
+        const logoBase64 = await imageToBase64(logo);
+
+        // 🎨 Clean white background
+        doc.setFillColor(255, 255, 255);
+        doc.rect(0, 0, 210, 297, 'F');
+
+        // 🖼️ Add logo (top-left corner)
+        doc.addImage(logoBase64, 'PNG', 20, 10, 30, 15);
+
+        // 📄 Title
+        doc.setFontSize(16);
+        doc.setFont("courier", "bold");
+        doc.setTextColor(0, 0, 0);
+        doc.text("JAPA TRAVEL", 105, 35, { align: "center" });
+
+        doc.setFontSize(10);
+        doc.setFont("courier", "normal");
+        doc.text("RECEIPT", 105, 45, { align: "center" });
+
+        // ✍🏽 Booking details section
+        doc.setFontSize(12);
+        doc.setFont("courier", "normal");
+        doc.setTextColor(40, 40, 40);
+
+        // Format date nicely
+        const formattedDate = new Date(bookingSession.bookingDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        // Receipt details with clean spacing
+        let yPos = 65;
+        const lineHeight = 10;
+
+        doc.text(`DATE:        ${formattedDate}`, 20, yPos);
+        yPos += lineHeight;
+
+        doc.text(`BOOKING ID:  ${bookingSession.bookingId}`, 20, yPos);
+        yPos += lineHeight;
+
+        doc.text(`CUSTOMER:    ${bookingSession.travelerName.toUpperCase()}`, 20, yPos);
+        yPos += lineHeight;
+
+        doc.text(`PACKAGE BOOKED: ${bookingSession.packageName.toUpperCase()}`, 20, yPos);
+        yPos += lineHeight * 2;
+
+        doc.text(`DESTINATION: ${bookingSession.destination.toUpperCase()}`, 20, yPos);
+        yPos += lineHeight * 2;
+
+        doc.text(`TRAVELER COUNT: ${bookingSession.travelerNo}`, 20, yPos);
+        yPos += lineHeight * 2;
+
+
+        // Amount section 
+        doc.setFontSize(12);
+        doc.setFont("courier", "bold");
+        doc.text(`TOTAL PAID:  ${bookingSession.totalAmtPaid}`, 20, yPos);
+        yPos += lineHeight * 2.5;
+
+        // 🙏 Thank you footer
+        doc.setFontSize(8);
+        doc.setFont("courier", "normal");
+        doc.setTextColor(80, 80, 80);
+        doc.text("THANK YOU FOR BOOKING WITH US!", 105, yPos, { align: "center" });
+        yPos += 10;
+
+        doc.setFontSize(7);
+        doc.setFont("courier", "normal");
+        doc.text("JAPA — Making your travel dreams a reality.", 105, yPos, { align: "center" });
+        yPos += 15;
+
+        // 📱 Contact info
+        doc.setFontSize(7);
+        doc.setFont("courier", "normal");
+        doc.setTextColor(120, 120, 120);
+        doc.text("support@japatravel.com | www.japatravel.com", 105, yPos, { align: "center" });
+
+        // 📄 Save file with timestamp
+        const timestamp = new Date().toISOString().slice(0, 10);
+        const fileName = `japa_receipt_${bookingSession.bookingId.replace("#", "")}_${timestamp}.pdf`;
+        doc.save(fileName);
+    });
+
+    function imageToBase64(imgElement) {
+        return new Promise((resolve) => {
+            const canvas = document.createElement("canvas");
+            canvas.width = imgElement.naturalWidth;
+            canvas.height = imgElement.naturalHeight;
+            const ctx = canvas.getContext("2d");
+
+            // Handle potential CORS issues
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.drawImage(imgElement, 0, 0);
+            resolve(canvas.toDataURL("image/png"));
+        });
+    }
+
+    console.log("Receipts here:", receiptsDatabase);
+
+
+
+
+</script>
+
 </html>
