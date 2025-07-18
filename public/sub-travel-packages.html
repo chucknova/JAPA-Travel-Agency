@@ -39,9 +39,17 @@
                 </ul>
             </div>
 
-
             <div class="user-actions">
-                <button class="login-button"><a href="user-auth.html">Log In</a></button>
+                <div class="bookmark-container" id="bookmark-btn">
+                    <svg class="bookmark-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                    </svg>
+                    <span class="bookmark-badge" id="bookmark-count"></span>
+                </div>
+
+                <button class="login-button">
+                    <a href="user-auth.html">Log In</a>
+                </button>
             </div>
         </div>
     </nav>
@@ -126,9 +134,50 @@
     const urlParams = new URLSearchParams(window.location.search);
     const packageId = urlParams.get('packageId');
     const selectedPackage = travelPackages[packageId];
+    
 
-    // Liked Trips Database
-    const likedTrips = [];
+
+    // Global saved items array
+    let savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+    let bookmarkCount = document.getElementById('bookmark-count')
+    
+    // Function to update bookmark count in navbar
+    function updateBookmarkCount() {
+        savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+        bookmarkCount.innerHTML = savedItems.length;
+    }
+    
+    // Initial count update
+    updateBookmarkCount();
+
+    // Global functions to manage saved items
+    function getSavedItems() {
+        return savedItems;
+    }
+
+    function addToSaved(packageId) {
+        if (!savedItems.includes(packageId)) {
+            savedItems.push(packageId);
+            localStorage.setItem('savedItems', JSON.stringify(savedItems));
+            updateBookmarkCount(); // Update count immediately
+        }
+    }
+
+    function removeFromSaved(packageId) {
+        savedItems = savedItems.filter(id => id !== packageId);
+        localStorage.setItem('savedItems', JSON.stringify(savedItems));
+        updateBookmarkCount(); // Update count immediately
+    }
+
+    function isSaved(packageId) {
+        return savedItems.includes(packageId);
+    }
+
+    function clearAllSaved() {
+        savedItems = [];
+        localStorage.setItem('savedItems', JSON.stringify(savedItems));
+        updateBookmarkCount(); // Update count immediately
+    }
 
     console.log("selected package:", selectedPackage);
     let subPackages = selectedPackage.packages
@@ -160,24 +209,44 @@
     // Calling the function so it runs
     renderHeaderName()
 
-    // Function to sort packages based on selected criteria
-    // Simple function to sort packages
-    function sortPackages(packages, sortBy) {
-        const sorted = [...packages]; // Create a copy
+    // Function to sort packages
+    function sortPackages(sortBy) {
+        let sortedPackages = [...subPackages]; // Create a copy to avoid mutating original array
 
         switch (sortBy) {
             case 'price':
-                return sorted.sort((a, b) => a.price.amount - b.price.amount);
-
-            case 'duration':
-                return sorted.sort((a, b) => a.duration.days - b.duration.days);
-
-            case 'destination':
-                return sorted.sort((a, b) => a.destination.localeCompare(b.destination));
-
+                sortedPackages.sort((a, b) => {
+                    // Extract numeric price values and sort by price (low to high)
+                    // Handle both string and number formats
+                    const priceA = typeof a.price.amount === 'string' ?
+                        parseFloat(a.price.amount.replace(/,/g, '')) :
+                        parseFloat(a.price.amount);
+                    const priceB = typeof b.price.amount === 'string' ?
+                        parseFloat(b.price.amount.replace(/,/g, '')) :
+                        parseFloat(b.price.amount);
+                    return priceA - priceB;
+                });
+                break;
+            case 'departure-time': // Duration
+                sortedPackages.sort((a, b) => {
+                    // Sort by duration in days (short to long)
+                    return a.duration.days - b.duration.days;
+                });
+                break;
+            case 'arrival-time': // Ratings
+                sortedPackages.sort((a, b) => {
+                    // Sort by ratings (high to low)
+                    // Since ratings are hardcoded as 4.8, we'll sort by name as a fallback
+                    // In a real app, you'd have actual rating data
+                    return b.name.localeCompare(a.name);
+                });
+                break;
             default:
-                return sorted; // Return original order
+                // No sorting, return original order
+                return sortedPackages;
         }
+
+        return sortedPackages;
     }
 
     // Function to get the appropriate SVG based on state (FIXED LOGIC)
@@ -215,56 +284,45 @@
         }
     }
 
-    // Function to check if an item is saved
-    function isSaved(id) {
-        const savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
-        return savedItems.includes(id);
-    }
 
-    // Updated renderPackages function with initial state restoration
+
     function renderPackages(packagesToRender = subPackages) {
         // Mapping through the provided packages to render on the DOM
         const displaySubPk = packagesToRender.map((subPkg, index) => {
             // Find the original index for routing purposes
             const originalIndex = subPackages.findIndex(pkg => pkg === subPkg);
 
-            // Get the correct initial bookmark state
-            const isCurrentlySaved = isSaved(subPkg.id);
+            // Use the global isSaved function to check if the package is saved
+            const isCurrentlySaved = isSaved(subPkg.id); // Use global isSaved
             const bookmarkIcon = getBookmarkSVG(isCurrentlySaved);
 
             return `  <div class="travel-package-card-tp">
-        <div class="travel-package-upper" style="background-image: url(${subPkg.packageThumbnail}); position: relative;">
-
-  <!-- Duration tag: top-left -->
-  <div class="duration-tag" style="position: absolute; top: 15px; left: 15px;">
-    ${subPkg.duration.days} days
-  </div>
-
-  <!-- SVG Heart icon: top-right -->
-  <div class="heart-icon" id="bookmark-${subPkg.id}" style="position: absolute; top: 15px; right: 15px; cursor: pointer;">
-    ${bookmarkIcon}
-  </div>
-
-</div>
-
-        <div class="travel-package-lower">
-            <div class="package-location-name-desc" id="pkgIndex-${originalIndex}" data-package-index="${originalIndex}">
-                <p class="pk-location">${subPkg.destination}</p>
-                <p style="cursor: pointer;" class="pk-name">${subPkg.name}</p>
-                <p class="pk-desc">${subPkg.shortDesc}
-                </p>
-            </div>
-
-            <div class="package-price-ratings">
-                <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount}</h3>
-                <P class="pk-ratings">⭐ 4.8 (152 reviews)</P>
-            </div>
+    <div class="travel-package-upper" style="background-image: url(${subPkg.packageThumbnail}); position: relative;">
+        <!-- Duration tag: top-left -->
+        <div class="duration-tag" style="position: absolute; top: 15px; left: 15px;">
+            ${subPkg.duration.days} days
         </div>
-    </div>`
-        })
+        <!-- SVG Heart icon: top-right -->
+        <div class="heart-icon" id="bookmark-${subPkg.id}" style="position: absolute; top: 15px; right: 15px; cursor: pointer;">
+            ${bookmarkIcon}
+        </div>
+    </div>
+    <div class="travel-package-lower">
+        <div class="package-location-name-desc" id="pkgIndex-${originalIndex}" data-package-index="${originalIndex}">
+            <p class="pk-location">${subPkg.destination}</p>
+            <p style="cursor: pointer;" class="pk-name">${subPkg.name}</p>
+            <p class="pk-desc">${subPkg.shortDesc}</p>
+        </div>
+        <div class="package-price-ratings">
+            <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount}</h3>
+            <p class="pk-ratings">⭐ 4.8 (152 reviews)</p>
+        </div>
+    </div>
+</div>`;
+        });
 
         // Rendering travel packages in the DOM
-        document.getElementById("bottom-pk").innerHTML = displaySubPk.join('')
+        document.getElementById("bottom-pk").innerHTML = displaySubPk.join('');
 
         // Function to route user to sub travel packages page
         function routeToDetails(packageIndex) {
@@ -283,7 +341,6 @@
             });
         });
     }
-
     // Event listener for sort dropdown
     document.getElementById('sortBy').addEventListener('change', function () {
         const sortBy = this.value;
@@ -294,8 +351,7 @@
     // Initial render
     renderPackages();
 
-    // Function to add list to likedList
-
+    // Add package to favorites
     document.addEventListener('click', function (event) {
         if (event.target.closest('.heart-icon')) {
             const heartIcon = event.target.closest('.heart-icon');
@@ -309,26 +365,23 @@
                     heartIcon.innerHTML = getBookmarkSVG(saved);
                 }
 
-                // Toggle saved state
-                let savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
-
+                // Toggle saved state using global functions
                 if (isSaved(packageId)) {
                     // Unsave the item
-                    savedItems = savedItems.filter(id => id !== packageId);
-                    console.log('Removed:', savedItems);
+                    removeFromSaved(packageId);
+                    console.log('Removed. Current saved items:', getSavedItems());
                 } else {
                     // Save the item
-                    savedItems.push(packageId);
-                    console.log('Added:', savedItems);
+                    addToSaved(packageId);
+                    console.log('Added. Current saved items:', getSavedItems());
                 }
 
-                localStorage.setItem('savedItems', JSON.stringify(savedItems));
                 updateButtonState(); // Update button appearance after state change
             }
         }
     });
-
-    console.log(likedTrips);
+    console.log("Saved Items here o SWIGGLY SWIGGLY WEOOO!!", savedItems);
+    
 
 
 

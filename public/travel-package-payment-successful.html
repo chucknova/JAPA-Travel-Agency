@@ -48,7 +48,6 @@
         <!-- Automatically Inserted from dom manipulation -->
     </div>
 
-    <img id="logo-img" src="/public/assets/japalogosvg.svg" alt="JAPA Logo" style="display: none;">
 
 </body>
 
@@ -153,17 +152,12 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        const logo = document.getElementById("logo-img");
-
-        // Convert logo to base64 using canvas
-        const logoBase64 = await imageToBase64(logo);
 
         // 🎨 Clean white background
         doc.setFillColor(255, 255, 255);
         doc.rect(0, 0, 210, 297, 'F');
 
-        // 🖼️ Add logo (top-left corner)
-        doc.addImage(logoBase64, 'PNG', 20, 10, 30, 15);
+  
 
         // 📄 Title
         doc.setFontSize(16);
