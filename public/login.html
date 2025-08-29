@@ -16,6 +16,128 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="user-auth.css">
     <title>Log in to your JAPA Account</title>
+    
+    <style>
+        /* Additional styles for password toggle and forgot password */
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6b7280;
+            font-size: 16px;
+            transition: color 0.2s ease;
+        }
+        
+        .password-toggle:hover {
+            color: #374151;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: 8px;
+        }
+        
+        .forgot-password a {
+            font-size: 14px;
+            color: #E71D36;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .forgot-password a:hover {
+            color: #E71D36;
+            text-decoration: underline;
+        }
+        
+        /* Modal styles for forgot password */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
+        
+        .close {
+            color: #6b7280;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        
+        .close:hover {
+            color: #374151;
+        }
+        
+        .modal p {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .modal .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .modal button {
+            width: 100%;
+            padding: 12px;
+            background-color: #E71D36;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .modal button:hover:not(:disabled) {
+            background-color: #E71D36;
+        }
+        
+        .modal button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,7 +157,15 @@
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password" required>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <button type="button" class="password-toggle" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="forgot-password">
+                    <a href="#" id="forgotPasswordLink">Forgot password?</a>
+                </div>
             </div>
 
             <button id="loginBtn" type="button">Log in to account</button>
@@ -63,83 +193,167 @@
             Don't have an account? <a href="user-auth.html">Create account</a>
         </div>
     </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Reset Password</h2>
+                <button style="width: 44px; background-color: #ffffff77; color: #e71d35; font-size: 24px; font-weight: 600px;" class="close" id="closeModal">&times;</button>
+            </div>
+            <p>Enter your email address and we'll send you a link to reset your password.</p>
+            <div class="form-group">
+                <label for="resetEmail">Email</label>
+                <input type="email" id="resetEmail" placeholder="Enter your email" required>
+            </div>
+            <button id="sendResetBtn" type="button">Send Reset Link</button>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+            authDomain: "japa-269a4.firebaseapp.com",
+            projectId: "japa-269a4",
+            storageBucket: "japa-269a4.firebasestorage.app",
+            messagingSenderId: "736749113389",
+            appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Initialize Firebase Authentication and get a reference to the service
+        const auth = firebase.auth();
+
+        // Your existing login functionality (unchanged)
+        document.getElementById("loginBtn").addEventListener("click", function (e) {
+            e.preventDefault(); // prevent form reload
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const loginBtn = document.getElementById("loginBtn");
+
+            if (!email) {
+                alert("Please enter your email.");
+                return;
+            }
+            if (!password) {
+                alert("Please enter your password.");
+                return;
+            }
+
+            loginBtn.innerHTML = "Logging you in...";
+            loginBtn.disabled = true;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log("User logged in:", user.email);
+                    alert("Logged in successfully!");
+                    window.location.href = "index.html"; // redirect to dashboard
+                })
+                .catch((error) => {
+                    console.error("Login error:", error.message);
+                    alert("Login failed: " + error.message);
+                    loginBtn.innerHTML = "Log in to account";
+                    loginBtn.disabled = false;
+                });
+        });
+
+        // Your existing Google sign-in functionality (unchanged)
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        document.getElementById("signupwithgoogleBtn").addEventListener("click", function () {
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    const isNewUser = result.additionalUserInfo.isNewUser;
+
+                    if (isNewUser) {
+                        console.log("New user signed up with Google:", user.email);
+                        alert("Welcome to JAPA, " + user.displayName + "!");
+                    } else {
+                        console.log("Returning user logged in:", user.email);
+                        alert("Welcome back, " + user.displayName + "!");
+                    }
+
+                    window.location.href = "index.html"; // redirect after login
+                })
+                .catch((error) => {
+                    console.error("Google Sign-In Error:", error.message);
+                    alert("Google Sign-In failed: " + error.message);
+                });
+        });
+
+        // NEW FUNCTIONALITY: Password visibility toggle
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            const passwordField = document.getElementById("password");
+            const toggleIcon = this.querySelector("i");
+            
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        });
+
+        // NEW FUNCTIONALITY: Forgot password modal
+        const forgotPasswordModal = document.getElementById("forgotPasswordModal");
+        const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+        const closeModal = document.getElementById("closeModal");
+        const sendResetBtn = document.getElementById("sendResetBtn");
+
+        // Open modal
+        forgotPasswordLink.addEventListener("click", function(e) {
+            e.preventDefault();
+            forgotPasswordModal.style.display = "block";
+        });
+
+        // Close modal
+        closeModal.addEventListener("click", function() {
+            forgotPasswordModal.style.display = "none";
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener("click", function(e) {
+            if (e.target === forgotPasswordModal) {
+                forgotPasswordModal.style.display = "none";
+            }
+        });
+
+        // Send password reset email
+        sendResetBtn.addEventListener("click", function() {
+            const resetEmail = document.getElementById("resetEmail").value.trim();
+            
+            if (!resetEmail) {
+                alert("Please enter your email address.");
+                return;
+            }
+
+            sendResetBtn.innerHTML = "Sending...";
+            sendResetBtn.disabled = true;
+
+            auth.sendPasswordResetEmail(resetEmail)
+                .then(() => {
+                    alert("Password reset email sent! Check your inbox or your spam folder.");
+                    forgotPasswordModal.style.display = "none";
+                    document.getElementById("resetEmail").value = "";
+                })
+                .catch((error) => {
+                    console.error("Password reset error:", error.message);
+                    alert("Error sending reset email: " + error.message);
+                })
+                .finally(() => {
+                    sendResetBtn.innerHTML = "Send Reset Link";
+                    sendResetBtn.disabled = false;
+                });
+        });
+    </script>
 </body>
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
-        authDomain: "japa-269a4.firebaseapp.com",
-        projectId: "japa-269a4",
-        storageBucket: "japa-269a4.firebasestorage.app",
-        messagingSenderId: "736749113389",
-        appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-
-    // Initialize Firebase Authentication and get a reference to the service
-    const auth = firebase.auth();
-
-    document.getElementById("loginBtn").addEventListener("click", function (e) {
-        e.preventDefault(); // prevent form reload
-
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value.trim();
-        const loginBtn = document.getElementById("loginBtn");
-
-        if (!email) {
-            alert("Please enter your email.");
-            return;
-        }
-        if (!password) {
-            alert("Please enter your password.");
-            return;
-        }
-
-        loginBtn.innerHTML = "Logging you in...";
-        loginBtn.disabled = true;
-
-        auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log("User logged in:", user.email);
-                alert("Logged in successfully!");
-                window.location.href = "index.html"; // redirect to dashboard
-            })
-            .catch((error) => {
-                console.error("Login error:", error.message);
-                alert("Login failed: " + error.message);
-                loginBtn.innerHTML = "Log in to account";
-                loginBtn.disabled = false;
-            });
-    });
-
-    const provider = new firebase.auth.GoogleAuthProvider();
-
-    document.getElementById("signupwithgoogleBtn").addEventListener("click", function () {
-        auth.signInWithPopup(provider)
-            .then((result) => {
-                const user = result.user;
-                const isNewUser = result.additionalUserInfo.isNewUser;
-
-                if (isNewUser) {
-                    console.log("New user signed up with Google:", user.email);
-                    alert("Welcome to JAPA, " + user.displayName + "!");
-                } else {
-                    console.log("Returning user logged in:", user.email);
-                    alert("Welcome back, " + user.displayName + "!");
-                }
-
-                window.location.href = "index.html"; // redirect after login
-            })
-            .catch((error) => {
-                console.error("Google Sign-In Error:", error.message);
-                alert("Google Sign-In failed: " + error.message);
-            });
-    });
-
-
-
-</script>
 
 </html>

@@ -245,13 +245,13 @@
     }
 
     .newhero-header {
-        font-size: 32px;
-        line-height: 36px;
+        font-size: 40px;
+        /* line-height: 36px; */
     }
 
     .newhero-subheader {
         font-size: 14px;
-        line-height: 20px;
+        /* line-height: 20px; */
     }
 
     .main-button {
