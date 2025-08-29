@@ -1,87 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-                <div class="travel-package-card">
-                <img class="thumbnail" src="./assets/nature-holiday-travel-relaxation-resort.jpg" alt="" srcset=""
-                    style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                <div class="content" style="padding-left: 16px; padding-right: 16px;">
-                    <div class="name-desc">
-                        <h3 style="font-size: 18px; margin-bottom: -2px;">Beach Vacation</h3>
-                        <p style="font-size: 14px; font-weight: 400; color: var(--Subtext, rgba(27, 14, 6, 0.80)); line-height: 160%;">Sun, sand, soft life.
-                            Curate your perfect beach escape, where every
-                            wave resets your soul.
-
-                        </p>
+    <div class="groovy-penguin-card">
+        <div class="card-content">
+            <img src=${trip.tripThumbnail} alt="Santorini" class="trip-image">
+            <div class="trip-details">
+                <div class="trip-header">
+                    <h3 class="trip-destination">${trip.destination}</h3>
+                    <span class="trip-status status-completed">Completed</span>
+                </div>
+                <p class="trip-dates">${trip.startDate} - ${trip.endDate}</p>
+                <p class="trip-package">${trip.packageName}</p>
+                <div class="trip-meta">
+                    <span class="trip-price">${trip.totalAmtPaid}</span>
+                    <div class="trip-actions">
+                        <a href="#" class="action-button primary">
+                            <i class="fas fa-star"></i>
+                            Rate Trip
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <div class="travel-package-card">
-                <img class="thumbnail" src="./assets/side-view-breakfast-omelet-with-mushrooms-juice-croissants-room-service-hotel-with-amazing-sea-view.jpg" alt="" srcset=""
-                    style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                <div class="content" style="padding-left: 16px; padding-right: 16px;">
-                    <div class="name-desc">
-                        <h3 style="font-size: 18px; margin-bottom: -2px;">All-Inclusive Vacation</h3>
-                        <p style="font-size: 14px; font-weight: 400; color: var(--Subtext, rgba(27, 14, 6, 0.80)); line-height: 160%;">Our all-inclusive getaways mean zero stress, full
-                            enjoyment. You just pack vibes, we’ll handle the rest.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="travel-package-card">
-                <img class="thumbnail" src="./assets/heres-everlasting-love-shot-young-couple-making-toast-while-picnic-lakeside.jpg" alt="" srcset=""
-                    style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                <div class="content" style="padding-left: 16px; padding-right: 16px;">
-                    <div class="name-desc">
-                        <h3 style="font-size: 18px; margin-bottom: -2px;">Romantic Getaways</h3>
-                        <p style="font-size: 14px; font-weight: 400; color: var(--Subtext, rgba(27, 14, 6, 0.80)); line-height: 160%;">Plan baecations, honeymoons, or dreamy spa
-                            weekends. Wherever love is calling, JAPA gets you there in style.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="travel-package-card">
-                <img class="thumbnail" src="./assets/black-family-relaxing-luxury-beach-resort.jpg" alt="" srcset=""
-                    style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                <div class="content" style="padding-left: 16px; padding-right: 16px;">
-                    <div class="name-desc">
-                        <h3 style="font-size: 18px; margin-bottom: -2px;">Family Vacation</h3>
-                        <p style="font-size: 14px; font-weight: 400; color: var(--Subtext, rgba(27, 14, 6, 0.80)); line-height: 160%;">For the whole crew.
-                            From cultural tours to kid-friendly resorts, JAPA makes family travel easy, fun, and
-                            unforgettable.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="travel-package-card">
-                <img class="thumbnail" src="./assets/high-angle-friends-spending-time-together.jpg" alt="" srcset=""
-                    style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                <div class="content" style="padding-left: 16px; padding-right: 16px;">
-                    <div class="name-desc">
-                        <h3 style="font-size: 18px; margin-bottom: -2px;">Cheap Vacation</h3>
-                        <p style="font-size: 14px; font-weight: 400; color: var(--Subtext, rgba(27, 14, 6, 0.80)); line-height: 160%;">Big vibes. Small spend.
-                            With JAPA’s budget-friendly packages, you can flex on a budget, because soft life should be
-                            accessible. </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="travel-package-card">
-                <img class="thumbnail" src="./assets/phone-call-airport-black-woman-with-ticket-travel-luggage-suitcase-global-holiday-plane-transport-communication-girl-with-smartphone-schedule-talking-flight-details.jpg" alt="" srcset=""
-                    style="border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                <div class="content" style="padding-left: 16px; padding-right: 16px;">
-                    <div class="name-desc">
-                        <h3 style="font-size: 18px; margin-bottom: -2px;">Last Minute Vacation</h3>
-                        <p style="font-size: 14px; font-weight: 400; color: var(--Subtext, rgba(27, 14, 6, 0.80)); line-height: 160%;">Need to JAPA ASAP?
-                            Whether it’s a quick romantic escape or a spontaneous squad trip, we’ve got fire last-minute
-                            deals ready to go.</p>
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
 </body>
+
 </html>

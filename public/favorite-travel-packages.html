@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="subtravelpackage.css">
+    <link rel="stylesheet" href="flights.css">
+    <link rel="stylesheet" href="bookmark.css">
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <script src="schema.js"></script>
+    <title>Favorite Travel Package</title>
+</head>
+
+<body class="unicorn-body-wrapper">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navcontents">
+            <div class="navcontents-left">
+                <div class="logo">
+                    <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#who-we-are">Who we are</a></li>
+                    <li><a href="#how-to-japa">How to JAPA</a></li>
+                    <li><a href="#featured-picks">Our Featured Picks</a></li>
+                    <li><a href="#why-us">Why us</a></li>
+                    <li style="font-weight: 600; color: #E71D36;">
+                        <a href="./travel-packages.html" class="book-link">BOOK A PACKAGE</a>
+                        <div class="confetti-container"></div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="user-actions">
+                <div class="bookmark-container" id="bookmark-btn">
+                    <svg class="bookmark-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                    </svg>
+                    Bookmarked trips
+                    <span class="bookmark-badge" id="bookmark-count"></span>
+                </div>
+
+                <button id="username" class="login-button">
+                    <a href="user-auth.html">Log In</a>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="banana-split-container">
+        <!-- Header Section -->
+        <header class="disco-potato-header">
+            <h1 class="funky-chicken-title">Your Favorite Adventures</h1>
+            <p class="silly-goose-subtitle">Your handpicked collection of dream destinations</p>
+        </header>
+
+        <!-- Navigation Breadcrumb -->
+        <nav class="dancing-taco-nav">
+            <a href="index.html" class="pickle-sandwich-breadcrumb">Home</a>
+            <span class="breadcrumb-arrow">→</span>
+            <a href="travel-packages.html" class="pickle-sandwich-breadcrumb">Packages</a>
+            <span class="breadcrumb-arrow">→</span>
+            <span class="pickle-sandwich-breadcrumb" style="color: #4ecdc4;">Favorites</span>
+        </nav>
+
+        <!-- Stats Section -->
+        <div class="rubber-duck-stats">
+            <div class="giggly-penguin-stat">
+                <span class="stat-number" id="total-favorites">0</span>
+                <span class="stat-label">Packages Bookmarked</span>
+            </div>
+        </div>
+
+        <!-- Main Content Section -->
+        <main class="magical-unicorn-content">
+            <h2 class="wonky-elephant-section-title">Your Bookmarked Packages</h2>
+
+            <div id="bottom-pk" class="crazy-monkey-grid">
+                <!-- Loading state -->
+                <div class="sleepy-hamster-empty" style="grid-column: 1 / -1;">
+                    <span class="empty-icon">⏳</span>
+                    <h1>Loading your favorites...</h1>
+                    <p>Please wait while we fetch your bookmarked packages.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="bouncy-castle-footer">
+            <p class="footer-text">Start planning your next adventure today! ✈️</p>
+        </footer>
+
+        <!-- Floating Action Button -->
+        <button class="flying-donut-fab" onclick="window.location.href='travel-packages.html'"
+            title="Browse More Packages">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+            authDomain: "japa-269a4.firebaseapp.com",
+            projectId: "japa-269a4",
+            storageBucket: "japa-269a4.firebasestorage.app",
+            messagingSenderId: "736749113389",
+            appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        function myFirebaseUserAuth() {
+            // Firebase Auth State Change Handler
+            firebase.auth().onAuthStateChanged((user) => {
+                const usernameElement = document.getElementById("username");
+
+                if (user) {
+                    console.log("Current user:", user);
+
+                    // Get the first initial from display name or email
+                    const displayName = user.displayName || user.email;
+                    const firstInitial = displayName.charAt(0).toUpperCase();
+
+
+
+                    // Replace the button content with profile picture and dropdown
+                    usernameElement.innerHTML = `
+                    <div class="user-profile-container">
+        <div class="profile-picture" id="profilePicture">
+            <span class="profile-initial">${firstInitial}</span>
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+            <div class="dropdown-header">
+                <div class="dropdown-profile-pic">
+                    <span class="dropdown-initial">${firstInitial}</span>
+                </div>
+                <div class="dropdown-user-info">
+                    <div class="dropdown-name">👋🏽 Hello, there! ${user.displayName || 'Hello, there! 👋🏽'}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                </div>
+            </div>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item" id="route-to-trips">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+                        fill="currentColor" />
+                </svg>
+                My Upcoming Trips
+            </button>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item" id="bookmark-btn">
+                <svg class="logout-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+                My Bookmarked Trips
+            </button>
+            <hr class="dropdown-divider">
+            <button style = "color: red;" class="dropdown-item" id="logoutBtn">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="red" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <polyline points="16,17 21,12 16,7" stroke="red" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <line x1="21" y1="12" x2="9" y2="12" stroke="red" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Log Out
+            </button>
+        </div>
+    </div>
+    `;
+
+                    // Remove the login-button class and add user-profile class
+                    usernameElement.className = "user-profile";
+
+                } else {
+                    console.log("No user signed in.");
+                    // Reset to login button
+                    usernameElement.innerHTML = '<a href="user-auth.html">Log In</a>';
+                    usernameElement.className = "login-button";
+                }
+            });
+
+            // Toggle dropdown function
+            function toggleDropdown() {
+                const dropdown = document.getElementById("profileDropdown");
+                dropdown.classList.toggle("show");
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (event) {
+                const userProfile = document.querySelector('.user-profile-container');
+                const dropdown = document.getElementById("profileDropdown");
+
+                if (userProfile && !userProfile.contains(event.target)) {
+                    dropdown?.classList.remove("show");
+                }
+            });
+
+            // Logout function with event listener
+            function handleLogout() {
+                firebase.auth().signOut().then(() => {
+                    console.log("User signed out successfully");
+                    // Redirect to home page or refresh
+                    window.location.reload();
+                }).catch((error) => {
+                    console.error("Error signing out:", error);
+                });
+            }
+
+            // Routing users to upcoming trips / booking history
+            function handleUpcomingTripsRoute() {
+                window.location.href = './bookinghistory.html'
+            }
+
+            // Routing users to bookmarks
+            function handleBookmarks() {
+                window.location.href = './favorite-travel-packages.html'
+            }
+
+            // Add event listener for logout button and profile picture
+            document.addEventListener('DOMContentLoaded', function () {
+                // Use event delegation since elements are dynamically created
+                document.addEventListener('click', function (event) {
+                    // Handle logout button click
+                    if (event.target.closest('#logoutBtn')) {
+                        handleLogout();
+                    }
+                    if (event.target.closest('#route-to-trips')) {
+                        handleUpcomingTripsRoute();
+                    }
+                    if (event.target.closest('#bookmark-btn')) {
+                        handleBookmarks();
+                    }
+
+                    // Handle profile picture click
+                    if (event.target.closest('#profilePicture')) {
+                        toggleDropdown();
+                    }
+                });
+            });
+
+        }
+        myFirebaseUserAuth()
+
+
+        // Global variables
+        let allPackages = [];
+        let likedIds = []; // DO NOT initialize from localStorage here!
+        let currentUser = null;
+        let isDataLoaded = false;
+        let isPackagesLoaded = false;
+
+        // Delete SVG
+        const deleteSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`;
+
+        // Handle authentication state changes FIRST
+        firebase.auth().onAuthStateChanged(async (user) => {
+            currentUser = user;
+            console.log("Auth state changed. User:", user ? user.uid : "none");
+
+            if (user) {
+                // User is logged in - load their bookmarks from Firestore
+                try {
+                    const doc = await db.collection("users").doc(user.uid).get();
+
+                    if (doc.exists && doc.data().savedItems) {
+                        likedIds = doc.data().savedItems;
+                        console.log("Loaded user bookmarks from Firestore:", likedIds);
+                    } else {
+                        // No saved items in Firestore, start with empty array
+                        likedIds = [];
+                        console.log("No bookmarks found in Firestore for user, starting fresh");
+                    }
+
+                    // Update localStorage as backup
+                    localStorage.setItem('savedItems', JSON.stringify(likedIds));
+
+                } catch (error) {
+                    console.error("Error loading user bookmarks:", error);
+                    // On error, try localStorage fallback
+                    likedIds = JSON.parse(localStorage.getItem('savedItems') || '[]');
+                }
+            } else {
+                // User is not logged in 
+                console.log("No user logged in:", likedIds);
+            }
+
+            isDataLoaded = true;
+
+            // Initialize page if packages are also loaded
+            if (isPackagesLoaded) {
+                initializePage();
+            }
+        });
+
+        async function loadTravelPackages() {
+            try {
+                const travelPackages = [];
+                const querySnapshot = await db.collection("travel-packages").get();
+
+                querySnapshot.forEach((doc) => {
+                    const packageData = doc.data();
+                    packageData.id = doc.id;
+                    travelPackages.push(packageData);
+                });
+
+                console.log("All travel packages:", travelPackages);
+
+                // Flatten all packages from all categories
+                allPackages = travelPackages.flatMap(category => category.packages);
+                console.log("ALL PACKAGES:", allPackages);
+
+                isPackagesLoaded = true;
+
+                // Initialize page if user data is also loaded
+                if (isDataLoaded) {
+                    initializePage();
+                }
+
+            } catch (error) {
+                console.error("Error getting documents: ", error);
+                // Show error state
+                document.getElementById("bottom-pk").innerHTML = `
+                    <div class="sleepy-hamster-empty" style="grid-column: 1 / -1;">
+                        <span class="empty-icon">❌</span>
+                        <h1>Error loading packages</h1>
+                        <p>There was an error loading your bookmarked packages. Please try again later.</p>
+                    </div>`;
+            }
+        }
+
+        // Function to initialize the page after both auth and packages are loaded
+        function initializePage() {
+            console.log("Initializing page with likedIds:", likedIds);
+            renderSavedItems();
+            updateStats();
+        }
+
+        // Function to update stats
+        function updateStats() {
+            const liked = getLikedPackages();
+            document.getElementById('total-favorites').textContent = liked.length;
+        }
+
+        // Function to get currently liked packages
+        function getLikedPackages() {
+            return allPackages.filter(pkg => likedIds.includes(pkg.id));
+        }
+
+        // Function to check if user is authenticated
+        function checkUserAuthentication() {
+            if (!currentUser) {
+                alert("Create or login to your account to save to bookmarks");
+                return false;
+            }
+            return true;
+        }
+
+        // Function to save bookmarks to Firestore (with proper sync)
+        async function saveBookmarksToFirestore() {
+            if (!currentUser) {
+                // No user logged in, just update localStorage
+                localStorage.setItem("savedItems", JSON.stringify(likedIds));
+                return;
+            }
+
+            try {
+                // Save to Firestore for logged-in users
+                await db.collection("users").doc(currentUser.uid).set({
+                    savedItems: likedIds,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+
+                console.log("Bookmarks saved to Firestore for user:", currentUser.uid);
+
+                // Also update localStorage as backup
+                localStorage.setItem("savedItems", JSON.stringify(likedIds));
+
+            } catch (error) {
+                console.error("Error saving bookmarks to Firestore:", error);
+                // Still save to localStorage on error
+                localStorage.setItem("savedItems", JSON.stringify(likedIds));
+            }
+        }
+
+        // Function to remove item from favorites - FIXED VERSION
+        function removeFromFavorites(packageId) {
+            // Check authentication BEFORE making any changes
+            if (!checkUserAuthentication()) {
+                return; // Exit early if not authenticated
+            }
+
+            // Remove from likedIds array
+            likedIds = likedIds.filter(id => id !== packageId);
+
+            // Save to both Firestore and localStorage
+            saveBookmarksToFirestore();
+
+            // Re-render the display
+            renderSavedItems();
+            updateStats();
+        }
+
+        // Function to route user to sub travel packages page
+        function routeToDetails(packageIndex) {
+            console.log("Selected package index:", packageIndex);
+            console.log("Selected Package:", allPackages[packageIndex]);
+            window.location.href = `travel-package-detail.html?likedPackageID=${packageIndex}`;
+        }
+
+        function renderSavedItems() {
+            const liked = getLikedPackages();
+            console.log("Rendering saved items:", liked);
+
+            if (liked.length === 0) {
+                const emptyMessage = currentUser
+                    ? "No favorite packages yet"
+                    : "Please log in to view your bookmarks";
+
+                const emptyDesc = currentUser
+                    ? "Start exploring and bookmark your dream destinations!"
+                    : "Sign in to save and access your favorite travel packages.";
+
+                document.getElementById("bottom-pk").innerHTML = `
+                    <div class="sleepy-hamster-empty" style="grid-column: 1 / -1;">
+                        <span class="empty-icon">📝</span>
+                        <h1>${emptyMessage}</h1>
+                        <p>${emptyDesc}</p>
+                    </div>`;
+                return;
+            }
+
+            const favItems = liked.map((subPkg, i) => {
+                // Find the original index from allPackages
+                const originalIndex = allPackages.findIndex(pkg => pkg.id === subPkg.id);
+
+                return `
+        <div class="travel-package-card-tp">
+            <div class="travel-package-upper"
+                style="background-image: url(${subPkg.packageThumbnail}); position: relative;">
+                <div class="duration-tag" style="position: absolute; top: 15px; left: 15px;">
+                    ${subPkg.duration.days} days
+                </div>
+                <div class="heart-icon delete-btn" data-package-id="${subPkg.id}"
+                    style="position: absolute; top: 15px; right: 15px; cursor: pointer;">
+                    ${deleteSvg}
+                </div>
+            </div>
+            <div class="travel-package-lower">
+               <div class="package-location-name-desc" data-package-index="${originalIndex}">
+                    <p class="pk-location">${subPkg.destination}</p>
+                    <p style="cursor: pointer;" class="pk-name">${subPkg.name}</p>
+                    <p class="pk-desc">${subPkg.shortDesc}</p>
+                </div>
+                <div class="package-price-ratings">
+                    <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount}</h3>
+                    <p class="pk-ratings">⭐ 4.8 (152 reviews)</p>
+                </div>
+            </div>
+        </div>
+    `;
+            });
+
+            // Render bookmarked packages
+            document.getElementById("bottom-pk").innerHTML = favItems.join('');
+
+            // Add click event listeners for delete buttons
+            document.querySelectorAll('.delete-btn').forEach(deleteBtn => {
+                deleteBtn.addEventListener('click', function (e) {
+                    e.stopPropagation(); // Prevent triggering the card click
+                    const packageId = this.getAttribute('data-package-id');
+                    removeFromFavorites(packageId);
+                });
+            });
+
+            // Add click event listeners to all package cards for navigation
+            document.querySelectorAll('.package-location-name-desc').forEach(card => {
+                card.addEventListener('click', function () {
+                    const packageIndex = this.getAttribute('data-package-index');
+                    routeToDetails(packageIndex);
+                });
+            });
+        }
+
+        // Start loading packages (auth state will be handled separately)
+        loadTravelPackages();
+
+    </script>
+</body>
+
+</html>

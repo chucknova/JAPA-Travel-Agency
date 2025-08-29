@@ -41,6 +41,261 @@
     line-height: 34px;
 }
 
+/* Mobile Portrait and Small Mobile (320-480px) */
+@media (max-width: 480px) {
+    .hero-section-tp {
+        height: 25vh;
+        padding: 24px 20px;
+        gap: 24px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        /* Ensure gradient overlay works on mobile */
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            var(--bg-image, url('assets/beach-resort-maldives-asia.jpg'));
+    }
+
+    .hero-content-tp {
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-header-tp {
+        font-size: 28px;
+        line-height: 36px;
+        font-weight: 600;
+    }
+
+    .hero-subtext-tp {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        max-width: 90%;
+    }
+}
+
+/* Extra Small Mobile (320px) */
+@media (max-width: 320px) {
+    .hero-section-tp {
+        height: 25vh;
+        padding: 20px 16px;
+        gap: 20px;
+        /* Slightly darker overlay for smaller screens */
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+            var(--bg-image, url('assets/beach-resort-maldives-asia.jpg'));
+    }
+
+    .hero-header-tp {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .hero-subtext-tp {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
+
+/* Travel Packages Mobile (320-480px) */
+@media (max-width: 480px) {
+    .travel-packages {
+        padding-top: 48px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .travel-package-top-left-header-tp {
+        font-size: 20px;
+        line-height: 28px;
+        margin-bottom: 12px;
+        display: none;
+    }
+
+    .travel-package-top-left-subheader-tp {
+        font-size: 14px;
+        line-height: 24px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .travel-packages .bottom {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 32px;
+    }
+
+    .travel-package-card {
+        border-radius: 8px;
+    }
+
+    .thumbnail {
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .content {
+        padding: 12px 16px 16px 16px;
+    }
+
+    .name-desc h3 {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .name-desc p {
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    .travel-package-card:hover {
+        transform: scale(1.01);
+    }
+}
+
+/* Extra Small Mobile Travel Packages (320px) */
+@media (max-width: 320px) {
+    .travel-packages {
+        padding-top: 40px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .travel-package-top-left-header-tp {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    .travel-package-top-left-subheader-tp {
+        font-size: 13px;
+        line-height: 22px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .travel-packages .bottom {
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .thumbnail {
+        height: 160px;
+    }
+
+    .content {
+        padding: 10px 12px 12px 12px;
+    }
+
+    .name-desc h3 {
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+
+    .name-desc p {
+        font-size: 12px;
+        line-height: 18px;
+    }
+}
+
+/* How JAPA Works Mobile (320-480px) */
+@media (max-width: 480px) {
+    .how-japa-works {
+        padding: 24px 20px;
+        gap: 20px;
+    }
+
+    .main-container {
+        height: auto;
+        padding-right: 0;
+        border-radius: 12px;
+    }
+
+    .main-container .inner-container {
+        height: auto;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .main-container .inner-container .bg-img {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px 12px 0px 0px;
+    }
+
+    .main-container .inner-container .left {
+        padding: 24px 20px;
+        gap: 24px;
+    }
+
+    .main-container .inner-container .left .left-top {
+        gap: 16px;
+    }
+
+    .main-container .inner-container .left .left-top h3 {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .main-container .inner-container .left .left-top p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .main-container .inner-container .left-bottom button {
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 50px;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+/* Extra Small Mobile How JAPA Works (320px) */
+@media (max-width: 320px) {
+    .how-japa-works {
+        padding: 20px 16px;
+        gap: 16px;
+    }
+
+    .main-container {
+        border-radius: 10px;
+    }
+
+    .main-container .inner-container .bg-img {
+        height: 180px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .main-container .inner-container .left {
+        padding: 20px 16px;
+        gap: 20px;
+    }
+
+    .main-container .inner-container .left .left-top {
+        gap: 12px;
+    }
+
+    .main-container .inner-container .left .left-top h3 {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    .main-container .inner-container .left .left-top p {
+        font-size: 13px;
+        line-height: 22px;
+    }
+
+    .main-container .inner-container .left-bottom button {
+        padding: 10px 18px;
+        font-size: 13px;
+    }
+}
+
 .travel-packages {
     padding-top: 64px;
 }
@@ -443,48 +698,567 @@
     letter-spacing: 0.5px;
 }
 
-/* Responsive design */
+/* Mobile Portrait and Small Mobile (320-480px) */
 @media (max-width: 480px) {
+    .hero-section-tp {
+        height: 25vh;
+        padding: 24px 20px;
+        gap: 24px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        /* Ensure gradient overlay works on mobile */
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            var(--bg-image, url('assets/beach-resort-maldives-asia.jpg'));
+    }
+
+    .hero-content-tp {
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-header-tp {
+        font-size: 28px;
+        line-height: 36px;
+        font-weight: 600;
+    }
+
+    .hero-subtext-tp {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        max-width: 90%;
+    }
+}
+
+/* Extra Small Mobile (320px) */
+@media (max-width: 320px) {
+    .hero-section-tp {
+        height: 45vh;
+        padding: 20px 16px;
+        gap: 20px;
+        /* Slightly darker overlay for smaller screens */
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+            var(--bg-image, url('assets/beach-resort-maldives-asia.jpg'));
+    }
+
+    .hero-header-tp {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .hero-subtext-tp {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
+
+/* Travel Packages Mobile (320-480px) */
+@media (max-width: 480px) {
+    .travel-packages {
+        padding-top: 48px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .travel-packages .top {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 32px !important;
+    }
+
+    .travel-package-top-left-header-tp {
+        font-size: 20px !important;
+        line-height: 28px;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+
+    .travel-package-top-left-subheader-tp {
+        font-size: 14px !important;
+        line-height: 24px;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Sort dropdown mobile styling */
+    .sort-flights-inner {
+        width: 100%;
+    }
+
     .sort-flights {
-        padding: 20px;
-        min-width: 240px;
+        padding: 16px 20px;
+        min-width: auto;
+        width: 100%;
+        margin-top: 16px;
     }
 
     .sort-dropdown {
-        font-size: 15px;
+        font-size: 14px;
         padding: 12px 14px;
         padding-right: 40px;
     }
-}
 
-/* Subtle pulse animation */
-@keyframes pulse {
-
-    0%,
-    100% {
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    50% {
-        box-shadow: 0 8px 25px -8px rgba(102, 126, 234, 0.3);
-    }
-}
-
-.sort-dropdown:hover {
-    animation: pulse 2s infinite;
-}
-
-
-/* Tablet: 2 columns */
-@media (max-width: 1024px) {
-    .bottom-pk {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Mobile: 1 column */
-@media (max-width: 600px) {
+    /* Grid layout for packages */
+    .travel-packages .bottom,
     .bottom-pk {
         grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 24px;
+    }
+
+    /* Package cards mobile styling - Airbnb meets Apple */
+    .travel-package-card-tp {
+        gap: 16px;
+        margin-bottom: 24px;
+        transform: translateY(0);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .travel-package-upper {
+        height: 220px;
+        border-radius: 20px;
+        padding: 12px;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.12),
+            0 2px 8px rgba(0, 0, 0, 0.08);
+        background-size: cover;
+        background-position: center;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Subtle gradient overlay for better text contrast */
+    .travel-package-upper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg,
+                rgba(0, 0, 0, 0.15) 0%,
+                rgba(0, 0, 0, 0.05) 30%,
+                transparent 70%,
+                rgba(0, 0, 0, 0.1) 100%);
+        border-radius: 20px;
+        pointer-events: none;
+    }
+
+    .duration-tag {
+        font-size: 12px;
+        padding: 6px 12px;
+        top: 16px !important;
+        left: 16px !important;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(12px);
+        color: white;
+        border-radius: 20px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        z-index: 2;
+        position: relative;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .heart-icon {
+        top: 16px !important;
+        right: 16px !important;
+        backdrop-filter: blur(12px);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        position: relative;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .heart-icon:active {
+        transform: scale(0.95);
+        background: rgba(231, 29, 54, 0.1);
+    }
+
+    .travel-package-lower {
+        gap: 16px;
+        padding: 4px 0;
+    }
+
+    .package-location-name-desc {
+        gap: 8px;
+    }
+
+    .pk-location {
+        font-size: 13px;
+        color: rgba(27, 14, 6, 0.6);
+        font-weight: 500;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+    }
+
+    .pk-name {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 600;
+        color: #1a1a1a;
+        letter-spacing: -0.2px;
+        margin: 2px 0;
+    }
+
+    .pk-desc {
+        font-size: 13px;
+        line-height: 20px;
+        color: rgba(27, 14, 6, 0.75);
+        font-weight: 400;
+    }
+
+    .package-price-ratings {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .pk-price {
+        font-size: 17px;
+        font-weight: 700;
+        color: #1a1a1a;
+        letter-spacing: -0.3px;
+    }
+
+    .pk-ratings {
+        font-size: 13px;
+        text-align: right;
+        color: rgba(27, 14, 6, 0.8);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .pk-ratings::before {
+        content: '⭐';
+        font-size: 11px;
+    }
+
+    /* Active/Touch states */
+    .travel-package-card-tp:active {
+        transform: scale(0.98) translateY(1px);
+    }
+
+    .travel-package-upper:active {
+        box-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.15),
+            0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hover effects reduced for mobile */
+    .travel-package-upper:hover {
+        transform: none;
+        box-shadow: 0px 4px 40px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .travel-package-upper:hover::before {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+/* Extra Small Mobile Travel Packages (320px) */
+@media (max-width: 320px) {
+    .travel-packages {
+        padding-top: 40px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .travel-packages .top {
+        gap: 16px;
+        margin-bottom: 24px !important;
+    }
+
+    .travel-package-top-left-header-tp {
+        font-size: 18px !important;
+        line-height: 26px;
+        text-align: center;
+    }
+
+    .travel-package-top-left-subheader-tp {
+        font-size: 13px !important;
+        line-height: 22px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .sort-flights {
+        padding: 14px 16px;
+    }
+
+    .sort-dropdown {
+        font-size: 13px;
+        padding: 10px 12px;
+        padding-right: 36px;
+    }
+
+    .bottom-pk {
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .travel-package-card-tp {
+        gap: 14px;
+        margin-bottom: 20px;
+        transform: translateY(0);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .travel-package-upper {
+        height: 200px;
+        border-radius: 18px;
+        padding: 10px;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+            0 6px 24px rgba(0, 0, 0, 0.1),
+            0 1px 6px rgba(0, 0, 0, 0.06);
+        background-size: cover;
+        background-position: center;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .travel-package-upper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg,
+                rgba(0, 0, 0, 0.12) 0%,
+                rgba(0, 0, 0, 0.03) 30%,
+                transparent 70%,
+                rgba(0, 0, 0, 0.08) 100%);
+        border-radius: 18px;
+        pointer-events: none;
+    }
+
+    .duration-tag {
+        font-size: 11px;
+        padding: 5px 10px;
+        top: 14px !important;
+        left: 14px !important;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        color: white;
+        border-radius: 18px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        z-index: 2;
+        position: relative;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .heart-icon {
+        top: 14px !important;
+        right: 14px !important;
+        backdrop-filter: blur(10px);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        position: relative;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.12);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .heart-icon:active {
+        transform: scale(0.95);
+        background: rgba(231, 29, 54, 0.1);
+    }
+
+    .travel-package-lower {
+        gap: 12px;
+        padding: 2px 0;
+    }
+
+    .package-location-name-desc {
+        gap: 6px;
+    }
+
+    .pk-location {
+        font-size: 12px;
+        color: rgba(27, 14, 6, 0.6);
+        font-weight: 500;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+    }
+
+    .pk-name {
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        color: #1a1a1a;
+        letter-spacing: -0.2px;
+        margin: 1px 0;
+    }
+
+    .pk-desc {
+        font-size: 12px;
+        line-height: 18px;
+        color: rgba(27, 14, 6, 0.75);
+        font-weight: 400;
+    }
+
+    .package-price-ratings {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding-top: 6px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .pk-price {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1a1a1a;
+        letter-spacing: -0.2px;
+    }
+
+    .pk-ratings {
+        font-size: 12px;
+        text-align: right;
+        color: rgba(27, 14, 6, 0.8);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .pk-ratings::before {
+        content: '⭐';
+        font-size: 10px;
+    }
+
+    .travel-package-card-tp:active {
+        transform: scale(0.98) translateY(1px);
+    }
+
+    .travel-package-upper:active {
+        box-shadow:
+            0 3px 16px rgba(0, 0, 0, 0.12),
+            0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* How JAPA Works Mobile (320-480px) */
+@media (max-width: 480px) {
+    .how-japa-works {
+        padding: 24px 20px;
+        gap: 20px;
+    }
+
+    .main-container {
+        height: auto;
+        padding-right: 0;
+        border-radius: 12px;
+    }
+
+    .main-container .inner-container {
+        height: auto;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .main-container .inner-container .bg-img {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px 12px 0px 0px;
+    }
+
+    .main-container .inner-container .left {
+        padding: 24px 20px;
+        gap: 24px;
+    }
+
+    .main-container .inner-container .left .left-top {
+        gap: 16px;
+    }
+
+    .main-container .inner-container .left .left-top h3 {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .main-container .inner-container .left .left-top p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .main-container .inner-container .left-bottom button {
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 50px;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+/* Extra Small Mobile How JAPA Works (320px) */
+@media (max-width: 320px) {
+    .how-japa-works {
+        padding: 20px 16px;
+        gap: 16px;
+    }
+
+    .main-container {
+        border-radius: 10px;
+    }
+
+    .main-container .inner-container .bg-img {
+        height: 180px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .main-container .inner-container .left {
+        padding: 20px 16px;
+        gap: 20px;
+    }
+
+    .main-container .inner-container .left .left-top {
+        gap: 12px;
+    }
+
+    .main-container .inner-container .left .left-top h3 {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    .main-container .inner-container .left .left-top p {
+        font-size: 13px;
+        line-height: 22px;
+    }
+
+    .main-container .inner-container .left-bottom button {
+        padding: 10px 18px;
+        font-size: 13px;
     }
 }

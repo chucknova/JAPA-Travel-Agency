@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="subtravelpackage.css">
+    <link rel="stylesheet" href="flights.css">
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <script src="schema.js"></script>
+    <link rel="stylesheet" href="booking-history.css">
+    <title>My Trips - Booking History</title>
+</head>
+
+<body class="pizza-unicorn-wrapper">
+   <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navcontents">
+        <div class="navcontents-left">
+          <div class="logo">
+            <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#who-we-are">Who we are</a></li>
+            <li><a href="#how-to-japa">How to JAPA</a></li>
+            <li><a href="#featured-picks">Our Featured Picks</a></li>
+            <li><a href="#why-us">Why us</a></li>
+            <li style="font-weight: 600; color: #E71D36;">
+              <a href="./travel-packages.html" class="book-link">BOOK A PACKAGE</a>
+              <div class="confetti-container"></div>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="user-actions">
+          <div class="bookmark-container" id="bookmark-btn">
+            <svg class="bookmark-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
+            Bookmarked trips
+            <span class="bookmark-badge" id="bookmark-count"></span>
+          </div>
+
+          <button id="username" class="login-button">
+            <a href="user-auth.html">Log In</a>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="taco-bell-container">
+        <!-- Header Section -->
+        <header class="dancing-llama-header">
+            <h1 class="magical-narwhal-title">My Trips</h1>
+            <p class="sleepy-koala-subtitle">Track your travel adventures and plan your next journey</p>
+        </header>
+
+        <!-- Search and Filter Controls -->
+        <div class="clever-monkey-controls">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search trips...">
+            </div>
+            <div class="filter-dropdown">
+                <nav class="bouncy-giraffe-tabs">
+                    <button class="tab-button active" data-tab="upcoming">
+                        <i class="fas fa-calendar-plus"></i>
+                        Upcoming Trips
+                    </button>
+                    <button class="tab-button" data-tab="history">
+                        <i class="fas fa-history"></i>
+                        Booking History
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Trips Content -->
+        <main class="funky-elephant-trips">
+            <!-- Upcoming Trips Tab -->
+            <div id="upcoming-tab" class="tab-content active">
+                <div id="trips-grid" class="trips-grid">
+                    <!-- Automatically Injected from Firestore -->
+                </div>
+            </div>
+
+            <!-- Booking History Tab -->
+            <div id="history-tab" class="tab-content">
+                <div id="past-trips-grid" class="trips-grid">
+                    <!-- Injected Automatically from Firestore -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Skeletons -->
+        <div class="loading-skeletons" id="loadingSkeletons">
+            <div class="trip-skeleton">
+                <div class="skeleton-content">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line long"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="trip-skeleton">
+                <div class="skeleton-content">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line long"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+            authDomain: "japa-269a4.firebaseapp.com",
+            projectId: "japa-269a4",
+            storageBucket: "japa-269a4.firebasestorage.app",
+            messagingSenderId: "736749113389",
+            appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Global variables to store trip data
+        let allTrips = [];
+        let upcomingTrips = [];
+        let pastTrips = [];
+        let currentUser = null;
+
+        function displayNav() {
+            let savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+            let bookmarkCount = document.getElementById('bookmark-count')
+
+            function updateBookmarkCount() {
+                savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+                bookmarkCount.innerHTML = savedItems.length;
+            }
+
+            updateBookmarkCount();
+            document.getElementById('bookmark-btn').addEventListener('click', () => {
+                window.location.href = 'favorite-travel-packages.html'
+            })
+        }
+        displayNav()
+
+        function showLoading() {
+            document.querySelector('.funky-elephant-trips').style.display = 'none';
+            document.getElementById('loadingSkeletons').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingSkeletons').style.display = 'none';
+            document.querySelector('.funky-elephant-trips').style.display = 'block';
+        }
+
+        // Fetch trips from Firestore
+        async function fetchTripsFromFirestore() {
+            try {
+                if (!currentUser) {
+                    console.log("No authenticated user");
+                    return;
+                }
+
+                showLoading();
+                console.log("Fetching trips for user:", currentUser.uid);
+
+                const userDoc = await db.collection("users").doc(currentUser.uid).get();
+                
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    console.log("User data from Firestore:", userData);
+                    
+                    // Get all trips and filter by date
+                    allTrips = userData.upcomingTrips || [];
+                    console.log("All trips from Firestore:", allTrips);
+                    
+                    // Filter trips by date
+                    filterTripsByDate();
+                    
+                    // Render both upcoming and past trips
+                    renderUpcomingTrips();
+                    renderPastTrips();
+                    
+                } else {
+                    console.log("No user document found");
+                    allTrips = [];
+                    upcomingTrips = [];
+                    pastTrips = [];
+                    renderEmptyState();
+                }
+                
+                hideLoading();
+                
+            } catch (error) {
+                console.error("Error fetching trips from Firestore:", error);
+                hideLoading();
+                renderErrorState();
+            }
+        }
+
+        function parseDate(dateString) {
+            if (!dateString) return null;
+            
+            if (dateString.includes('-')) {
+                return new Date(dateString);
+            } else {
+                return new Date(dateString);
+            }
+        }
+
+        function filterTripsByDate() {
+            const currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0);
+            
+            upcomingTrips = [];
+            pastTrips = [];
+
+            allTrips.forEach((trip, index) => {
+                console.log(`Processing trip ${index}:`, trip);
+
+                if (!trip.endDate) {
+                    console.warn(`Trip ${index} missing endDate:`, trip);
+                    // Default to upcoming if no end date
+                    upcomingTrips.push(trip);
+                    return;
+                }
+
+                const endDate = parseDate(trip.endDate);
+                if (!endDate) {
+                    upcomingTrips.push(trip);
+                    return;
+                }
+                
+                endDate.setHours(23, 59, 59, 999);
+
+                console.log(`Trip ${index} end date:`, endDate, "Current:", currentDate, "Is past:", endDate < currentDate);
+
+                if (endDate < currentDate) {
+                    pastTrips.push(trip);
+                } else {
+                    upcomingTrips.push(trip);
+                }
+            });
+
+            console.log("Filtered results - Upcoming:", upcomingTrips.length, "Past:", pastTrips.length);
+        }
+
+        function renderUpcomingTrips() {
+            console.log("Rendering upcoming trips:", upcomingTrips);
+            
+            const tripsGrid = document.getElementById("trips-grid");
+            if (!tripsGrid) {
+                console.error("trips-grid element not found");
+                return;
+            }
+
+            if (upcomingTrips.length === 0) {
+                tripsGrid.innerHTML = '<div class="no-trips">No upcoming trips found.</div>';
+                return;
+            }
+
+            const tripsHTML = upcomingTrips.map((trip, i) => {
+                console.log(`Rendering upcoming trip ${i}:`, trip);
+                return `
+                    <div class="groovy-penguin-card">
+                        <div class="card-content">
+                            <img src="${trip.tripThumbnail || trip.image || 'https://via.placeholder.com/300x200?text=Trip+Image'}" alt="${trip.destination}" class="trip-image">
+                            <div class="trip-details">
+                                <div class="trip-header">
+                                    <h3 class="trip-destination">${trip.destination || 'Destination'}</h3>
+                                    <span class="trip-status status-upcoming">Upcoming</span>
+                                </div>
+                                <p class="trip-dates">${trip.startDate || 'Start Date'} - ${trip.endDate || 'End Date'}</p>
+                                <p class="trip-package">${trip.packageName || trip.name || 'Package Name'}</p>
+                                <div class="trip-meta">
+                                    <span class="trip-price">${trip.totalAmtPaid || trip.price || 'Price N/A'}</span>
+                                    <div class="trip-actions">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            tripsGrid.innerHTML = tripsHTML.join('');
+        }
+
+        function renderPastTrips() {
+            console.log("Rendering past trips:", pastTrips);
+            
+            const pastTripsGrid = document.getElementById("past-trips-grid");
+            if (!pastTripsGrid) {
+                console.error("past-trips-grid element not found");
+                return;
+            }
+
+            if (pastTrips.length === 0) {
+                pastTripsGrid.innerHTML = '<div class="no-trips">No past trips found.</div>';
+                return;
+            }
+
+            const tripsHTML = pastTrips.map((trip, i) => {
+                console.log(`Rendering past trip ${i}:`, trip);
+                return `
+                    <div class="groovy-penguin-card">
+                        <div class="card-content">
+                            <img src="${trip.tripThumbnail || trip.image || 'https://via.placeholder.com/300x200?text=Trip+Image'}" alt="${trip.destination}" class="trip-image">
+                            <div class="trip-details">
+                                <div class="trip-header">
+                                    <h3 class="trip-destination">${trip.destination || 'Destination'}</h3>
+                                    <span class="trip-status status-completed">Completed</span>
+                                </div>
+                                <p class="trip-dates">${trip.startDate || 'Start Date'} - ${trip.endDate || 'End Date'}</p>
+                                <p class="trip-package">${trip.packageName || trip.name || 'Package Name'}</p>
+                                <div class="trip-meta">
+                                    <span class="trip-price">${trip.totalAmtPaid || trip.price || 'Price N/A'}</span>
+                                    <div class="trip-actions">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            pastTripsGrid.innerHTML = tripsHTML.join('');
+        }
+
+        function renderEmptyState() {
+            document.getElementById("trips-grid").innerHTML = '<div class="no-trips">No trips found. Start planning your next adventure!</div>';
+            document.getElementById("past-trips-grid").innerHTML = '<div class="no-trips">No past trips found.</div>';
+        }
+
+        function renderErrorState() {
+            const errorMessage = '<div class="no-trips">Error loading trips. Please try again later.</div>';
+            document.getElementById("trips-grid").innerHTML = errorMessage;
+            document.getElementById("past-trips-grid").innerHTML = errorMessage;
+        }
+
+        function myFirebaseUserAuth() {
+            firebase.auth().onAuthStateChanged(async (user) => {
+                const usernameElement = document.getElementById("username");
+                currentUser = user;
+
+                if (user) {
+                    console.log("Current user:", user);
+                    const displayName = user.displayName || user.email;
+                    const firstInitial = displayName.charAt(0).toUpperCase();
+
+                    usernameElement.innerHTML = `
+                        <div class="user-profile-container">
+                            <div class="profile-picture" id="profilePicture">
+                                <span class="profile-initial">${firstInitial}</span>
+                            </div>
+                            <div class="profile-dropdown" id="profileDropdown">
+                                <div class="dropdown-header">
+                                    <div class="dropdown-profile-pic">
+                                        <span class="dropdown-initial">${firstInitial}</span>
+                                    </div>
+                                    <div class="dropdown-user-info">
+                                        <div class="dropdown-name">👋🏽 Hello, ${user.displayName || 'there'}!</div>
+                                        <div class="dropdown-email">${user.email}</div>
+                                    </div>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <button class="dropdown-item" id="route-to-trips">
+                                    <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor"/>
+                                    </svg>
+                                    My Upcoming Trips
+                                </button>
+                                <hr class="dropdown-divider">
+                                <button class="dropdown-item" id="logoutBtn">
+                                    <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <polyline points="16,17 21,12 16,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Log Out
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    usernameElement.className = "user-profile";
+
+                    // Fetch trips from Firestore once user is authenticated
+                    await fetchTripsFromFirestore();
+
+                } else {
+                    console.log("No user signed in.");
+                    currentUser = null;
+                    usernameElement.innerHTML = '<a href="user-auth.html">Log In</a>';
+                    usernameElement.className = "login-button";
+                    renderEmptyState();
+                }
+            });
+
+            function toggleDropdown() {
+                const dropdown = document.getElementById("profileDropdown");
+                if (dropdown) {
+                    dropdown.classList.toggle("show");
+                }
+            }
+
+            document.addEventListener('click', function (event) {
+                const userProfile = document.querySelector('.user-profile-container');
+                const dropdown = document.getElementById("profileDropdown");
+
+                if (userProfile && !userProfile.contains(event.target)) {
+                    dropdown?.classList.remove("show");
+                }
+            });
+
+            function handleLogout() {
+                firebase.auth().signOut().then(() => {
+                    console.log("User signed out successfully");
+                    window.location.reload();
+                }).catch((error) => {
+                    console.error("Error signing out:", error);
+                });
+            }
+
+            function handleUpcomingTripsRoute() {
+                window.location.href = './bookinghistory.html'
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                document.addEventListener('click', function (event) {
+                    if (event.target.closest('#logoutBtn')) {
+                        handleLogout();
+                    }
+                    if (event.target.closest('#route-to-trips')) {
+                        handleUpcomingTripsRoute();
+                    }
+                    if (event.target.closest('#profilePicture')) {
+                        toggleDropdown();
+                    }
+                });
+            });
+        }
+
+        // Tab Switching
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                button.classList.add('active');
+
+                const tabName = button.getAttribute('data-tab');
+                const targetTab = document.getElementById(tabName + '-tab');
+                if (targetTab) {
+                    targetTab.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality
+        document.querySelector('.search-input').addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tripCards = document.querySelectorAll('.groovy-penguin-card');
+
+            tripCards.forEach(card => {
+                const destinationEl = card.querySelector('.trip-destination');
+                const packageEl = card.querySelector('.trip-package');
+                
+                if (destinationEl && packageEl) {
+                    const destination = destinationEl.textContent.toLowerCase();
+                    const packageName = packageEl.textContent.toLowerCase();
+
+                    if (destination.includes(searchTerm) || packageName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        // Initialize authentication
+        myFirebaseUserAuth();
+
+        // Utility functions for debugging
+        window.refreshTrips = async function() {
+            console.log("Manually refreshing trips...");
+            await fetchTripsFromFirestore();
+        };
+
+        window.checkFirebaseAuth = function() {
+            console.log("Current user:", firebase.auth().currentUser);
+            console.log("Current user variable:", currentUser);
+        };
+
+        window.addSampleTrip = async function() {
+            if (!currentUser) {
+                console.log("No authenticated user");
+                return;
+            }
+
+            const sampleTrip = {
+                destination: "Tokyo, Japan",
+                packageName: "Japan Cultural Experience",
+                startDate: "2025-09-10",
+                endDate: "2025-09-17",
+                totalAmtPaid: "$3,200",
+                tripThumbnail: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=300&h=200&fit=crop"
+            };
+
+            try {
+                // Add to the existing trips array
+                const currentTrips = [...allTrips, sampleTrip];
+                
+                await db.collection("users").doc(currentUser.uid).set({
+                    upcomingTrips: currentTrips,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+
+                console.log("Sample trip added!");
+                await fetchTripsFromFirestore();
+            } catch (error) {
+                console.error("Error adding sample trip:", error);
+            }
+        };
+    </script>
+
+    <style>
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .no-trips {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 2rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .loading-skeletons {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .trip-skeleton {
+            background: #f0f0f0;
+            border-radius: 12px;
+            overflow: hidden;
+            animation: pulse 2s infinite;
+        }
+
+        .skeleton-content {
+            padding: 1rem;
+        }
+
+        .skeleton-image {
+            width: 100%;
+            height: 200px;
+            background: #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .skeleton-line {
+            height: 16px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-line.short { width: 60%; }
+        .skeleton-line.medium { width: 80%; }
+        .skeleton-line.long { width: 100%; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        
+        
+    </style>
+</body>
+
+</html>

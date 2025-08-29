@@ -9,6 +9,17 @@
     padding-top: 64px;
 }
 
+@media (max-width: 480px) {
+    .upper-component {
+        display: flex;
+        width: 100%;
+        padding: 32px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+}
+
 .travel-name-short-details {
     display: flex;
     flex-direction: column;
@@ -35,6 +46,50 @@
     font-weight: 400;
     line-height: normal;
     align-self: stretch;
+}
+
+.col-reverse {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+@media (max-width: 480px) {
+    .travel-name-short-details {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        align-self: stretch;
+    }
+
+    .package-name {
+        color: #1B0E06;
+        font-family: "IBM Plex Sans";
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.2;
+        align-self: stretch;
+        padding-top: 12px;
+        padding-bottom: 4px;
+    }
+
+    .package-short-details {
+        color: rgba(27, 14, 6, 0.80);
+        font-family: "IBM Plex Sans";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.7;
+        align-self: stretch;
+    }
+
+    .col-reverse {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 24px;
+    }
 }
 
 .travel-gallery {
@@ -104,6 +159,111 @@
     cursor: pointer;
 }
 
+@media (max-width: 480px) {
+    .travel-gallery {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        align-self: stretch;
+        border-radius: 16px;
+        background: #F6F6F6;
+        box-shadow: 0px 2px 20px -3px rgba(0, 0, 0, 0.10);
+        width: 100%;
+        margin: 0 auto;
+        padding: 4px;
+    }
+
+    .grid-1 {
+        width: 100%;
+        height: 40vh;
+        border-radius: 12px;
+        object-fit: cover;
+        cursor: pointer;
+        flex: none;
+    }
+
+    .right-grid-images {
+        display: flex;
+        width: 100%;
+        height: 120px;
+        gap: 4px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        flex: 1;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    /* Hide 2 images on mobile */
+    .grid-2,
+    .grid-3 {
+        display: none;
+    }
+
+    .grid-4 {
+        border-radius: 8px;
+    }
+
+    .gallery-trigger {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        width: 100%;
+        height: 100%;
+        flex: 1;
+    }
+
+    .gallery-trigger:hover {
+        transform: scale(1.02);
+    }
+
+    .gallery-trigger img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    .overlay-text {
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.5);
+        padding: 4px 6px;
+        border-radius: 8px;
+        backdrop-filter: blur(3px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+        line-height: 1.2;
+    }
+}
+
+
 .travel-details-nav {
     display: flex;
     align-items: center;
@@ -111,7 +271,6 @@
     padding: 16px 0px;
     align-self: stretch;
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
-    position: sticky;
     position: sticky;
     top: 0;
     z-index: 20;
@@ -134,6 +293,61 @@
     cursor: pointer;
 }
 
+@media (max-width: 480px) {
+    .travel-details-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 0px;
+        align-self: stretch;
+        border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background-color: white;
+        margin-bottom: 24px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .travel-details-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-item {
+        display: flex;
+        padding: 8px 12px;
+        padding-bottom: 12px;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        color: #1B0E06;
+        font-family: "IBM Plex Sans";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-width: fit-content;
+        border-radius: 6px 6px 0 0;
+        transition: background-color 0.2s ease;
+    }
+
+    .nav-item:hover {
+        background-color: rgba(27, 14, 6, 0.05);
+    }
+
+    .nav-item.active {
+        color: #1B0E06;
+        font-weight: 600;
+        background-color: rgba(27, 14, 6, 0.08);
+        border-bottom: 2px solid #1B0E06;
+    }
+}
+
 .middle-component {
     display: flex;
     width: 100%;
@@ -147,7 +361,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 32px;
+    gap: 64px;
     flex: 1 0 0;
 }
 
@@ -322,21 +536,12 @@
 .package-included-card-container {
     perspective: 1000px;
     height: 156px;
-    flex: 1 1 220px; /* Allow growth and shrinkage with 220px base */
+    flex: 1 1 220px;
+    /* Allow growth and shrinkage with 220px base */
     min-width: 220px;
-    max-width: 300px; /* Reasonable maximum */
+    max-width: 300px;
+    /* Reasonable maximum */
 }
-
-/* Alternative approach - if you want responsive sizing */
-/* 
-.package-included-card-container {
-    perspective: 1000px;
-    height: 156px;
-    min-width: 220px;
-    max-width: 280px;
-    flex: 1 1 220px; // Allow growth but with reasonable limits
-}
-*/
 
 /* Flip card wrapper */
 .package-included-card-flip {
@@ -355,8 +560,10 @@
 /* Fixed card styles - remove conflicting width properties */
 .package-included-card {
     position: absolute;
-    width: 100%; /* Takes full width of container */
-    height: 100%; /* Takes full height of container */
+    width: 100%;
+    /* Takes full width of container */
+    height: 100%;
+    /* Takes full height of container */
     backface-visibility: hidden;
     display: flex;
     padding: 16px 0px 0px 16px;
@@ -488,6 +695,349 @@
     /* 142.857% */
     align-self: stretch;
 }
+
+@media (max-width: 480px) {
+    .middle-component {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0px 20px;
+        align-items: flex-start;
+        gap: 16px;
+        padding-bottom: 32px;
+    }
+
+    .main-details-left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 64px;
+        flex: 1 0 0;
+    }
+
+    /* What Package Is About Section */
+    .what-package-is-about {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        align-self: stretch;
+    }
+
+    .what-package-is-about h3 {
+        color: #1B0E06;
+        font-family: "IBM Plex Sans";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.3;
+        align-self: stretch;
+    }
+
+    .what-package-is-about p {
+        color: rgba(27, 14, 6, 0.80);
+        font-family: "IBM Plex Sans";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5;
+        height: 63px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        align-self: stretch;
+    }
+
+    .read-more {
+        border-radius: 6px;
+        background: rgba(231, 29, 54, 0.10);
+        color: #E71D36;
+        font-family: "IBM Plex Sans";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.4;
+        display: flex;
+        padding: 10px 14px;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+
+    /* Day by Day Itinerary Section */
+    .day-by-day-itinerary {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
+    }
+
+    .day-by-day-itinerary h3 {
+        color: #1B0E06;
+        font-family: "IBM Plex Sans";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.3;
+        align-self: stretch;
+    }
+
+    .itinerary-accordion {
+        display: flex;
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: stretch;
+        border-radius: 12px;
+        background: #F6F6F6;
+    }
+
+    .accordion-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        align-self: stretch;
+    }
+
+    .accordion-component {
+        display: flex;
+        padding: 16px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 12px;
+        align-self: stretch;
+        border-radius: 12px;
+        background: #FFF;
+    }
+
+    .title-and-arrow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+    }
+
+    .accordion-component-title {
+        color: #1B0E06;
+        font-family: "IBM Plex Sans";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.4;
+        flex: 1 0 0;
+        margin-right: 12px;
+    }
+
+    .arrow svg {
+        width: 24px;
+        height: 24px;
+        aspect-ratio: 1/1;
+        flex-shrink: 0;
+    }
+
+    .accordion-component-subtext {
+        color: rgba(27, 14, 6, 0.80);
+        font-family: "IBM Plex Sans";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5;
+        align-self: stretch;
+    }
+
+    /* Package Included Section */
+    @media (max-width: 480px) {
+        .package-included {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            align-self: stretch;
+        }
+
+        .package-included-heading {
+            color: #1B0E06;
+            font-family: "IBM Plex Sans";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.3;
+            align-self: stretch;
+        }
+
+        .package-included-grid {
+            display: flex;
+            align-items: flex-start;
+            align-content: flex-start;
+            gap: 8px;
+            align-self: stretch;
+            flex-direction: column;
+        }
+
+        .package-included-card-container {
+            perspective: 1000px;
+            width: 100%;
+            min-height: 80px;
+            aspect-ratio: 3 / 1;
+        }
+
+        .package-included-card-flip {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .package-included-card-container:hover .package-included-card-flip {
+            transform: rotateY(180deg);
+        }
+
+        .package-included-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            padding: 12px 16px 12px 16px;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            gap: 8px;
+            border-radius: 10px;
+            background: #FFEDE2;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .card-front {
+            z-index: 2;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .inner-package-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            flex: 1 0 0;
+            align-self: stretch;
+            width: 100%;
+        }
+
+        .package-included-name {
+            color: #7D4320;
+            font-family: "IBM Plex Sans";
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.2;
+            flex: 1 0 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .card-back .package-included-name {
+            font-weight: 450;
+            font-size: 14px;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .japa-package-inclusion-badge {
+            align-self: flex-end;
+            flex-shrink: 0;
+        }
+    }
+
+    /* Where You Will Stay Section */
+    .where-you-will-stay {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
+        margin-bottom: 200px;
+    }
+
+    .heading {
+        color: #1B0E06;
+        font-family: "IBM Plex Sans";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.3;
+        align-self: stretch;
+    }
+
+    .accomodations-grid {
+        display: flex;
+        align-items: flex-start;
+        align-content: flex-start;
+        gap: 16px;
+        align-self: stretch;
+        flex-wrap: wrap;
+        border-radius: 12px;
+    }
+
+    .accomodation-card {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        flex: none;
+    }
+
+    .accomodation-thumbnail {
+        display: flex;
+        height: 180px;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+        align-self: stretch;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .accomodation-name-desc {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        align-self: stretch;
+    }
+
+    .name {
+        color: var(--Main-text, #1B0E06);
+        font-family: "IBM Plex Sans";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.3;
+        align-self: stretch;
+    }
+
+    .desc {
+        color: rgba(27, 14, 6, 0.70);
+        font-family: "IBM Plex Sans";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5;
+        align-self: stretch;
+    }
+}
+
 
 .book-spot-bar-right {
     display: flex;
@@ -693,6 +1243,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: 145%;
+    text-align: left;
     /* 23.2px */
     align-self: stretch;
 }
@@ -704,6 +1255,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 145%;
+    text-align: left;
     /* 20.3px */
     align-self: stretch;
 }
@@ -901,130 +1453,164 @@
 }
 
 .bottom-component {
-    display: flex;
     width: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 52px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .ratings {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    align-self: stretch;
+    gap: 16px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .star-ratings-avg {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 8px;
 }
 
-.star-rating-icon svg {
-    aspect-ratio: 1/1;
-    fill: #FAA61A;
+.star-rating-icon {
+    width: 24px;
+    height: 24px;
+    background: #ffc107;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star-rating-icon::before {
+    content: "★";
+    color: white;
+    font-size: 16px;
 }
 
 .ratings-avg {
-    color: #000;
-    font-family: "IBM Plex Sans";
-    font-size: 64px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
 }
 
 .ratings-placeholder {
-    color: rgba(0, 0, 0, 0.70);
-    text-align: center;
-    font-family: "IBM Plex Sans";
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
-    /* 160% */
-    letter-spacing: -0.15px;
-    align-self: stretch;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6c757d;
+    letter-spacing: 0.5px;
 }
 
-.reviews {}
-
 .review-grid {
-    display: flex;
-    padding: 24px 80px;
-    align-items: center;
-    align-content: center;
-    gap: 44px;
-    align-self: stretch;
-    flex-wrap: wrap;
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
 }
 
 .user-review-card {
-    display: flex;
-    width: 350px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.user-review-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .user-pfp-name-timestamp {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 16px;
 }
 
 .user-review-pfp {
-    width: 54px;
-    height: 54px;
-    aspect-ratio: 1/1;
-    border-radius: 100px;
-}
-
-.name-timestamp {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e9ecef;
 }
 
 .name-timestamp h3 {
-    color: #000;
-    font-family: "IBM Plex Sans";
     font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 2px;
 }
 
 .name-timestamp p {
-    color: rgba(0, 0, 0, 0.50);
-    font-family: "IBM Plex Sans";
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.card-rating .star {
+    color: #ffc107;
     font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+}
+
+.card-rating .star.empty {
+    color: #e9ecef;
 }
 
 .user-review-here {
-    overflow: hidden;
-    color: rgba(27, 14, 6, 0.80);
-    text-overflow: ellipsis;
-    font-family: "IBM Plex Sans";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 160%;
-    /* 25.6px */
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    align-self: stretch;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #495057;
+    font-style: italic;
+    position: relative;
+}
+
+.user-review-here::before {
+    content: "";
+    font-size: 20px;
+    color: #dee2e6;
+    position: absolute;
+    left: -8px;
+    top: -2px;
+}
+
+.user-review-here::after {
+    content: "";
+    font-size: 20px;
+    color: #dee2e6;
+}
+
+@media (max-width: 768px) {
+    .bottom-component {
+        padding: 24px;
+        margin: 10px;
+    }
+
+    .review-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .user-review-card {
+        padding: 20px;
+    }
+
+    .ratings {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
 }
 
 /* Testing for accordion, might conflict with others */
@@ -1200,7 +1786,7 @@
 }
 
 .addon-btn.added {
-    background-color:#E71D36;
+    background-color: #E71D36;
     color: #fff;
 }
 
@@ -1223,5 +1809,678 @@
     100% {
         opacity: 0;
         transform: translate(-50%, -150%) scale(1.5);
+    }
+}
+
+/* Desktop styles */
+.book-spot-bar-right {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 16px;
+    border: 1.5px solid #F2F2F2;
+    background: #FFF;
+    box-shadow: 0px 9px 15px 0px rgba(0, 0, 0, 0.10);
+    position: sticky;
+    top: 120px;
+    z-index: 10;
+}
+
+.book-spot-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    flex: 1 0 0;
+}
+
+.book-spot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.book-spot-header h3 {
+    color: var(--Main-text, #1B0E06);
+    font-family: "IBM Plex Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.spots-left-counter {
+    display: flex;
+    padding: 6px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    border-radius: 100px;
+    background: var(--Pink, #E71D36);
+    color: var(--White, #FFF);
+    font-family: "IBM Plex Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.book-spot-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.spot-price {
+    display: flex;
+    padding: 12px 0px 20px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    align-self: stretch;
+    border-bottom: 1px solid #E3E3E3;
+}
+
+.spot-price-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.spot-price-inner p {
+    align-self: stretch;
+    color: var(--Subtext, rgba(27, 14, 6, 0.90));
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.spot-price-inner h2 {
+    align-self: stretch;
+    color: var(--Main-text, #1B0E06);
+    font-family: "IBM Plex Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.traveler-count-bs {
+    display: flex;
+    padding: 12px 0px 20px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    align-self: stretch;
+    border-bottom: 1px solid #E3E3E3;
+}
+
+.traveler-count-inner-bs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+}
+
+.heading-bs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.heading-bs h2 {
+    color: #1B0E06;
+    font-family: "IBM Plex Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%;
+    align-self: stretch;
+}
+
+.heading-bs p {
+    color: var(--Main-text, #1B0E06);
+    font-family: "IBM Plex Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    align-self: stretch;
+}
+
+.inputs-section-traveler-count {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+}
+
+.input-subsection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.input-subsection input {
+    display: flex;
+    height: 54px;
+    padding: 8px 12px;
+    align-items: center;
+    gap: 12px;
+    flex: 1 0 0;
+    border-radius: 6px;
+    border: 1px solid var(--Grey-300, #D0D5DD);
+    background: var(--Shade-White, #FFF);
+}
+
+.input-subsection input::placeholder {
+    color: var(--Grey-400, #98A2B3);
+    font-feature-settings: 'cv03' on, 'cv04' on;
+    font-family: "IBM Plex Sans";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+}
+
+.who-agedesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    flex: 1 0 0;
+}
+
+.who-agedesc h2 {
+    color: #000;
+    font-family: "IBM Plex Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 145%;
+    align-self: stretch;
+}
+
+.who-agedesc p {
+    color: #000;
+    font-family: "IBM Plex Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+    align-self: stretch;
+}
+
+.traveler-info-bs {
+    display: flex;
+    padding: 12px 0px 20px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    align-self: stretch;
+    border-bottom: 1px solid #E3E3E3;
+}
+
+.traveler-info-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+}
+
+.inputs-section-traveler-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+}
+
+.inputs-subsection-traveler-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+}
+
+.inputs-subsection-traveler-info input {
+    display: flex;
+    height: 54px;
+    padding: 8px 12px;
+    align-items: center;
+    gap: 12px;
+    flex: 1 0 0;
+    border-radius: 6px;
+    border: 1px solid var(--Grey-300, #D0D5DD);
+    background: var(--Shade-White, #FFF);
+}
+
+.inputs-subsection-traveler-info input::placeholder {
+    color: var(--Grey-400, #98A2B3);
+    font-feature-settings: 'cv03' on, 'cv04' on;
+    font-family: "IBM Plex Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+}
+
+.add-ons-bs {
+    display: flex;
+    padding: 12px 0px 20px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    align-self: stretch;
+    border-bottom: 1px solid #E3E3E3;
+}
+
+.add-ons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    padding-top: 12px;
+}
+
+.add-on-component {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #F6F6F6;
+}
+
+.add-on-component-inner {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    align-self: stretch;
+}
+
+.add-on-name-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 7px;
+    flex: 1 0 0;
+}
+
+.add-on-name-price h2 {
+    color: rgba(49, 37, 30, 0.70);
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.add-on-name-price h3 {
+    color: var(--Subtext, rgba(27, 14, 6, 0.90));
+    text-align: right;
+    font-family: "IBM Plex Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.add-on-component-inner button {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: 12px;
+    color: #E71D36;
+    font-family: "IBM Plex Sans";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 145%;
+    border-radius: 6px;
+    background: rgba(231, 29, 54, 0.1);
+    cursor: pointer;
+    border: none;
+}
+
+.package-total-price {
+    display: flex;
+    padding: 12px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.package-total-price p {
+    align-self: stretch;
+    color: var(--Subtext, rgba(27, 14, 6, 0.90));
+    text-align: right;
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.package-total-price h2 {
+    color: #E71D36;
+    text-align: right;
+    font-family: "IBM Plex Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    align-self: stretch;
+}
+
+.reserve-spot-btn {
+    display: flex;
+    height: 56px;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 6px;
+    background: var(--Pink, #E71D36);
+    flex: 1 0 0;
+    color: var(--White, #FFF);
+    text-align: center;
+    font-family: "IBM Plex Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 145%;
+    border: none;
+    cursor: pointer;
+}
+
+/* Mobile responsive styles for 320px - 480px */
+@media (max-width: 480px) {
+    .book-spot-bar-right {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: 90vh;
+        padding: 0;
+        border-radius: 20px 20px 0 0;
+        border: none;
+        box-shadow: 0px -4px 20px rgba(0, 0, 0, 0.15);
+        background: #FFF;
+        z-index: 1000;
+        overflow-y: auto;
+        transform: translateY(calc(100% - 120px));
+        transition: transform 0.3s ease-in-out;
+        margin-top: 0;
+        top: auto;
+    }
+
+    /* When expanded - ensure full content is accessible */
+    .book-spot-bar-right.expanded {
+        transform: translateY(0);
+        max-height: 90vh;
+        padding-top: 0;
+    }
+
+    .book-spot-bar-right.expanded .book-spot-inner {
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        margin-top: 600px;
+    }
+
+    /* Add a drag handle at the top */
+    .book-spot-bar-right::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+
+    .book-spot-inner {
+        padding: 24px 20px 20px;
+        gap: 20px;
+    }
+
+    /* Collapsed state - show header and price */
+    .book-spot-bar-right:not(.expanded) .book-spot-inner>*:not(.book-spot-header):not(.spot-price) {
+        display: none;
+    }
+
+    .book-spot-bar-right:not(.expanded) .spot-price {
+        padding: 8px 0 16px 0;
+    }
+
+    .book-spot-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+        padding-top: 8px;
+    }
+
+    .book-spot-header h3 {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .spots-left-counter {
+        align-self: flex-start;
+        padding: 4px 12px;
+        font-size: 13px;
+    }
+
+    .spot-price {
+        padding: 16px 0 16px 0;
+    }
+
+    .spot-price-inner h2 {
+        font-size: 22px;
+    }
+
+    .spot-price-inner p {
+        font-size: 15px;
+    }
+
+    .traveler-count-bs,
+    .traveler-info-bs,
+    .add-ons-bs {
+        padding: 16px 0 16px 0;
+    }
+
+    .heading-bs h2 {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .heading-bs p {
+        font-size: 14px;
+    }
+
+    .inputs-section-traveler-count {
+        gap: 20px;
+    }
+
+    .input-subsection {
+        flex-direction: row;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .input-subsection input {
+        height: 48px;
+        font-size: 16px;
+        border-radius: 8px;
+        padding: 12px 16px;
+    }
+
+    .input-subsection input::placeholder {
+        font-size: 14px;
+    }
+
+    .who-agedesc {
+        text-align: left;
+        align-items: center;
+    }
+
+    .who-agedesc h2 {
+        font-size: 16px;
+    }
+
+    .who-agedesc p {
+        font-size: 13px;
+    }
+
+    .traveler-count-inner-bs {
+        gap: 20px;
+    }
+
+    .traveler-info-inner {
+        gap: 20px;
+    }
+
+    .inputs-section-traveler-info {
+        gap: 20px;
+    }
+
+    .inputs-subsection-traveler-info {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .inputs-subsection-traveler-info input {
+        height: 48px;
+        width: 100%;
+        font-size: 16px;
+        border-radius: 8px;
+        padding: 12px 16px;
+    }
+
+    .inputs-subsection-traveler-info input::placeholder {
+        font-size: 14px;
+    }
+
+    .add-ons-container {
+        gap: 16px;
+    }
+
+    .add-on-component {
+        padding: 16px;
+        gap: 12px;
+        border-radius: 10px;
+    }
+
+    .add-on-component-inner {
+        gap: 12px;
+    }
+
+    .add-on-name-price h2 {
+        font-size: 15px;
+    }
+
+    .add-on-name-price h3 {
+        font-size: 13px;
+    }
+
+    .add-on-component-inner button {
+        padding: 10px 12px;
+        font-size: 12px;
+        border-radius: 8px;
+        min-width: 60px;
+        white-space: nowrap;
+    }
+
+    .package-total-price {
+        padding: 20px 16px;
+        background: rgba(231, 29, 54, 0.02);
+        border-radius: 12px;
+        margin: 8px 0;
+        border: 1px solid rgba(231, 29, 54, 0.1);
+    }
+
+    .package-total-price h2 {
+        font-size: 22px;
+    }
+
+    .package-total-price p {
+        font-size: 15px;
+    }
+
+    .reserve-spot-btn {
+        height: 52px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        margin-top: 12px;
+        position: sticky;
+        bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        box-shadow: 0px 2px 12px rgba(231, 29, 54, 0.3);
+    }
+}
+
+/* Extra small mobile devices (320px - 360px) */
+@media (max-width: 360px) {
+    .book-spot-inner {
+        padding: 20px 16px 16px;
+    }
+
+    .book-spot-header h3 {
+        font-size: 17px;
+    }
+
+    .spots-left-counter {
+        font-size: 12px;
+    }
+
+    .heading-bs h2 {
+        font-size: 15px;
+    }
+
+    .package-total-price {
+        padding: 16px 12px;
+    }
+
+    .package-total-price h2 {
+        font-size: 20px;
+    }
+
+    .reserve-spot-btn {
+        height: 48px;
+        font-size: 15px;
+    }
+
+    .add-on-component {
+        padding: 14px;
+    }
+
+    .input-subsection input,
+    .inputs-subsection-traveler-info input {
+        padding: 10px 14px;
     }
 }

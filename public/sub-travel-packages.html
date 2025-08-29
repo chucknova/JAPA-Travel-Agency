@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="flights.css">
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
     <script src="schema.js"></script>
     <title>Travel Packages || JAPA</title>
 </head>
@@ -27,27 +28,21 @@
         <div class="navcontents">
             <div class="navcontents-left">
                 <div class="logo">
-                    <img src="assets/logo.png" alt="Logo" class="logo-img">
+                    <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
                 </div>
 
                 <ul class="nav-links">
-                    <li><a href="#">Travel Packages</a></li>
-                    <li><a href="#">Destinations</a></li>
-                    <li><a href="flights.html">Flights</a></li>
-                    <li><a href="#">Tours & Experiences</a></li>
-                    <li><a href="#">Visa</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#who-we-are">Who we are</a></li>
+                    <li><a href="#how-to-japa">How to JAPA</a></li>
+                    <li><a href="#featured-picks">Our Featured Picks</a></li>
+                    <li><a href="#why-us">Why us</a></li>
+
                 </ul>
             </div>
 
             <div class="user-actions">
-                <div class="bookmark-container" id="bookmark-btn">
-                    <svg class="bookmark-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                    </svg>
-                    <span class="bookmark-badge" id="bookmark-count"></span>
-                </div>
-
-                <button class="login-button">
+                <button id="username" class="login-button">
                     <a href="user-auth.html">Log In</a>
                 </button>
             </div>
@@ -57,7 +52,6 @@
     <!-- Hero -->
     <div id="heroo">
         <!-- Inserted automatically from dom manipulation -->
-    </div>
     </div>
 
     <!-- Travel Package -->
@@ -87,8 +81,6 @@
 
         </div>
     </div>
-    </div>
-    </div>
 
     <!-- How does JAPA work? -->
     <div class="how-japa-works">
@@ -110,9 +102,242 @@
         </div>
     </div>
 </body>
-<script type="module">
-    import travelPackages from "./travel-package-schema.js";
-    console.log(travelPackages);
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+        authDomain: "japa-269a4.firebaseapp.com",
+        projectId: "japa-269a4",
+        storageBucket: "japa-269a4.firebasestorage.app",
+        messagingSenderId: "736749113389",
+        appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = firebase.auth();
+
+    // Initialize Cloud Firestore and get a reference to the service
+    const db = firebase.firestore();
+
+    function myFirebaseUserAuth() {
+        // Firebase Auth State Change Handler
+        firebase.auth().onAuthStateChanged((user) => {
+            const usernameElement = document.getElementById("username");
+
+            if (user) {
+                console.log("Current user:", user);
+
+                // Get the first initial from display name or email
+                const displayName = user.displayName || user.email;
+                const firstInitial = displayName.charAt(0).toUpperCase();
+
+
+
+                // Replace the button content with profile picture and dropdown
+                usernameElement.innerHTML = `
+                    <div class="user-profile-container">
+        <div class="profile-picture" id="profilePicture">
+            <span class="profile-initial">${firstInitial}</span>
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+            <div class="dropdown-header">
+                <div class="dropdown-profile-pic">
+                    <span class="dropdown-initial">${firstInitial}</span>
+                </div>
+                <div class="dropdown-user-info">
+                    <div class="dropdown-name">👋🏽 Hello, there! ${user.displayName || 'Hello, there! 👋🏽'}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                </div>
+            </div>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item" id="route-to-trips">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+                        fill="currentColor" />
+                </svg>
+                My Upcoming Trips
+            </button>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item" id="bookmark-btn">
+                <svg class="logout-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+                My Bookmarked Trips
+            </button>
+            <hr class="dropdown-divider">
+            <button style = "color: red;" class="dropdown-item" id="logoutBtn">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="red" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <polyline points="16,17 21,12 16,7" stroke="red" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <line x1="21" y1="12" x2="9" y2="12" stroke="red" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Log Out
+            </button>
+        </div>
+    </div>
+    `;
+
+                // Remove the login-button class and add user-profile class
+                usernameElement.className = "user-profile";
+
+            } else {
+                console.log("No user signed in.");
+                // Reset to login button
+                usernameElement.innerHTML = '<a href="user-auth.html">Log In</a>';
+                usernameElement.className = "login-button";
+            }
+        });
+
+        // Toggle dropdown function
+        function toggleDropdown() {
+            const dropdown = document.getElementById("profileDropdown");
+            dropdown.classList.toggle("show");
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const userProfile = document.querySelector('.user-profile-container');
+            const dropdown = document.getElementById("profileDropdown");
+
+            if (userProfile && !userProfile.contains(event.target)) {
+                dropdown?.classList.remove("show");
+            }
+        });
+
+        // Logout function with event listener
+        function handleLogout() {
+            firebase.auth().signOut().then(() => {
+                console.log("User signed out successfully");
+                // Redirect to home page or refresh
+                window.location.reload();
+            }).catch((error) => {
+                console.error("Error signing out:", error);
+            });
+        }
+
+        // Routing users to upcoming trips / booking history
+        function handleUpcomingTripsRoute() {
+            window.location.href = './bookinghistory.html'
+        }
+
+        // Routing users to bookmarks
+        function handleBookmarks() {
+            window.location.href = './favorite-travel-packages.html'
+        }
+
+        // Add event listener for logout button and profile picture
+        document.addEventListener('DOMContentLoaded', function () {
+            // Use event delegation since elements are dynamically created
+            document.addEventListener('click', function (event) {
+                // Handle logout button click
+                if (event.target.closest('#logoutBtn')) {
+                    handleLogout();
+                }
+                if (event.target.closest('#route-to-trips')) {
+                    handleUpcomingTripsRoute();
+                }
+                if (event.target.closest('#bookmark-btn')) {
+                    handleBookmarks();
+                }
+
+                // Handle profile picture click
+                if (event.target.closest('#profilePicture')) {
+                    toggleDropdown();
+                }
+            });
+        });
+
+    }
+    myFirebaseUserAuth()
+
+    function showLoading() {
+        document.getElementById("bottom-pk").innerHTML = `
+        <div class="loading-container" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+        ">
+            <div class="airbnb-spinner" style="
+                width: 48px; 
+                height: 48px; 
+                margin-bottom: 32px;
+                position: relative;
+            ">
+                <div class="spinner-dot" style="
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #FF385C;
+                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
+                "></div>
+                <div class="spinner-dot" style="
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #FF385C;
+                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
+                    animation-delay: -0.16s;
+                    left: 18px;
+                "></div>
+                <div class="spinner-dot" style="
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #FF385C;
+                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
+                    animation-delay: -0.32s;
+                    left: 36px;
+                "></div>
+            </div>
+            <p style="
+                color: #222222; 
+                font-size: 20px; 
+                font-weight: 500; 
+                margin: 0;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                text-align: center;
+            ">Finding amazing places for you...</p>
+        </div>
+        <style>
+            @keyframes airbnb-bounce {
+                0%, 80%, 100% {
+                    transform: scale(0);
+                    opacity: 0.5;
+                }
+                40% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+    `;
+    }    // Show loading state immediately
+    showLoading();
+
+    // import travelPackages from "./travel-package-schema.js";
+    // console.log(travelPackages);
+    const travelPackages = JSON.parse(localStorage.getItem("travelPackage"));
+    console.log("TRAVEL-PACKAGES:", travelPackages);
+
 
     // Bookmark SVG
     const bookmarkSVG = `
@@ -134,126 +359,313 @@
     const urlParams = new URLSearchParams(window.location.search);
     const packageId = urlParams.get('packageId');
     const selectedPackage = travelPackages[packageId];
-    
+    console.log(selectedPackage);
 
+    let selectedsubpkg = selectedPackage.packages
+    console.log("Selected SUBPACKAGE:", selectedsubpkg);
 
-    // Global saved items array
-    let savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
-    let bookmarkCount = document.getElementById('bookmark-count')
-    
+    // Global saved items array - initialize as empty, will be populated from Firestore
+    // Global saved items array and state management
+    let savedItems = [];
+    let isDataLoaded = false;
+    let currentUser = null;
+    let pendingOperations = []; // Queue for operations before data loads
+
+    // Track loading state for UI feedback
+    let isLoading = true;
+
+    firebase.auth().onAuthStateChanged(async (user) => {
+        isLoading = true;
+        isDataLoaded = false;
+        currentUser = user;
+
+        if (user) {
+            const uid = user.uid;
+            console.log("Logged in UID:", uid);
+
+            try {
+                // Fetch Firestore data for this user
+                const doc = await db.collection("users").doc(uid).get();
+
+                // Load data from Firestore (authoritative source for logged-in users)
+                savedItems = doc.exists && doc.data().savedItems ? doc.data().savedItems : [];
+
+                console.log("Loaded savedItems from Firestore:", savedItems);
+
+                // Update localStorage only as a backup for offline scenarios
+                localStorage.setItem('savedItems', JSON.stringify(savedItems));
+
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+
+                // On Firestore error, try localStorage fallback
+                const localData = localStorage.getItem('savedItems');
+                savedItems = localData ? JSON.parse(localData) : [];
+
+                console.log("Using localStorage fallback due to Firestore error");
+
+                // Show user notification about offline mode
+                showUserNotification("Working in offline mode. Changes will sync when connection is restored.");
+            }
+
+        } else {
+            console.log("No user is signed in - using localStorage");
+
+            // User logged out - use localStorage as primary source
+            const localData = localStorage.getItem('savedItems');
+            savedItems = localData ? JSON.parse(localData) : [];
+        }
+
+        // Mark data as loaded and process pending operations
+        isDataLoaded = true;
+        isLoading = false;
+
+        // Process any operations that were queued while loading
+        processPendingOperations();
+
+        // Update UI
+        updateBookmarkCount();
+
+        // Re-render packages to update bookmark states
+        if (typeof renderPackages === 'function') {
+            renderPackages();
+        }
+    });
+
+    let bookmarkCount = document.getElementById('bookmark-count');
+
     // Function to update bookmark count in navbar
     function updateBookmarkCount() {
-        savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
-        bookmarkCount.innerHTML = savedItems.length;
+        if (bookmarkCount) {
+            bookmarkCount.innerHTML = savedItems.length;
+        }
     }
-    
-    // Initial count update
-    updateBookmarkCount();
+
+    // Function to show user notifications (implement based on your UI framework)
+    function showUserNotification(message) {
+        console.log("Notification:", message);
+        // Implement your notification system here (toast, alert, etc.)
+    }
 
     // Global functions to manage saved items
     function getSavedItems() {
-        return savedItems;
+        return [...savedItems]; // Return a copy of the array
+    }
+
+    // Check if data is ready for operations
+    function isReady() {
+        return isDataLoaded && !isLoading;
+    }
+
+    // Process queued operations after data loads
+    function processPendingOperations() {
+        console.log(`Processing ${pendingOperations.length} pending operations`);
+
+        pendingOperations.forEach(operation => {
+            try {
+                operation.execute();
+            } catch (error) {
+                console.error("Error executing pending operation:", error);
+            }
+        });
+
+        pendingOperations = []; // Clear the queue
+    }
+
+    // Queue an operation if data isn't ready yet
+    function queueOperation(operationFn, operationName) {
+        console.log(`Queueing operation: ${operationName}`);
+        pendingOperations.push({
+            execute: operationFn,
+            name: operationName
+        });
+    }
+
+    // Helper function to sync savedItems to Firestore with retry logic
+    async function syncToFirestore(retryCount = 0) {
+        const maxRetries = 3;
+
+        if (currentUser) {
+            try {
+                console.log("Syncing to Firestore for user:", currentUser.uid, "Data:", savedItems);
+
+                await db.collection("users").doc(currentUser.uid).set({
+                    savedItems: savedItems,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+
+                console.log("Successfully synced savedItems to Firestore");
+
+                // Update localStorage backup
+                localStorage.setItem('savedItems', JSON.stringify(savedItems));
+
+            } catch (error) {
+                console.error("Error syncing to Firestore:", error);
+
+                if (retryCount < maxRetries) {
+                    console.log(`Retrying sync (attempt ${retryCount + 1}/${maxRetries})`);
+                    setTimeout(() => syncToFirestore(retryCount + 1), 1000 * Math.pow(2, retryCount));
+                } else {
+                    showUserNotification("Failed to sync bookmarks. Changes saved locally and will sync when connection is restored.");
+
+                    // Still update localStorage so we don't lose data
+                    localStorage.setItem('savedItems', JSON.stringify(savedItems));
+                }
+            }
+        } else {
+            // No user logged in - only update localStorage
+            localStorage.setItem('savedItems', JSON.stringify(savedItems));
+            console.log("Updated localStorage (no user logged in)");
+        }
     }
 
     function addToSaved(packageId) {
+        // If data isn't ready, queue the operation
+        if (!isReady()) {
+            queueOperation(() => addToSaved(packageId), `addToSaved(${packageId})`);
+            return;
+        }
+
         if (!savedItems.includes(packageId)) {
             savedItems.push(packageId);
-            localStorage.setItem('savedItems', JSON.stringify(savedItems));
-            updateBookmarkCount(); // Update count immediately
+            syncToFirestore();
+            updateBookmarkCount();
+            console.log("Added package:", packageId, "Current saved items:", savedItems);
+
+            // Provide immediate UI feedback
+            showUserNotification("Bookmark added!");
+        } else {
+            console.log("Package already saved:", packageId);
         }
     }
 
     function removeFromSaved(packageId) {
+        // If data isn't ready, queue the operation
+        if (!isReady()) {
+            queueOperation(() => removeFromSaved(packageId), `removeFromSaved(${packageId})`);
+            return;
+        }
+
+        const initialLength = savedItems.length;
         savedItems = savedItems.filter(id => id !== packageId);
-        localStorage.setItem('savedItems', JSON.stringify(savedItems));
-        updateBookmarkCount(); // Update count immediately
+
+        // Only sync if something was actually removed
+        if (savedItems.length !== initialLength) {
+            syncToFirestore();
+            updateBookmarkCount();
+            console.log("Removed package:", packageId, "Current saved items:", savedItems);
+
+            // Provide immediate UI feedback
+            showUserNotification("Bookmark removed!");
+        } else {
+            console.log("Package was not in saved items:", packageId);
+        }
     }
 
     function isSaved(packageId) {
+        // Return false if data isn't loaded yet to prevent incorrect UI states
+        if (!isReady()) {
+            return false;
+        }
+
         return savedItems.includes(packageId);
     }
 
     function clearAllSaved() {
-        savedItems = [];
-        localStorage.setItem('savedItems', JSON.stringify(savedItems));
-        updateBookmarkCount(); // Update count immediately
-    }
-
-    console.log("selected package:", selectedPackage);
-    let subPackages = selectedPackage.packages
-
-    // Function to render hero
-    function renderHero() {
-        // Mapping through the travelPackage database to render on the DOM
-        const displayHero = ` <div class="hero-section-tp"
-        style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${selectedPackage.categoryThumbnail});">
-        <div class="hero-content-tp">
-            <h1 class="hero-header-tp">${selectedPackage.categoryName}</h1>
-            <p class="hero-subtext-tp" style="font-weight: 500;">${selectedPackage.description}</p>
-        </div>`
-
-        // Rendering travel packages in the DOM
-        document.getElementById("heroo").innerHTML = displayHero
-    }
-    // Calling the function so it runs
-    renderHero()
-
-    // Function to render category header name
-    function renderHeaderName() {
-        // Mapping through the travelPackage database to render on the DOM
-        const displayHeaderName = `Top ${selectedPackage.categoryName} Packages at JAPA this month`
-
-        // Rendering travel packages in the DOM
-        document.getElementById("tp-header").innerHTML = displayHeaderName
-    }
-    // Calling the function so it runs
-    renderHeaderName()
-
-    // Function to sort packages
-    function sortPackages(sortBy) {
-        let sortedPackages = [...subPackages]; // Create a copy to avoid mutating original array
-
-        switch (sortBy) {
-            case 'price':
-                sortedPackages.sort((a, b) => {
-                    // Extract numeric price values and sort by price (low to high)
-                    // Handle both string and number formats
-                    const priceA = typeof a.price.amount === 'string' ?
-                        parseFloat(a.price.amount.replace(/,/g, '')) :
-                        parseFloat(a.price.amount);
-                    const priceB = typeof b.price.amount === 'string' ?
-                        parseFloat(b.price.amount.replace(/,/g, '')) :
-                        parseFloat(b.price.amount);
-                    return priceA - priceB;
-                });
-                break;
-            case 'departure-time': // Duration
-                sortedPackages.sort((a, b) => {
-                    // Sort by duration in days (short to long)
-                    return a.duration.days - b.duration.days;
-                });
-                break;
-            case 'arrival-time': // Ratings
-                sortedPackages.sort((a, b) => {
-                    // Sort by ratings (high to low)
-                    // Since ratings are hardcoded as 4.8, we'll sort by name as a fallback
-                    // In a real app, you'd have actual rating data
-                    return b.name.localeCompare(a.name);
-                });
-                break;
-            default:
-                // No sorting, return original order
-                return sortedPackages;
+        // If data isn't ready, queue the operation
+        if (!isReady()) {
+            queueOperation(() => clearAllSaved(), 'clearAllSaved');
+            return;
         }
 
-        return sortedPackages;
+        if (savedItems.length > 0) {
+            const itemCount = savedItems.length;
+            savedItems = [];
+            syncToFirestore();
+            updateBookmarkCount();
+            console.log("Cleared all saved items");
+
+            // Provide user feedback
+            showUserNotification(`Cleared ${itemCount} bookmarks`);
+        }
     }
 
-    // Function to get the appropriate SVG based on state (FIXED LOGIC)
-    function getBookmarkSVG(saved) {
-        if (saved) {
-            // When saved, show FILLED (red) bookmark
-            return `
+    // Utility function to check loading state (useful for UI)
+    function isLoadingData() {
+        return isLoading || !isDataLoaded;
+    }
+
+    // Function to manually retry failed sync operations
+    function retrySyncToFirestore() {
+        if (currentUser) {
+            console.log("Manually retrying Firestore sync...");
+            syncToFirestore();
+        } else {
+            console.log("No user logged in - cannot sync to Firestore");
+        }
+    }
+
+    // Wait for data to be loaded before accessing selectedPackage
+    function initializePageContent() {
+        console.log("selected package:", selectedPackage);
+        let subPackages = selectedPackage.packages;
+
+        // Function to render hero
+        function renderHero() {
+            const displayHero = `<div class="hero-section-tp"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${selectedPackage.categoryThumbnail});">
+            <div class="hero-content-tp">
+                <h1 class="hero-header-tp">${selectedPackage.categoryName}</h1>
+                <p class="hero-subtext-tp" style="font-weight: 500;">${selectedPackage.description}</p>
+            </div>
+        </div>`;
+
+            document.getElementById("heroo").innerHTML = displayHero;
+        }
+
+        // Function to render category header name
+        function renderHeaderName() {
+            const displayHeaderName = `Top ${selectedPackage.categoryName} Packages at JAPA this month`;
+            document.getElementById("tp-header").innerHTML = displayHeaderName;
+        }
+
+        // Function to sort packages
+        function sortPackages(sortBy) {
+            let sortedPackages = [...subPackages];
+
+            switch (sortBy) {
+                case 'price':
+                    sortedPackages.sort((a, b) => {
+                        const priceA = typeof a.price.amount === 'string' ?
+                            parseFloat(a.price.amount.replace(/,/g, '')) :
+                            parseFloat(a.price.amount);
+                        const priceB = typeof b.price.amount === 'string' ?
+                            parseFloat(b.price.amount.replace(/,/g, '')) :
+                            parseFloat(b.price.amount);
+                        return priceA - priceB;
+                    });
+                    break;
+                case 'departure-time':
+                    sortedPackages.sort((a, b) => {
+                        return a.duration.days - b.duration.days;
+                    });
+                    break;
+                case 'arrival-time':
+                    sortedPackages.sort((a, b) => {
+                        return b.name.localeCompare(a.name);
+                    });
+                    break;
+                default:
+                    return sortedPackages;
+            }
+
+            return sortedPackages;
+        }
+
+        // Function to get the appropriate SVG based on state
+        function getBookmarkSVG(saved) {
+            if (saved) {
+                return `
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" 
   stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-bookmark-icon lucide-bookmark">
@@ -266,10 +678,9 @@
   </defs>
   <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" fill="#E71D36" class="bookmark-fill"/>
 </svg>`;
-        } else {
-            // When not saved, show UNFILLED (gradient) bookmark
-            return `
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" 
+            } else {
+                return `
+<svg xmlns="http://www.w3.svg" width="32" height="32" viewBox="0 0 24 24" 
   stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-bookmark-icon lucide-bookmark">
   <defs>
@@ -281,48 +692,55 @@
   </defs>
   <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" fill="url(#glossyFill)" class="bookmark-fill"/>
 </svg>`;
+            }
         }
-    }
 
+        function renderPackages(packagesToRender = subPackages) {
+            const displaySubPk = packagesToRender.map((subPkg, index) => {
+                const startDate = new Date(subPkg.startAndEndLocation.startsAt);
+                const endDate = new Date(subPkg.startAndEndLocation.endsAt);
+                const timeDiff = endDate - startDate;
+                const durationInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                const originalIndex = subPackages.findIndex(pkg => pkg === subPkg);
 
+                // Check if the package is saved
+                const isCurrentlySaved = isSaved(subPkg.id);
+                const bookmarkIcon = getBookmarkSVG(isCurrentlySaved);
 
-    function renderPackages(packagesToRender = subPackages) {
-        // Mapping through the provided packages to render on the DOM
-        const displaySubPk = packagesToRender.map((subPkg, index) => {
-            // Find the original index for routing purposes
-            const originalIndex = subPackages.findIndex(pkg => pkg === subPkg);
-
-            // Use the global isSaved function to check if the package is saved
-            const isCurrentlySaved = isSaved(subPkg.id); // Use global isSaved
-            const bookmarkIcon = getBookmarkSVG(isCurrentlySaved);
-
-            return `  <div class="travel-package-card-tp">
-    <div class="travel-package-upper" style="background-image: url(${subPkg.packageThumbnail}); position: relative;">
-        <!-- Duration tag: top-left -->
-        <div class="duration-tag" style="position: absolute; top: 15px; left: 15px;">
-            ${subPkg.duration.days} days
+                return `<div class="travel-package-card-tp">
+        <div class="travel-package-upper" style="background-image: url(${subPkg.packageThumbnail}); position: relative;">
+            <div class="duration-tag" style="position: absolute; top: 15px; left: 15px;">
+                ${durationInDays} days
+            </div>
+            <div class="heart-icon" id="bookmark-${subPkg.id}" style="position: absolute; top: 15px; right: 15px; cursor: pointer;">
+                ${bookmarkIcon}
+            </div>
         </div>
-        <!-- SVG Heart icon: top-right -->
-        <div class="heart-icon" id="bookmark-${subPkg.id}" style="position: absolute; top: 15px; right: 15px; cursor: pointer;">
-            ${bookmarkIcon}
-        </div>
-    </div>
-    <div class="travel-package-lower">
-        <div class="package-location-name-desc" id="pkgIndex-${originalIndex}" data-package-index="${originalIndex}">
-            <p class="pk-location">${subPkg.destination}</p>
-            <p style="cursor: pointer;" class="pk-name">${subPkg.name}</p>
-            <p class="pk-desc">${subPkg.shortDesc}</p>
-        </div>
-        <div class="package-price-ratings">
-            <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount}</h3>
-            <p class="pk-ratings">⭐ 4.8 (152 reviews)</p>
-        </div>
-    </div>
-</div>`;
-        });
+        <div class="travel-package-lower">
+            <div class="package-location-name-desc" id="pkgIndex-${originalIndex}" data-package-index="${originalIndex}">
+                <p class="pk-location">${subPkg.destination}</p>
+                <p style="cursor: pointer;" class="pk-name">${subPkg.name}</p>
+                <p class="pk-desc">${subPkg.shortDesc}</p>
+            </div>
+            <div class="package-price-ratings">
+                <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount.toLocaleString()}</h3>
 
-        // Rendering travel packages in the DOM
-        document.getElementById("bottom-pk").innerHTML = displaySubPk.join('');
+                <p class="pk-ratings">⭐ 4.8 (152 reviews)</p>
+            </div>
+        </div>
+    </div>`;
+            });
+
+            document.getElementById("bottom-pk").innerHTML = displaySubPk.join('');
+
+            // Add click event listeners to all package cards
+            document.querySelectorAll('.package-location-name-desc').forEach(card => {
+                card.addEventListener('click', function () {
+                    const packageIndex = this.getAttribute('data-package-index');
+                    routeToDetails(packageIndex);
+                });
+            });
+        }
 
         // Function to route user to sub travel packages page
         function routeToDetails(packageIndex) {
@@ -333,55 +751,73 @@
             window.location.href = `travel-package-detail.html?parentPackageID=${packageId}&packageId=${packageIndex}`;
         }
 
-        // Add click event listeners to all package cards
-        document.querySelectorAll('.package-location-name-desc').forEach(card => {
-            card.addEventListener('click', function () {
-                const packageIndex = this.getAttribute('data-package-index');
-                routeToDetails(packageIndex);
-            });
+        // Event listener for sort dropdown
+        document.getElementById('sortBy').addEventListener('change', function () {
+            const sortBy = this.value;
+            const sortedPackages = sortPackages(sortBy);
+            renderPackages(sortedPackages);
         });
-    }
-    // Event listener for sort dropdown
-    document.getElementById('sortBy').addEventListener('change', function () {
-        const sortBy = this.value;
-        const sortedPackages = sortPackages(sortBy);
-        renderPackages(sortedPackages);
-    });
 
-    // Initial render
-    renderPackages();
+        // Add package to favorites - Updated event listener
+        document.addEventListener('click', function (event) {
+            if (event.target.closest('.heart-icon')) {
+                const heartIcon = event.target.closest('.heart-icon');
+                if (heartIcon.id.startsWith('bookmark-')) {
+                    const packageId = heartIcon.id.replace('bookmark-', '');
+                    console.log('Package ID clicked:', packageId);
 
-    // Add package to favorites
-    document.addEventListener('click', function (event) {
-        if (event.target.closest('.heart-icon')) {
-            const heartIcon = event.target.closest('.heart-icon');
-            if (heartIcon.id.startsWith('bookmark-')) {
-                const packageId = heartIcon.id.replace('bookmark-', '');
-                console.log('Package ID:', packageId);
+                    // Only proceed if data has been loaded
+                    if (!isDataLoaded) {
+                        console.log('Data not loaded yet, please wait...');
+                        return;
+                    }
 
-                // Function to update button state
-                function updateButtonState() {
-                    const saved = isSaved(packageId);
-                    heartIcon.innerHTML = getBookmarkSVG(saved);
+                    // Toggle saved state using global functions
+                    if (isSaved(packageId)) {
+                        removeFromSaved(packageId);
+                        console.log('Package removed from saved items');
+                    } else {
+                        addToSaved(packageId);
+                        console.log('Package added to saved items');
+                    }
+
+                    // Update the button appearance immediately
+                    const newSavedState = isSaved(packageId);
+                    heartIcon.innerHTML = getBookmarkSVG(newSavedState);
+                    console.log('Button updated. New saved state:', newSavedState);
                 }
-
-                // Toggle saved state using global functions
-                if (isSaved(packageId)) {
-                    // Unsave the item
-                    removeFromSaved(packageId);
-                    console.log('Removed. Current saved items:', getSavedItems());
-                } else {
-                    // Save the item
-                    addToSaved(packageId);
-                    console.log('Added. Current saved items:', getSavedItems());
-                }
-
-                updateButtonState(); // Update button appearance after state change
             }
-        }
-    });
-    console.log("Saved Items here o SWIGGLY SWIGGLY WEOOO!!", savedItems);
+        });
+
+        // Bookmark button navigation
+        document.getElementById('bookmark-btn').addEventListener('click', () => {
+            window.location.href = 'favorite-travel-packages.html';
+        });
+
+        // Initialize the page
+        renderHero();
+        renderHeaderName();
+        renderPackages();
+
+        console.log("Page initialized. Current saved items:", savedItems);
+    }
+
     
+    // Wait for DOM and auth to be ready before initializing
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if auth state has been determined
+        const checkAuthAndInit = () => {
+            if (isDataLoaded) {
+                initializePageContent();
+            } else {
+                // Wait a bit more and check again
+                setTimeout(checkAuthAndInit, 100);
+            }
+        };
+
+        checkAuthAndInit();
+    });
+
 
 
 

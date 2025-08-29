@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -18,13 +22,25 @@ a {
     display: flex;
     height: 72px;
     padding: 12px 80px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    flex-shrink: 0;
+    align-items: center;
+    /* not flex-start */
+    justify-content: space-between;
+    /* optional */
     background-color: white;
     border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* keep it above content */
 }
+
+.book-link {
+    display: inline-block;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+
 
 .navcontents {
     display: flex;
@@ -69,14 +85,174 @@ a {
     gap: 16px;
 }
 
-.bookmark-container {
+/* User Profile Styles */
+.user-profile {
     position: relative;
+}
+
+.user-profile-container {
+    position: relative;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.profile-picture:hover {
+    border-color: #667eea;
+    transform: scale(1.05);
+}
+
+.profile-initial {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+/* Dropdown Styles */
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    min-width: 260px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: 1px solid #e1e5e9;
+}
+
+.profile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dropdown-profile-pic {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dropdown-initial {
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.dropdown-user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dropdown-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.dropdown-email {
+    font-size: 14px;
+    color: #666;
+    word-break: break-all;
+}
+
+.dropdown-divider {
+    margin: 0;
+    border: none;
+    border-top: 1px solid #e1e5e9;
+}
+
+.dropdown-item {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.2s ease;
+    border-radius: 0 0 12px 12px;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #1a1a1a;
+}
+
+.logout-icon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-dropdown {
+        right: -10px;
+        min-width: 240px;
+    }
+
+    .dropdown-header {
+        padding: 16px;
+    }
+
+    .dropdown-profile-pic {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dropdown-initial {
+        font-size: 16px;
+    }
+}
+
+.bookmark-container {
+    position: relative;
+    display: flex;
+    gap: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: 44px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
     background: rgba(63, 34, 15, 0.10);
     cursor: pointer;
     transition: background 0.2s ease;
@@ -90,6 +266,7 @@ a {
     width: 20px;
     height: 20px;
     fill: #3F220F;
+    stroke-width: 4px;
 }
 
 .bookmark-badge {
@@ -135,6 +312,89 @@ a {
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 16px;
     font-weight: 400;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 12px 20px;
+        height: 64px;
+    }
+
+    .logo-img {
+        height: 32px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        order: 1;
+    }
+
+    .mobile-menu-overlay {
+        display: block;
+        top: 64px;
+        height: calc(100vh - 64px);
+    }
+
+    .navcontents-left {
+        gap: 16px;
+        flex: 1;
+    }
+
+    .user-actions {
+        gap: 8px;
+        order: 2;
+    }
+
+    .bookmark-container {
+        display: none;
+    }
+
+    .login-button {
+        width: auto;
+        min-width: 70px;
+        padding: 6px 12px;
+    }
+
+    .login-button a {
+        font-size: 14px;
+    }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 12px 16px;
+    }
+
+    .logo-img {
+        height: 28px;
+    }
+
+    .login-button {
+        min-width: 60px;
+        padding: 6px 8px;
+    }
+
+    .login-button a {
+        font-size: 13px;
+    }
+
+    .mobile-nav-links {
+        padding: 20px;
+    }
+
+    .mobile-nav-links a {
+        font-size: 16px;
+    }
+
+    .mobile-user-actions {
+        padding: 20px;
+    }
 }
 
 .hero-section {
@@ -990,4 +1250,246 @@ a {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+/* Mobile Portrait and Small Mobile (320-480px) */
+@media (max-width: 480px) {
+    .hero-section-tp {
+        height: 50vh;
+        padding: 24px 20px;
+        gap: 24px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-content-tp {
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-header-tp {
+        font-size: 28px;
+        line-height: 36px;
+        font-weight: 600;
+    }
+
+    .hero-subtext-tp {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        max-width: 90%;
+    }
+}
+
+/* Extra Small Mobile (320px) */
+@media (max-width: 320px) {
+    .hero-section-tp {
+        height: 45vh;
+        padding: 20px 16px;
+        gap: 20px;
+    }
+
+    .hero-header-tp {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .hero-subtext-tp {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
+
+/* Travel Packages Mobile (320-480px) */
+@media (max-width: 480px) {
+    .travel-packages {
+        padding-top: 48px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .travel-package-top-left-header-tp {
+        font-size: 20px;
+        line-height: 28px;
+        margin-bottom: 12px;
+    }
+
+    .travel-package-top-left-subheader-tp {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .travel-packages .bottom {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 32px;
+    }
+
+    .travel-package-card {
+        border-radius: 8px;
+    }
+
+    .thumbnail {
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .content {
+        padding: 12px 16px 16px 16px;
+    }
+
+    .name-desc h3 {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .name-desc p {
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    .travel-package-card:hover {
+        transform: scale(1.01);
+    }
+}
+
+/* Extra Small Mobile Travel Packages (320px) */
+@media (max-width: 320px) {
+    .travel-packages {
+        padding-top: 40px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .travel-package-top-left-header-tp {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    .travel-package-top-left-subheader-tp {
+        font-size: 13px;
+        line-height: 22px;
+    }
+
+    .travel-packages .bottom {
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .thumbnail {
+        height: 160px;
+    }
+
+    .content {
+        padding: 10px 12px 12px 12px;
+    }
+
+    .name-desc h3 {
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+
+    .name-desc p {
+        font-size: 12px;
+        line-height: 18px;
+    }
+}
+
+/* How JAPA Works Mobile (320-480px) */
+@media (max-width: 480px) {
+    .how-japa-works {
+        padding: 24px 20px;
+        gap: 20px;
+    }
+
+    .main-container {
+        height: auto;
+        padding-right: 0;
+        border-radius: 12px;
+    }
+
+    .main-container .inner-container {
+        height: auto;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .main-container .inner-container .bg-img {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px 12px 0px 0px;
+    }
+
+    .main-container .inner-container .left {
+        padding: 24px 20px;
+        gap: 24px;
+    }
+
+    .main-container .inner-container .left .left-top {
+        gap: 16px;
+    }
+
+    .main-container .inner-container .left .left-top h3 {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .main-container .inner-container .left .left-top p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .main-container .inner-container .left-bottom button {
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 50px;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+/* Extra Small Mobile How JAPA Works (320px) */
+@media (max-width: 320px) {
+    .how-japa-works {
+        padding: 20px 16px;
+        gap: 16px;
+    }
+
+    .main-container {
+        border-radius: 10px;
+    }
+
+    .main-container .inner-container .bg-img {
+        height: 180px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .main-container .inner-container .left {
+        padding: 20px 16px;
+        gap: 20px;
+    }
+
+    .main-container .inner-container .left .left-top {
+        gap: 12px;
+    }
+
+    .main-container .inner-container .left .left-top h3 {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    .main-container .inner-container .left .left-top p {
+        font-size: 13px;
+        line-height: 22px;
+    }
+
+    .main-container .inner-container .left-bottom button {
+        padding: 10px 18px;
+        font-size: 13px;
+    }
 }

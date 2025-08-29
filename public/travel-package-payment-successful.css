@@ -55,7 +55,6 @@
     height: 56px;
     padding: 16px 32px;
     align-items: center;
-    gap: 12px;
     border-radius: 6px;
     background: var(--Pink, #E71D36);
     color: var(--White, #FFF);
@@ -196,4 +195,160 @@
     line-height: 160%;
     /* 25.6px */
     flex: 1 0 0;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    .success-container {
+        flex-direction: column;
+        padding: 32px 16px;
+        gap: 32px;
+    }
+
+    .left-message-cta {
+        gap: 24px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .payment-made-animation {
+        width: 120px;
+        height: 120px;
+        align-self: center;
+    }
+
+    .confirmation-message-ps h1 {
+        font-size: 24px;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    .confirmation-message-ps p {
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+    }
+
+    .button-flexx {
+        flex-direction: row !important;
+        width: 100%;
+        gap: 12px !important;
+    }
+
+    .left-message-cta button {
+        /* height: 48px; */
+        font-size: 14px;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .right-trip-summary {
+        gap: 16px;
+    }
+
+    .right-trip-summary h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .trip-summary {
+        padding: 12px;
+    }
+
+    .trip-summary-inner {
+        gap: 8px;
+    }
+
+    .trip-detail-booking-id,
+    .trip-detail {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .trip-detail-booking-id-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .booking-id-badge {
+        align-self: stretch;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .trip-detail-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .trip-detail-inner h3 {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .trip-detail-inner h4 {
+        font-size: 16px;
+        text-align: left;
+        font-weight: 400;
+    }
+}
+
+/* Extra small mobile devices */
+@media screen and (max-width: 480px) {
+    .success-container {
+        padding: 24px 12px;
+    }
+
+    .confirmation-message-ps h1 {
+        font-size: 20px;
+    }
+
+    .confirmation-message-ps p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .payment-made-animation {
+        width: 100px;
+        height: 100px;
+    }
+
+    .left-message-cta button {
+        /* height: 48px; */
+        font-size: 14px;
+        padding: 12px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .right-trip-summary h2 {
+        font-size: 18px;
+    }
+
+    .booking-id-badge {
+        font-size: 16px;
+        padding: 6px;
+    }
+    .button-flexx{
+        flex-direction: row !important;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .success-container {
+        padding: 20px 16px;
+        gap: 24px;
+    }
+
+    .confirmation-message-ps h1 {
+        font-size: 22px;
+    }
+
+    .payment-made-animation {
+        width: 80px;
+        height: 80px;
+    }
 }

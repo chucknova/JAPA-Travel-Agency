@@ -11,465 +11,818 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="flights.css">
   <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.0.42/lenis.min.js"></script>
   <script src="schema.js"></script>
   <title>JAPA Travels: Your Sure Japa Plug</title>
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navcontents">
-      <div class="navcontents-left">
-        <div class="logo">
-          <img src="assets/logo.png" alt="Logo" class="logo-img">
+  <div class="body-body">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navcontents">
+        <div class="navcontents-left">
+          <div class="logo">
+            <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#who-we-are">Who we are</a></li>
+            <li><a href="#how-to-japa">How to JAPA</a></li>
+            <li><a href="#featured-picks">Our Featured Picks</a></li>
+            <li><a href="#why-us">Why us</a></li>
+            <li style="font-weight: 600; color: #E71D36;">
+              <a href="./travel-packages.html" class="book-link">BOOK A PACKAGE</a>
+              <div class="confetti-container"></div>
+            </li>
+
+          </ul>
         </div>
 
-        <ul class="nav-links">
-          <li><a href="#">Travel Packages</a></li>
-          <li><a href="#">Destinations</a></li>
-          <li><a href="flights.html">Flights</a></li>
-          <li><a href="#">Tours & Experiences</a></li>
-          <li><a href="#">Visa</a></li>
-        </ul>
-      </div>
+        <div class="user-actions">
+          <div class="bookmark-container" id="bookmark-btn">
+            <svg class="bookmark-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
+            Bookmarked trips
+            <span class="bookmark-badge" id="bookmark-count"></span>
+          </div>
 
-      <div class="user-actions">
-        <div class="bookmark-container" id="bookmark-btn">
-          <svg class="bookmark-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-          </svg>
-          <span class="bookmark-badge" id="bookmark-count">3</span>
-        </div>
-
-        <button class="login-button">
-          <a href="user-auth.html">Log In</a>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <div class="hero-section">
-    <div class="hero-content">
-      <h1 class="hero-header">Japa Today. Travel Without Wahala</h1>
-      <p class="hero-subtext">Flights, visas, and curated experiences. All in one place — and built for you.</p>
-    </div>
-    <div class="hero-input-container">
-      <div class="input-contents">
-        <div class="input-wrapper">
-          <input type="text" placeholder="Leaving from" />
-        </div>
-
-        <div class="input-wrapper">
-          <input type="text" placeholder="Going to" />
-        </div>
-
-        <div class="input-wrapper">
-          <input type="text" placeholder="Departure Date"
-            onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
-        </div>
-
-        <div class="input-wrapper">
-          <input type="text" placeholder="Returning Date"
-            onmousedown="if(this.type==='text'){ this.type='date'; this.focus(); }" />
-        </div>
-
-        <div class="button-wrapper">
-          <button>
-            Search flights
+          <button id="username" class="login-button">
+            <a href="user-auth.html">Log In</a>
           </button>
         </div>
       </div>
+    </nav>
+
+
+    <!-- Hero -->
+    <div class="newhero-section">
+      <div class="newhero-content">
+
+        <div class="newhero-content-left">
+          <div class="newhero-header-subheader">
+            <h1 class="newhero-header">
+              Where To Next? <br>
+              Let's JAPA.
+            </h1>
+            <p class="newhero-subheader">
+              Book your escape, dodge the stress, and let us handle the rest. Curated travel packages for people who just want to up and go.
+            </p>
+          </div>
+          <a href="./travel-packages.html">
+            <button class="main-button">
+              Explore Travel Packages
+            </button>
+          </a>
+        </div>
+
+        <div class="newhero-content-right">
+          <img class="hero-image" src="./assets/Component 1 (2).webp" alt="" srcset="">
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Flights -->
-  <div class="flights-section">
-    <div class="flights-section-top">
-      <div class="flights-section-top-right">
-        <h3>Explore flights in top destinations</h3>
-        <p>Explore our top travel packages at JAPA this month</p>
-      </div>
-      <div class="flights-section-top-left">
-        <button>See all flights</button>
-      </div>
-    </div>
-
-    <div class="flights-section-bottom">
-      <div class="flight-card">
-        <div class="flight-card-top">
-          <img src="" alt="" class="airline-logo">
-          <div class="airline-name-location">
-            <div class="airline-name">Qatar Airways</div>
-            <div class="airport-name">Murtala Muhammed International Airport</div>
+    <!-- Forget travel agents -->
+    <div class="forget-travel-agents-section" id="who-we-are">
+      <div class="inner">
+        <div class="text-content">
+          <div class="inner-text-content">
+            <h1 class="forget-header">Forget travel agents and flight deals. What’s that?</h1>
+            <p class="forget-subheader">At JAPA, we’re the planners, plug, and vibe curators. We serve travel packages
+              with spice, No stress. No
+              long story. Just click, pack, and JAPA.</p>
           </div>
         </div>
-
-        <div class="flight-card-middle">
-          <div class="airport-codes-div">
-            <div class="airport-code">
-              <p class="airport-code-text">LOS</p>
-              <p class="airport-name">Lagos</p>
+        <div class="grid-content">
+          <div class="inner-grid-content">
+            <!-- Perk Card -->
+            <div class="perk-card">
+              <div class="perk-icon">
+                <img src="./assets/mdi_flight.svg" alt="" srcset="">
+              </div>
+              <div class="perk-top-bottom">
+                <h2 class="perk-top">
+                  Flights?
+                </h2>
+                <div class="perk-bottom">
+                  <h2>Sorted</h2>
+                  <div class="check-icon"><img src="./assets/check-green.svg" alt="" srcset=""></div>
+                </div>
+              </div>
             </div>
-
-            <svg class="plane-departure-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
-              viewBox="0 0 25 24" fill="none">
-              <path
-                d="M23.5 11V13H22.5V14H15.5V15H14.5V17H13.5V18H12.5V20H11.5V21H10.5V22H7.5V19H8.5V16H9.5V14H5.5V15H4.5V16H3.5V17H1.5V14H2.5V10H1.5V7H3.5V8H4.5V9H5.5V10H9.5V8H8.5V5H7.5V2H10.5V3H11.5V4H12.5V6H13.5V7H14.5V9H15.5V10H22.5V11H23.5Z"
-                fill="#E71D36" />
-            </svg>
-
-            <div class="airport-code-2">
-              <p class="airport-code-text-2">DOH</p>
-              <p class="airport-name-2">Doha</p>
+            <!-- Perk Card -->
+            <div class="perk-card">
+              <div class="perk-icon">
+                <img src="./assets/emojione-monotone_pot-of-food.svg" alt="" srcset="">
+              </div>
+              <div class="perk-top-bottom">
+                <h2 class="perk-top">
+                  Vibes?
+                </h2>
+                <div class="perk-bottom">
+                  <h2>Custom-Blended</h2>
+                  <div class="check-icon"><img src="./assets/check-green.svg" alt="" srcset=""></div>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div class="departure-arrival-div">
-            <div class="departure-time">
-              <p class="time">12:00 AM</p>
-              <p class="date">Friday, 12th Jan</p>
+            <!-- Perk Card -->
+            <div class="perk-card">
+              <div class="perk-icon">
+                <img src="./assets/ri_hotel-bed-fill.svg" alt="" srcset="">
+              </div>
+              <div class="perk-top-bottom">
+                <h2 class="perk-top">
+                  Stay?
+                </h2>
+                <div class="perk-bottom">
+                  <h2>Handpicked</h2>
+                  <div class="check-icon"><img src="./assets/check-green.svg" alt="" srcset=""></div>
+                </div>
+              </div>
             </div>
-
-            <div class="arrival-time">
-              <p class="time">12:00 AM</p>
-              <p class="date">Friday, 12th Jan</p>
+            <!-- Perk Card -->
+            <div class="perk-card">
+              <div class="perk-icon">
+                <img src="./assets/fluent_money-hand-20-filled.svg" alt="" srcset="">
+              </div>
+              <div class="perk-top-bottom">
+                <h2 class="perk-top">
+                  Prices?
+                </h2>
+                <div class="perk-bottom">
+                  <h2>Transparent</h2>
+                  <div class="check-icon"><img src="./assets/check-green.svg" alt="" srcset=""></div>
+                </div>
+              </div>
             </div>
-          </div>
-
-        </div>
-
-        <div class="flight-card-bottom">
-          <div class="flight-pricing">
-            <p class="price-fare">Economy</p>
-            <p class="price">₦1,200,000</p>
-          </div>
-
-          <div class="flight-booking">
-            <button class="select-flight-button">Select Flight</button>
-          </div>
-        </div>
-      </div>
-      <div class="flight-card">
-        <div class="flight-card-top">
-          <img src="" alt="" class="airline-logo">
-          <div class="airline-name-location">
-            <div class="airline-name">Qatar Airways</div>
-            <div class="airport-name">Murtala Muhammed International Airport</div>
-          </div>
-        </div>
-
-        <div class="flight-card-middle">
-          <div class="airport-codes-div">
-            <div class="airport-code">
-              <p class="airport-code-text">LOS</p>
-              <p class="airport-name">Lagos</p>
-            </div>
-
-            <svg class="plane-departure-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
-              viewBox="0 0 25 24" fill="none">
-              <path
-                d="M23.5 11V13H22.5V14H15.5V15H14.5V17H13.5V18H12.5V20H11.5V21H10.5V22H7.5V19H8.5V16H9.5V14H5.5V15H4.5V16H3.5V17H1.5V14H2.5V10H1.5V7H3.5V8H4.5V9H5.5V10H9.5V8H8.5V5H7.5V2H10.5V3H11.5V4H12.5V6H13.5V7H14.5V9H15.5V10H22.5V11H23.5Z"
-                fill="#E71D36" />
-            </svg>
-
-            <div class="airport-code-2">
-              <p class="airport-code-text-2">DOH</p>
-              <p class="airport-name-2">Doha</p>
-            </div>
-          </div>
-
-          <div class="departure-arrival-div">
-            <div class="departure-time">
-              <p class="time">12:00 AM</p>
-              <p class="date">Friday, 12th Jan</p>
-            </div>
-
-            <div class="arrival-time">
-              <p class="time">12:00 AM</p>
-              <p class="date">Friday, 12th Jan</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="flight-card-bottom">
-          <div class="flight-pricing">
-            <p class="price-fare">Economy</p>
-            <p class="price">₦1,200,000</p>
-          </div>
-
-          <div class="flight-booking">
-            <button class="select-flight-button">Select Flight</button>
-          </div>
-        </div>
-      </div>
-      <div class="flight-card">
-        <div class="flight-card-top">
-          <img src="" alt="" class="airline-logo">
-          <div class="airline-name-location">
-            <div class="airline-name">Qatar Airways</div>
-            <div class="airport-name">Murtala Muhammed International Airport</div>
-          </div>
-        </div>
-
-        <div class="flight-card-middle">
-          <div class="airport-codes-div">
-            <div class="airport-code">
-              <p class="airport-code-text">LOS</p>
-              <p class="airport-name">Lagos</p>
-            </div>
-
-            <svg class="plane-departure-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24"
-              viewBox="0 0 25 24" fill="none">
-              <path
-                d="M23.5 11V13H22.5V14H15.5V15H14.5V17H13.5V18H12.5V20H11.5V21H10.5V22H7.5V19H8.5V16H9.5V14H5.5V15H4.5V16H3.5V17H1.5V14H2.5V10H1.5V7H3.5V8H4.5V9H5.5V10H9.5V8H8.5V5H7.5V2H10.5V3H11.5V4H12.5V6H13.5V7H14.5V9H15.5V10H22.5V11H23.5Z"
-                fill="#E71D36" />
-            </svg>
-
-            <div class="airport-code-2">
-              <p class="airport-code-text-2">DOH</p>
-              <p class="airport-name-2">Doha</p>
-            </div>
-          </div>
-
-          <div class="departure-arrival-div">
-            <div class="departure-time">
-              <p class="time">12:00 AM</p>
-              <p class="date">Friday, 12th Jan</p>
-            </div>
-
-            <div class="arrival-time">
-              <p class="time">12:00 AM</p>
-              <p class="date">Friday, 12th Jan</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="flight-card-bottom">
-          <div class="flight-pricing">
-            <p class="price-fare">Economy</p>
-            <p class="price">₦1,200,000</p>
-          </div>
-
-          <div class="flight-booking">
-            <button class="select-flight-button">Select Flight</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Travel Package -->
-  <div class="travel-packages">
-    <div class="top">
-      <div class="top-left">
-        <h3 class="travel-package-top-left-header">Our Top Travel Packages — Curated Just for You</h3>
-        <p class="travel-package-top-left-subheader">Explore our top travel packages this month at JAPA</p>
-      </div>
-      <div class="top-right">
-        <button>See all packages</button>
+    <!-- Steps to book package -->
+    <div class="steps-to-book-section" id="how-to-japa">
+      <div class="inner">
+        <h1 class="steps-header">3 very easy steps to book a travel package with JAPA</h1>
+        <div class="steps-cards-container">
+          <!-- Steps Card -->
+          <div class="steps-card">
+            <img src="./assets/step1.png" alt="" class="step-image">
+            <div class="step-header-text">
+              <h2>Pick Your Package</h2>
+              <p>Search our list of travel packages, we’ve got trips for every mood.</p>
+            </div>
+          </div>
+          <!-- Steps Card -->
+          <div class="steps-card">
+            <img src="./assets/step2.png" alt="" class="step-image">
+            <div class="step-header-text">
+              <h2>Book in 5 Minutes</h2>
+              <p>No calls, forms, just smooth online booking and simple payment options.</p>
+            </div>
+          </div>
+          <!-- Steps Card -->
+          <div class="steps-card">
+            <img src="./assets/Group 12 3 (1).png" alt="" class="step-image">
+            <div class="step-header-text">
+              <h2>Catch Flights, Not Stress</h2>
+              <p>Your job? Show up at the airport. We’ll handle the rest.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="bottom">
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Zanzibar Beach Escape</h3>
-            <p>Eiffel Tower, croissants, and luxury shopping</p>
-          </div>
-          <div class="pricing">
-            From NGN 1,200,000
-          </div>
-        </div>
-      </div>
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Zanzibar Beach Escape</h3>
-            <p>Eiffel Tower, croissants, and luxury shopping</p>
-          </div>
-          <div class="pricing">
-            From NGN 1,200,000
-          </div>
-        </div>
-      </div>
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Zanzibar Beach Escape</h3>
-            <p>Eiffel Tower, croissants, and luxury shopping</p>
-          </div>
-          <div class="pricing">
-            From NGN 1,200,000
-          </div>
-        </div>
-      </div>
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Zanzibar Beach Escape</h3>
-            <p>Eiffel Tower, croissants, and luxury shopping</p>
-          </div>
-          <p class="pricing">
-            From NGN 1,200,000
-          </p>
-        </div>
+    <!-- Featured Picks -->
+    <div class="featured-picks" id="featured-picks">
+      <div class="featured-header-subheader">
+        <h2>Hot Picks This Month at JAPA🔥</h2>
+        <p>Explore popular destinations and reserve a spot before it’s too late</p>
       </div>
 
-    </div>
-  </div>
-
-  <!-- Travel Package Promo -->
-  <div class="travel-package-promo">
-    <div class="promo-container">
-      <div class="promo-content">
-        <div class="top">
-          <h2>Enjoy a 5-Day Paris Getaway</h2>
-          <p>Starting from NGN 2,800,000</p>
+      <div class="featured-picks-card-container">
+        <!-- Featured picks card -->
+        <div class="featured-picks-card"
+          style="background-image: url('./assets/beach-resort-maldives-asia.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+          <h3>Bali Luxury Retreat: 8-Day Villa Experience</h3>
         </div>
-        <div class="bottom">
-          <button>Book Package</button>
+        <!-- Featured picks card -->
+        <div class="featured-picks-card"
+          style="background-image: url('./assets/beach-resort-maldives-asia.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+          <h3>Bali Luxury Retreat: 8-Day Villa Experience</h3>
+        </div>
+        <!-- Featured picks card -->
+        <div class="featured-picks-card"
+          style="background-image: url('./assets/beach-resort-maldives-asia.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+          <h3>Bali Luxury Retreat: 8-Day Villa Experience</h3>
+        </div>
+        <!-- Featured picks card -->
+        <div class="featured-picks-card"
+          style="background-image: url('./assets/beach-resort-maldives-asia.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+          <h3>Bali Luxury Retreat: 8-Day Villa Experience</h3>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Destinations -->
-  <div class="destinations">
-    <div class="destinations-top">
-      <div class="destinations-top-left">
-        <h3>Not Sure Where to Go? Let the World Inspire You.</h3>
-        <p>Discover the world with JAPA</p>
+    <!-- Why book with japa -->
+    <div class="why-book-section" id="why-us">
+      <div class="inner">
+        <div class="why-book-inner-content">
+          <div class="why-book-inner-content-left">
+            <div class="wny-tag-header-subheader">
+              <div class="why-tag-header">
+                <h4>Why Book with JAPA?</h4>
+                <h2>We’ve done the legwork, haggled with hotels, tested the tours, and curated only the good stuff.</h2>
+              </div>
+              <p class="why-subheader">
+                Tired of planning fatigue? Done with dodgy prices? JAPA was made for people like you who just want to
+                GO.
+              </p>
+            </div>
+
+            <a href="./travel-packages.html">
+              <button class="main-button">
+                Book a package today
+              </button>
+            </a>
+          </div>
+          <div class="why-book-inner-content-right">
+            <img src="./assets/left-tilt.jpg" alt="" class="left-tilt">
+            <img src="./assets/center-tilt (1).webp" alt="" class="center-tilt">
+            <img src="./assets/right-tilt.jpg" alt="" class="right-tilt">
+          </div>
+        </div>
+        <div class="quick-facts-mini-section">
+          <!-- Fact Pill -->
+          <div class="fact-pill">
+            <div class="check-icon-white">
+              <img src="./assets/lets-icons_check-fill.svg" alt="" srcset="">
+            </div>
+            <p>No Hidden Fees</p>
+          </div>
+          <!-- Fact Pill -->
+          <div class="fact-pill">
+            <div class="check-icon-white">
+              <img src="./assets/lets-icons_check-fill.svg" alt="" srcset="">
+            </div>
+            <p>Real Humans, Real Help (24/7)</p>
+          </div>
+          <!-- Fact Pill -->
+          <div class="fact-pill">
+            <div class="check-icon-white">
+              <img src="./assets/lets-icons_check-fill.svg" alt="" srcset="">
+            </div>
+            <p>Local Guides, Global Experiences</p>
+          </div>
+          <!-- Fact Pill -->
+          <div class="fact-pill">
+            <div class="check-icon-white">
+              <img src="./assets/lets-icons_check-fill.svg" alt="" srcset="">
+            </div>
+            <p>Simple Payment Plans</p>
+          </div>
+        </div>
       </div>
-
-      <div class="destinations-top-right">
-        <button>See all destinations</button>
-      </div>
-
     </div>
-    <div class="destinations-bottom">
-      <div class="destination-card">
-        <div class="destination-card-content">
-          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
-        </div>
-      </div>
-      <div class="destination-card">
-        <div class="destination-card-content">
-          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
-        </div>
-      </div>
-      <div class="destination-card">
-        <div class="destination-card-content">
-          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
-        </div>
-      </div>
-      <div class="destination-card">
-        <div class="destination-card-content">
-          <div class="destination-name"><button>Tokyo, Japan 🇯🇵</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Tours & Experiences -->
-  <div class="travel-packages">
-    <div class="top">
-      <div class="top-left">
-        <h3 class="travel-package-top-left-header">Authentic Experiences That Make Memories</h3>
-        <p class="travel-package-top-left-subheader">Live the culture. Explore handpicked local tours and adventures.
-        </p>
-      </div>
-      <div class="top-right">
-        <button>See all packages</button>
+    <!--Call to action-->
+    <div class="call-to-action-section">
+      <div class="cta-inner">
+        <div class="cta-header-subheader">
+          <h1>Ready to pack your bags & JAPA?</h1>
+          <p>Whether you’re escaping work, celebrating love, or just need new scenery, there’s a package with your name
+            on
+            it. Don’t overthink it. Just JAPA.</p>
+        </div>
+
+        <a href="./travel-packages.html">
+          <button class="cta-button">Book a package today</button>
+        </a>
       </div>
     </div>
 
-    <div class="bottom">
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Jerusalem Historical & Spiritual Tour</h3>
-            <p>erusalem, Israel</p>
-          </div>
-          <div class="pricing">
-            NGN 1,500,000
-          </div>
-        </div>
-      </div>
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Jerusalem Historical & Spiritual Tour</h3>
-            <p>erusalem, Israel</p>
-          </div>
-          <div class="pricing">
-            NGN 1,500,000
-          </div>
-        </div>
-      </div>
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Jerusalem Historical & Spiritual Tour</h3>
-            <p>erusalem, Israel</p>
-          </div>
-          <div class="pricing">
-            NGN 1,500,000
-          </div>
-        </div>
-      </div>
-      <div class="travel-package-card">
-        <img class="thumbnail" src="" alt="" srcset="">
-        <div class="content">
-          <div class="name-desc">
-            <h3>Jerusalem Historical & Spiritual Tour</h3>
-            <p>erusalem, Israel</p>
-          </div>
-          <div class="pricing">
-            NGN 1,500,000
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-
-  <!-- How does JAPA work? -->
-  <div class="how-japa-works">
-    <div class="main-container">
-      <div class="inner-container">
-        <div class="bg-img"></div>
-        <div class="left">
-          <div class="left-top">
-            <h3>How does JAPA work?</h3>
-            <p>1. Browse destinations and packages across the world.</p>
-            <p>2. Choose your dates and reserve in minutes—no stress.</p>
-            <p>3. Pack your bags, we handle the rest. Your Japa journey awaits.</p>
-          </div>
-          <div class="left-bottom">
-            <button>JAPA Today</button>
-          </div>
+    <!--Footer-->
+    <div class="footer-section">
+      <div class="inner-footer">
+        <div class="footer-content">
+          <img src="./assets/japa-logo.svg" alt="" class="footer-logo">
+          <p>© 2025 Japa. All rights reserved.</p>
         </div>
       </div>
     </div>
   </div>
 </body>
 <script type="module">
+  // GSAP Animations start here
+  gsap.registerPlugin(SplitText, ScrollTrigger);
+
+  console.clear();
+
+  // Smooth scrolling setup
+  gsap.registerPlugin(ScrollTrigger);
+  let lenis;
+
+  // Initialize Lenis smooth scroll
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Connect Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  document.fonts.ready.then(() => {
+    // Enhanced cursor follower
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    document.body.appendChild(cursor);
+
+    // Add cursor styles
+    const cursorStyle = document.createElement('style');
+    cursorStyle.textContent = `
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease-out;
+    }
+    .custom-cursor.hover {
+      transform: scale(2);
+      background: rgba(255, 255, 255, 0.6);
+    }
+  `;
+    document.head.appendChild(cursorStyle);
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    // Smooth cursor animation
+    gsap.ticker.add(() => {
+      cursorX += (mouseX - cursorX) * 0.1;
+      cursorY += (mouseY - cursorY) * 0.1;
+      gsap.set(cursor, { x: cursorX, y: cursorY });
+    });
+
+    // Cursor hover effects
+    const hoverElements = document.querySelectorAll('button, a, .featured-picks-card, .perk-card');
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // Function to create split text animations with enhanced options
+    function createSplitAnimation(selector, options = {}) {
+      const elements = document.querySelectorAll(selector);
+      if (!elements.length) return;
+
+      const {
+        duration = 0.8,
+        yPercent = 100,
+        stagger = 0.1,
+        ease = "expo.out",
+        trigger = null,
+        delay = 0,
+        scrub = false,
+        start = "top 80%",
+        end = "bottom 20%"
+      } = options;
+
+      elements.forEach((element, index) => {
+        gsap.set(element, { opacity: 0 });
+
+        const split = new SplitText(element, {
+          type: "words,lines",
+          linesClass: "line"
+        });
+
+        gsap.set(element, { opacity: 1 });
+        gsap.set(split.lines, { yPercent: yPercent });
+
+        const animation = gsap.to(split.lines, {
+          duration,
+          yPercent: 0,
+          opacity: 1,
+          stagger,
+          ease,
+          delay: delay + (index * 0.1),
+          paused: trigger ? true : false
+        });
+
+        if (trigger) {
+          ScrollTrigger.create({
+            trigger: trigger || element,
+            start,
+            end,
+            animation: scrub ? animation : null,
+            scrub: scrub,
+            onEnter: () => !scrub && animation.play(),
+            onLeaveBack: () => !scrub && animation.reverse(),
+            toggleActions: scrub ? "" : "play none none reverse"
+          });
+        }
+      });
+    }
+
+    // Enhanced navbar animation
+    gsap.set('.navbar', { yPercent: -100 });
+    gsap.to('.navbar', {
+      yPercent: 0,
+      duration: 1,
+      ease: "expo.out",
+      delay: 0.2
+    });
+
+    // Navbar scroll behavior
+    let lastScrollTop = 0;
+    ScrollTrigger.create({
+      start: "top -80",
+      end: 99999,
+      onUpdate: (self) => {
+        const st = window.pageYOffset || document.documentElement.scrollTop;
+        if (st > lastScrollTop && st > 100) {
+          // Scrolling down
+          gsap.to('.navbar', { yPercent: -100, duration: 0.3 });
+        } else {
+          // Scrolling up
+          gsap.to('.navbar', { yPercent: 0, duration: 0.3 });
+        }
+        lastScrollTop = st <= 0 ? 0 : st;
+      }
+    });
+
+    // Enhanced hero animations with parallax
+    const heroTl = gsap.timeline();
+
+    // Hero image parallax
+    gsap.to('.hero-image', {
+      yPercent: -30,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".newhero-section",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Hero content animations
+    createSplitAnimation(".newhero-header", {
+      duration: 1,
+      stagger: 0.15,
+      yPercent: 80,
+      delay: 0.5
+    });
+
+    createSplitAnimation(".newhero-subheader", {
+      duration: 0.8,
+      stagger: 0.08,
+      yPercent: 60,
+      delay: 1
+    });
+
+    // Main button with enhanced animation
+    gsap.fromTo('.main-button',
+      {
+        scale: 0.8,
+        opacity: 0,
+        rotationX: -15
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        rotationX: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        delay: 1.5
+      }
+    );
+
+    // Button hover animations
+    document.querySelectorAll('.main-button, .cta-button').forEach(button => {
+      button.addEventListener('mouseenter', () => {
+        gsap.to(button, {
+          scale: 1.05,
+          rotationY: 5,
+          duration: 0.3,
+          ease: "back.out(1.7)"
+        });
+      });
+
+      button.addEventListener('mouseleave', () => {
+        gsap.to(button, {
+          scale: 1,
+          rotationY: 0,
+          duration: 0.3,
+          ease: "back.out(1.7)"
+        });
+      });
+    });
+
+    // Enhanced section animations
+    createSplitAnimation(".forget-header", {
+      duration: 1.2,
+      yPercent: 60,
+      stagger: 0.2,
+      trigger: ".forget-travel-agents-section",
+      ease: "expo.out"
+    });
+
+    createSplitAnimation(".forget-subheader", {
+      duration: 1,
+      yPercent: 40,
+      stagger: 0.1,
+      delay: 0.3,
+      trigger: ".forget-travel-agents-section"
+    });
+
+    // Enhanced perk cards with 3D tilt effect
+    document.querySelectorAll('.perk-card').forEach((card, index) => {
+      gsap.set(card, {
+        rotationY: -15,
+        rotationX: 10,
+        opacity: 0,
+        scale: 0.9
+      });
+
+      ScrollTrigger.create({
+        trigger: card,
+        start: "top 85%",
+        onEnter: () => {
+          gsap.to(card, {
+            rotationY: 0,
+            rotationX: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: "back.out(1.7)"
+          });
+        }
+      });
+
+      // Card hover effect
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          scale: 1.05,
+          rotationY: 5,
+          rotationX: -5,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          scale: 1,
+          rotationY: 0,
+          rotationX: 0,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      });
+    });
+
+    // Steps section with staggered animations
+    createSplitAnimation(".steps-header", {
+      trigger: ".steps-to-book-section",
+      duration: 1,
+      stagger: 0.15
+    });
+
+    gsap.fromTo('.steps-card',
+      {
+        y: 100,
+        opacity: 0,
+        rotationX: 15
+      },
+      {
+        y: 0,
+        opacity: 1,
+        rotationX: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".steps-cards-container",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Featured picks with advanced animations
+    createSplitAnimation(".featured-picks h2", {
+      trigger: ".featured-picks",
+      duration: 1
+    });
+
+    createSplitAnimation(".featured-picks p", {
+      trigger: ".featured-picks",
+      delay: 0.2,
+      duration: 0.8
+    });
+
+    // Featured cards with magnetic effect
+    document.querySelectorAll('.featured-picks-card').forEach((card, index) => {
+      gsap.fromTo(card,
+        {
+          scale: 0.8,
+          opacity: 0,
+          rotationY: index % 2 === 0 ? -20 : 20
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          rotationY: 0,
+          duration: 1,
+          delay: index * 0.15,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Magnetic hover effect
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        gsap.to(card, {
+          x: x * 0.1,
+          y: y * 0.1,
+          rotationY: x * 0.05,
+          rotationX: -y * 0.05,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          x: 0,
+          y: 0,
+          rotationY: 0,
+          rotationX: 0,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+      });
+    });
+
+    // Why book section with parallax images
+    createSplitAnimation(".why-tag-header h2", {
+      trigger: ".why-book-section",
+      duration: 1.2,
+      stagger: 0.1
+    });
+
+    createSplitAnimation(".why-subheader", {
+      trigger: ".why-book-section",
+      delay: 0.3,
+      duration: 0.8
+    });
+
+    // Fact pills animation
+    gsap.fromTo('.fact-pill',
+      {
+        x: -50,
+        opacity: 0,
+        rotationY: -15
+      },
+      {
+        x: 0,
+        opacity: 1,
+        rotationY: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: ".quick-facts-mini-section",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // CTA section
+    createSplitAnimation(".cta-header-subheader h1", {
+      trigger: ".call-to-action-section",
+      duration: 1.2,
+      stagger: 0.15
+    });
+
+    createSplitAnimation(".cta-header-subheader p", {
+      trigger: ".call-to-action-section",
+      delay: 0.3,
+      duration: 0.8,
+      stagger: 0.08
+    });
+
+    gsap.fromTo('.cta-button',
+      {
+        scale: 0.8,
+        opacity: 0,
+        y: 30
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: ".cta-button",
+          start: "top 90%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Page transition effect
+    gsap.fromTo('body',
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1.5,
+        ease: "power2.out"
+      }
+    );
+
+    // Refresh ScrollTrigger on window resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 250);
+    });
+  });
+
+  // Loading animation
+  window.addEventListener('load', () => {
+    gsap.to('.body-body', {
+      opacity: 1,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+  });
+
+  const bookLink = document.querySelector(".book-link");
+  function bounceLink() {
+    gsap.fromTo(
+      bookLink,
+      { y: 0 },
+      { y: -10, duration: 0.3, ease: "power1.out", yoyo: true, repeat: 1 }
+    );
+  }
+
+  // make it bounce every 2 seconds
+  setInterval(bounceLink, 2000);
+
+
+  //GSAP Animations end here
+
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
   // TODO: Add SDKs for Firebase products that you want to use
@@ -486,7 +839,143 @@
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = firebase.firestore();
+
+  function displayNav() {
+    let savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+    let bookmarkCount = document.getElementById('bookmark-count')
+    // Function to update bookmark count in navbar
+    function updateBookmarkCount() {
+      savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+      bookmarkCount.innerHTML = savedItems.length;
+    }
+
+    // Initial count update
+    updateBookmarkCount();
+    document.getElementById('bookmark-btn').addEventListener('click', () => {
+      window.location.href = 'favorite-travel-packages.html'
+    })
+  }
+  displayNav()
+
+
+  function myFirebaseUserAuth() {
+    // Firebase Auth State Change Handler
+    firebase.auth().onAuthStateChanged((user) => {
+      const usernameElement = document.getElementById("username");
+
+      if (user) {
+        console.log("Current user:", user);
+
+        // Get the first initial from display name or email
+        const displayName = user.displayName || user.email;
+        const firstInitial = displayName.charAt(0).toUpperCase();
+
+
+
+        // Replace the button content with profile picture and dropdown
+        usernameElement.innerHTML = `
+      <div class="user-profile-container">
+        <div class="profile-picture" id="profilePicture">
+          <span class="profile-initial">${firstInitial}</span>
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-profile-pic">
+              <span class="dropdown-initial">${firstInitial}</span>
+            </div>
+            <div class="dropdown-user-info">
+              <div class="dropdown-name">👋🏽 Hello, there! ${user.displayName || 'Hello, there! 👋🏽'}</div>
+              <div class="dropdown-email">${user.email}</div>
+            </div>
+          </div>
+          <hr class="dropdown-divider">
+          <button class="dropdown-item" id="route-to-trips">
+           <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor"/>
+            </svg>
+            My Upcoming Trips
+          </button>
+          <hr class="dropdown-divider">
+          <button class="dropdown-item" id="logoutBtn">
+            <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="16,17 21,12 16,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Log Out
+          </button>
+        </div>
+      </div>
+    `;
+
+        // Remove the login-button class and add user-profile class
+        usernameElement.className = "user-profile";
+
+      } else {
+        console.log("No user signed in.");
+        // Reset to login button
+        usernameElement.innerHTML = '<a href="user-auth.html">Log In</a>';
+        usernameElement.className = "login-button";
+      }
+    });
+
+    // Toggle dropdown function
+    function toggleDropdown() {
+      const dropdown = document.getElementById("profileDropdown");
+      dropdown.classList.toggle("show");
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+      const userProfile = document.querySelector('.user-profile-container');
+      const dropdown = document.getElementById("profileDropdown");
+
+      if (userProfile && !userProfile.contains(event.target)) {
+        dropdown?.classList.remove("show");
+      }
+    });
+
+    // Logout function with event listener
+    function handleLogout() {
+      firebase.auth().signOut().then(() => {
+        console.log("User signed out successfully");
+        // Redirect to home page or refresh
+        window.location.reload();
+      }).catch((error) => {
+        console.error("Error signing out:", error);
+      });
+    }
+
+    // Routing users to upcoming trips / booking history
+    function handleUpcomingTripsRoute() {
+      window.location.href = './bookinghistory.html'
+    }
+
+    // Add event listener for logout button and profile picture
+    document.addEventListener('DOMContentLoaded', function () {
+      // Use event delegation since elements are dynamically created
+      document.addEventListener('click', function (event) {
+        // Handle logout button click
+        if (event.target.closest('#logoutBtn')) {
+          handleLogout();
+        }
+        if (event.target.closest('#route-to-trips')) {
+          handleUpcomingTripsRoute();
+        }
+
+        // Handle profile picture click
+        if (event.target.closest('#profilePicture')) {
+          toggleDropdown();
+        }
+      });
+    });
+
+  }
+  myFirebaseUserAuth()
 </script>
 
 </html>

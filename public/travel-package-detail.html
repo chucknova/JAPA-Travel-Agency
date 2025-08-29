@@ -17,8 +17,10 @@
     <link rel="stylesheet" href="travel-details.css">
     <link rel="stylesheet" href="loadingstate.css">
     <link rel="stylesheet" href="morepictures.css">
+    <script type="module" src="./travel-package-schema.js"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
     <title>Travel Package Details || JAPA</title>
 </head>
@@ -29,37 +31,61 @@
         <div class="navcontents">
             <div class="navcontents-left">
                 <div class="logo">
-                    <img src="assets/logo.png" alt="Logo" class="logo-img">
+                    <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
                 </div>
 
                 <ul class="nav-links">
-                    <li><a href="#">Travel Packages</a></li>
-                    <li><a href="#">Destinations</a></li>
-                    <li><a href="flights.html">Flights</a></li>
-                    <li><a href="#">Tours & Experiences</a></li>
-                    <li><a href="#">Visa</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#who-we-are">Who we are</a></li>
+                    <li><a href="#how-to-japa">How to JAPA</a></li>
+                    <li><a href="#featured-picks">Our Featured Picks</a></li>
+                    <li><a href="#why-us">Why us</a></li>
+
                 </ul>
             </div>
 
-
             <div class="user-actions">
-                <button class="login-button"><a href="user-auth.html">Log In</a></button>
+                <button id="username" class="login-button">
+                    <a href="user-auth.html">Log In</a>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Upper -->
     <div class="upper-component">
-        <!-- Travel Package Card -->
-         
-        <!-- Travel Name and Short Details -->
-        <div class="travel-name-short-details" id="name-details">
-            <!-- Inserted automatically from dom manipulation -->
-        </div>
 
-        <!-- Travel Gallery -->
-        <div class="travel-gallery" id="travel-gallery">
-            <!-- Inserted automatically from dom manipulation -->
+        <!-- Travel Package Card -->
+        <div class="col-reverse">
+            <!-- Travel Name and Short Details -->
+            <div class="travel-name-short-details" id="name-details">
+                <!-- Inserted automatically from dom manipulation -->
+            </div>
+
+            <!-- Travel Gallery -->
+            <div class="travel-gallery" id="travel-gallery">
+                <img src="${galleryImages[0]}" alt="Beach resort in Maldives" class="grid-1">
+                <div class="right-grid-images">
+                    <img src="${galleryImages[1]}" alt="Friends spending time together" class="grid-2">
+                    <img src="${galleryImages[2]}" alt="Friends spending time together" class="grid-3">
+                    <img src="${galleryImages[3]}" alt="Friends spending time together" class="grid-4">
+                    <div class="gallery-trigger" id="gallery-trigger">
+                        <img src="${galleryImages[4]}" alt="Friends spending time together">
+                        <div class="overlay">
+                            <div class="overlay-text">See all photos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="imageModal" class="modal-hotel-doom poofed">
+                    <span id="close-modal" class="bye-bye-button">&times;</span>
+                    <img id="modalImage" class="hero-shot">
+                    <div class="button-flickers">
+                        <button id="prev-btn" class="fat-arrow">⟨</button>
+                        <button id="next-btn" class="fat-arrow">⟩</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Travel Details Nav -->
@@ -68,14 +94,12 @@
             <div class="nav-item" data-target="itinerary">Itinerary Details</div>
             <div class="nav-item" data-target="included">What's Included</div>
             <div class="nav-item" data-target="accommodation">Where you'll stay</div>
-            <div class="nav-item" data-target="reviews">Reviews</div>
         </div>
 
         <!-- Middle -->
         <div class="middle-component" style="padding: 0px;">
             <!-- Main Details left -->
             <div class="main-details-left">
-                <input type="text">
                 <!-- What's this package about? -->
                 <div class="what-package-is-about content-section" id="package-details">
                     <!-- Inserted automatically by dom manipulation -->
@@ -189,201 +213,296 @@
             </div>
         </div>
 
-        <!-- Bottom (Testimonials)-->
-        <div class="bottom-component content-section" style="padding: 0px; margin-top: 44px;">
-            <div class="ratings">
-                <div class="star-ratings-avg">
-                    <div class="star-rating-icon"><img src="./assets/Vector.svg" alt="" srcset=""></div>
-                    <div class="ratings-avg">4.85</div>
-                </div>
-                <div class="ratings-placeholder">OVERALL RATING</div>
-            </div>
-
-            <div class="review-grid" style="padding: 0px; margin-top: 36px;">
-                <!-- User review card -->
-                <div class="user-review-card">
-                    <div class="user-pfp-name-timestamp">
-                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                            alt="" class="user-review-pfp">
-                        <div class="name-timestamp">
-                            <h3>Liam Rowland</h3>
-                            <p>3 weeks ago</p>
-                        </div>
-                    </div>
-                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
-                        adventure.
-                        I can't wait to go back!"</p>
-                </div>
-                <!-- User review card -->
-                <div class="user-review-card">
-                    <div class="user-pfp-name-timestamp">
-                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                            alt="" class="user-review-pfp">
-                        <div class="name-timestamp">
-                            <h3>Liam Rowland</h3>
-                            <p>3 weeks ago</p>
-                        </div>
-                    </div>
-                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
-                        adventure.
-                        I can't wait to go back!"</p>
-                </div>
-                <!-- User review card -->
-                <div class="user-review-card">
-                    <div class="user-pfp-name-timestamp">
-                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                            alt="" class="user-review-pfp">
-                        <div class="name-timestamp">
-                            <h3>Liam Rowland</h3>
-                            <p>3 weeks ago</p>
-                        </div>
-                    </div>
-                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
-                        adventure.
-                        I can't wait to go back!"</p>
-                </div>
-                <!-- User review card -->
-                <div class="user-review-card">
-                    <div class="user-pfp-name-timestamp">
-                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                            alt="" class="user-review-pfp">
-                        <div class="name-timestamp">
-                            <h3>Liam Rowland</h3>
-                            <p>3 weeks ago</p>
-                        </div>
-                    </div>
-                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
-                        adventure.
-                        I can't wait to go back!"</p>
-                </div>
-                <!-- User review card -->
-                <div class="user-review-card">
-                    <div class="user-pfp-name-timestamp">
-                        <img src="./assets/phone-travel-happy-black-man-airport-typing-chatting-networking-via-email-online-airplane-smile-excited-african-businessman-reading-news-while-traveling-holiday-vacation-journey.jpg"
-                            alt="" class="user-review-pfp">
-                        <div class="name-timestamp">
-                            <h3>Liam Rowland</h3>
-                            <p>3 weeks ago</p>
-                        </div>
-                    </div>
-                    <p class="user-review-here">"The vibrant culture and delicious food in Bali made every day an
-                        adventure.
-                        I can't wait to go back!"</p>
-                </div>
-            </div>
-        </div>
-
         <div class="loading-container hidden" id="loadingState">
             <div class="spinner"></div>
-            <div class="loading-text">Loading</div>
-            <div class="loading-dots">Please wait<span class="dots"></span></div>
+            <div class="loading-text">Processing your payment...</div>
+            <div class="loading-dots">Please wait while we process your payment<span class="dots"></span></div>
         </div>
 
         <div class="overlay hidden" id="overlay"></div>
+    </div>
+
 </body>
 <script type="module">
-    import travelPackages from './travel-package-schema.js'
-    console.log(travelPackages);
+    import { getTravelPackages } from './travel-package-schema.js';
+    const firebaseConfig = {
+        apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+        authDomain: "japa-269a4.firebaseapp.com",
+        projectId: "japa-269a4",
+        storageBucket: "japa-269a4.firebasestorage.app",
+        messagingSenderId: "736749113389",
+        appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+    };
 
-    const targetSubPackages = travelPackages.map(pkg => pkg.packages);
-    // console.log(targetSubPackages);
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    function myFirebaseUserAuth() {
+        // Firebase Auth State Change Handler
+        firebase.auth().onAuthStateChanged((user) => {
+            const usernameElement = document.getElementById("username");
+
+            if (user) {
+                console.log("Current user:", user);
+
+                // Get the first initial from display name or email
+                const displayName = user.displayName || user.email;
+                const firstInitial = displayName.charAt(0).toUpperCase();
 
 
-    //Coming from the sub-travel-packages.html page
-    const urlParams = new URLSearchParams(window.location.search);
-    const packageId = urlParams.get('packageId');
-    const parentPackageId = urlParams.get('parentPackageID');
-    console.log("packageID:", packageId);
-    console.log("parentPackageId:", parentPackageId);
 
-    const selectedPackage = targetSubPackages[parentPackageId][packageId];
+                // Replace the button content with profile picture and dropdown
+                usernameElement.innerHTML = `
+                    <div class="user-profile-container">
+        <div class="profile-picture" id="profilePicture">
+            <span class="profile-initial">${firstInitial}</span>
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+            <div class="dropdown-header">
+                <div class="dropdown-profile-pic">
+                    <span class="dropdown-initial">${firstInitial}</span>
+                </div>
+                <div class="dropdown-user-info">
+                    <div class="dropdown-name">👋🏽 Hello, there! ${user.displayName || 'Hello, there! 👋🏽'}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                </div>
+            </div>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item" id="route-to-trips">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+                        fill="currentColor" />
+                </svg>
+                My Upcoming Trips
+            </button>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item" id="bookmark-btn">
+                <svg class="logout-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+                My Bookmarked Trips
+            </button>
+            <hr class="dropdown-divider">
+            <button style = "color: red;" class="dropdown-item" id="logoutBtn">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="red" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <polyline points="16,17 21,12 16,7" stroke="red" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <line x1="21" y1="12" x2="9" y2="12" stroke="red" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Log Out
+            </button>
+        </div>
+    </div>
+    `;
 
+                // Remove the login-button class and add user-profile class
+                usernameElement.className = "user-profile";
 
-    console.log("selected package:", selectedPackage);
-    document.getElementById("traveler-count").addEventListener("input", renderTotalPrice);
-    const allBookingIDs = [];
-    const allBookingSessions = [];
+            } else {
+                console.log("No user signed in.");
+                // Reset to login button
+                usernameElement.innerHTML = '<a href="user-auth.html">Log In</a>';
+                usernameElement.className = "login-button";
+            }
+        });
 
-    const today = new Date();
-
-    const formattedDate = today.toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-
-    function simulateAction() {
-        const loadingState = document.getElementById('loadingState');
-        const overlay = document.getElementById('overlay');
-
-        // Safety check to ensure elements exist
-        if (!loadingState || !overlay) {
-            console.warn('Missing #loadingState or #overlay in the DOM.');
-            return;
+        // Toggle dropdown function
+        function toggleDropdown() {
+            const dropdown = document.getElementById("profileDropdown");
+            dropdown.classList.toggle("show");
         }
 
-        // Show overlay and loading state
-        overlay.classList.remove('hidden');
-        loadingState.classList.remove('hidden');
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const userProfile = document.querySelector('.user-profile-container');
+            const dropdown = document.getElementById("profileDropdown");
 
-        // Hide them after exactly 6 seconds (6000 ms)
-        setTimeout(() => {
-            overlay.classList.add('hidden');
-            loadingState.classList.add('hidden');
-        }, 6000);
+            if (userProfile && !userProfile.contains(event.target)) {
+                dropdown?.classList.remove("show");
+            }
+        });
+
+        // Logout function with event listener
+        function handleLogout() {
+            firebase.auth().signOut().then(() => {
+                console.log("User signed out successfully");
+                // Redirect to home page or refresh
+                window.location.reload();
+            }).catch((error) => {
+                console.error("Error signing out:", error);
+            });
+        }
+
+        // Routing users to upcoming trips / booking history
+        function handleUpcomingTripsRoute() {
+            window.location.href = './bookinghistory.html'
+        }
+
+        // Routing users to bookmarks
+        function handleBookmarks() {
+            window.location.href = './favorite-travel-packages.html'
+        }
+
+        // Add event listener for logout button and profile picture
+        document.addEventListener('DOMContentLoaded', function () {
+            // Use event delegation since elements are dynamically created
+            document.addEventListener('click', function (event) {
+                // Handle logout button click
+                if (event.target.closest('#logoutBtn')) {
+                    handleLogout();
+                }
+                if (event.target.closest('#route-to-trips')) {
+                    handleUpcomingTripsRoute();
+                }
+                if (event.target.closest('#bookmark-btn')) {
+                    handleBookmarks();
+                }
+
+                // Handle profile picture click
+                if (event.target.closest('#profilePicture')) {
+                    toggleDropdown();
+                }
+            });
+        });
+
     }
+    myFirebaseUserAuth()
+
+    async function initializeApp() {
+        try {
+            // Fetch travel packages from Firebase
+            const travelPackages = await getTravelPackages();
+
+            // Now all your existing code can use 'travelPackages'
+            const targetSubPackages = travelPackages.map(pkg => pkg.packages);
+            // ... rest of your existing code stays exactly the same
+            const urlParams = new URLSearchParams(window.location.search);
+            const packageId = urlParams.get('packageId');
+            const likedPackageID = urlParams.get('likedPackageID');
+            console.log("likedPackageID", likedPackageID);
+            const allPackages = travelPackages.flatMap(category => category.packages);
+            console.log("allFuckingPackages:", allPackages);
 
 
-    let currentImageIndex = 0;
-    let galleryImages = [];
+            const parentPackageId = urlParams.get('parentPackageID');
+            console.log("packageID:", packageId);
+            console.log("parentPackageId:", parentPackageId);
 
-    function openCarousel(index = 0) {
-        currentImageIndex = index;
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImage");
-        modal.classList.remove("poofed");
-        document.body.style.overflow = "hidden";
-        modalImg.src = galleryImages[currentImageIndex];
-    }
+            let selectedPackage;
 
-    function closeCarousel() {
-        document.getElementById("imageModal").classList.add("poofed");
-        document.body.style.overflow = "";
-    }
-
-    function nextImage() {
-        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
-        document.getElementById("modalImage").src = galleryImages[currentImageIndex];
-    }
-
-    function prevImage() {
-        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-        document.getElementById("modalImage").src = galleryImages[currentImageIndex];
-    }
-
-    // 1. Function to render travel name and short details
-    function renderNameandDetails() {
-        // Mapping through the travelPackage database to render on the DOM
-        const displayNameandDetails =
-            `<h1 class="package-name">${selectedPackage.name}</h1>
-            <h1 class="package-short-details">From ${selectedPackage.price.currency} ${selectedPackage.price.amount} ${selectedPackage.price.priceType} · ${selectedPackage.duration.days} Days · Max ${selectedPackage.groupSize.max} people · Starts In: ${selectedPackage.startAndEndLocation.startsAt},
-                 · Ends In: ${selectedPackage.startAndEndLocation.endsAt}</h1>`
+            if (
+                targetSubPackages &&
+                targetSubPackages[parentPackageId] &&
+                targetSubPackages[parentPackageId][packageId]
+            ) {
+                selectedPackage = targetSubPackages[parentPackageId][packageId];
+            } else if (allPackages && allPackages[likedPackageID]) {
+                selectedPackage = allPackages[parseInt(likedPackageID)];
+            } else {
+                console.error("Package not found.");
+            }
 
 
-        // Rendering travel packages in the DOM
-        document.getElementById("name-details").innerHTML = displayNameandDetails
-    }
+            console.log("selected package:", selectedPackage);
+            const targetId = selectedPackage.id;
+            document.getElementById("traveler-count").addEventListener("input", renderTotalPrice);
+            const allBookingIDs = [];
+            const allBookingSessions = [];
+            const upcomingbookings = JSON.parse(sessionStorage.getItem("upcomingbookings")) || [];
 
-    // Calling the function so it runs
-    renderNameandDetails()
+            const today = new Date();
+            const startDate = new Date(selectedPackage.startAndEndLocation.startsAt);
+            const endDate = new Date(selectedPackage.startAndEndLocation.endsAt);
 
-    function renderTravelGallery() {
-        // Set the global gallery images
-        galleryImages = selectedPackage.tourGallery;
+            const timeDiff = endDate - startDate;
 
-        // Render gallery and modal to DOM
-        const displayTravelGallery = `
+
+            const durationInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+            const formattedDate = today.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            function simulateAction() {
+                const loadingState = document.getElementById('loadingState');
+                const overlay = document.getElementById('overlay');
+
+                // Safety check to ensure elements exist
+                if (!loadingState || !overlay) {
+                    console.warn('Missing #loadingState or #overlay in the DOM.');
+                    return;
+                }
+
+                // Show overlay and loading state
+                overlay.classList.remove('hidden');
+                loadingState.classList.remove('hidden');
+
+                // Hide them after exactly 6 seconds (6000 ms)
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    loadingState.classList.add('hidden');
+                }, 6000);
+            }
+
+
+            let currentImageIndex = 0;
+            let galleryImages = [];
+
+            function openCarousel(index = 0) {
+                currentImageIndex = index;
+                const modal = document.getElementById("imageModal");
+                const modalImg = document.getElementById("modalImage");
+                modal.classList.remove("poofed");
+                document.body.style.overflow = "hidden";
+                modalImg.src = galleryImages[currentImageIndex];
+            }
+
+            function closeCarousel() {
+                document.getElementById("imageModal").classList.add("poofed");
+                document.body.style.overflow = "";
+            }
+
+            function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                document.getElementById("modalImage").src = galleryImages[currentImageIndex];
+            }
+
+            function prevImage() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                document.getElementById("modalImage").src = galleryImages[currentImageIndex];
+            }
+
+            // 1. Function to render travel name and short details
+            function renderNameandDetails() {
+                // Mapping through the travelPackage database to render on the DOM
+                const displayNameandDetails =
+                    `<h1 class="package-name">${selectedPackage.name}</h1>
+            <h1 class="package-short-details"> ${durationInDays} Days · Max ${selectedPackage.groupSize.max} people · Starts In: ${startDate.toDateString()},
+                 · Ends In: ${endDate.toDateString()}</h1>`
+
+
+                // Rendering travel packages in the DOM
+                document.getElementById("name-details").innerHTML = displayNameandDetails
+            }
+
+            // Calling the function so it runs
+            renderNameandDetails()
+
+            function renderTravelGallery() {
+                // Set the global gallery images
+                galleryImages = selectedPackage.tourGallery;
+
+                // Render gallery and modal to DOM
+                const displayTravelGallery = `
     <img src="${galleryImages[0]}" alt="Beach resort in Maldives" class="grid-1">
     <div class="right-grid-images">
       <img src="${galleryImages[1]}" alt="Friends spending time together" class="grid-2">
@@ -408,21 +527,21 @@
 
   `;
 
-        document.getElementById("travel-gallery").innerHTML = displayTravelGallery;
+                document.getElementById("travel-gallery").innerHTML = displayTravelGallery;
 
-        // Attach JS event listeners AFTER DOM is rendered
-        document.getElementById("gallery-trigger").addEventListener("click", () => openCarousel(0));
-        document.getElementById("close-modal").addEventListener("click", closeCarousel);
-        document.getElementById("next-btn").addEventListener("click", nextImage);
-        document.getElementById("prev-btn").addEventListener("click", prevImage);
-    }
+                // Attach JS event listeners AFTER DOM is rendered
+                document.getElementById("gallery-trigger").addEventListener("click", () => openCarousel(0));
+                document.getElementById("close-modal").addEventListener("click", closeCarousel);
+                document.getElementById("next-btn").addEventListener("click", nextImage);
+                document.getElementById("prev-btn").addEventListener("click", prevImage);
+            }
 
-    // Call the function
-    renderTravelGallery();
+            // Call the function
+            renderTravelGallery();
 
-    // Function to render Package Details
-    function renderPackageDetails() {
-        const displayPackageDetails = `
+            // Function to render Package Details
+            function renderPackageDetails() {
+                const displayPackageDetails = `
                 <h3>What's this package about?</h3>
                 <p>${selectedPackage.aboutPackage}</p>
                 <button class="read-more" onclick="openModal()">Read more</button>
@@ -441,47 +560,47 @@
                 </div>
             `;
 
-        // Rendering travel packages in the DOM
-        document.getElementById("package-details").innerHTML = displayPackageDetails;
-    }
+                // Rendering travel packages in the DOM
+                document.getElementById("package-details").innerHTML = displayPackageDetails;
+            }
 
-    // Function to open modal
-    window.openModal = function () {
-        const modal = document.getElementById('modalOverlay');
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    };
+            // Function to open modal
+            window.openModal = function () {
+                const modal = document.getElementById('modalOverlay');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
 
-    // Function to close modal
-    window.closeModal = function () {
-        const modal = document.getElementById('modalOverlay');
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    };
-    // Close modal when clicking outside of it
-    document.addEventListener('click', function (e) {
-        const modal = document.getElementById('modalOverlay');
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+            // Function to close modal
+            window.closeModal = function () {
+                const modal = document.getElementById('modalOverlay');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            };
+            // Close modal when clicking outside of it
+            document.addEventListener('click', function (e) {
+                const modal = document.getElementById('modalOverlay');
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
 
-    // Close modal with Escape key
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            closeModal();
-        }
-    });
+            // Close modal with Escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
 
-    // Calling the function so it runs
-    renderPackageDetails();
+            // Calling the function so it runs
+            renderPackageDetails();
 
-    // 4. Function to render Itinerary
-    function renderItinerary() {
-        // Mapping through the travelPackage database to render on the DOM
-        const itineraryComponent = selectedPackage.itinerary
-        const displayItinerary = itineraryComponent.map((itinerary, index) => {
-            return `<!-- Accordion Component -->
+            // 4. Function to render Itinerary
+            function renderItinerary() {
+                // Mapping through the travelPackage database to render on the DOM
+                const itineraryComponent = selectedPackage.itinerary
+                const displayItinerary = itineraryComponent.map((itinerary, index) => {
+                    return `<!-- Accordion Component -->
                         <div class="accordion-component" data-index="${index}">
                             <div class="title-and-arrow accordion-header">
                                 <p class="accordion-component-title">${itinerary.itineraryTitle}</p>
@@ -504,55 +623,55 @@
                                 <p class="accordion-component-subtext">${itinerary.itineraryDetails}</p>
                             </div>
                         </div>`
-        })
+                })
 
-        // Rendering travel packages in the DOM
-        document.getElementById("accordion-inner").innerHTML = displayItinerary.join('')
+                // Rendering travel packages in the DOM
+                document.getElementById("accordion-inner").innerHTML = displayItinerary.join('')
 
-        // Add event listeners after rendering
-        addAccordionEventListeners()
-    }
+                // Add event listeners after rendering
+                addAccordionEventListeners()
+            }
 
-    // Function to add event listeners to accordion headers
-    function addAccordionEventListeners() {
-        const accordionHeaders = document.querySelectorAll('.accordion-header')
+            // Function to add event listeners to accordion headers
+            function addAccordionEventListeners() {
+                const accordionHeaders = document.querySelectorAll('.accordion-header')
 
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', function () {
-                const accordionComponent = this.parentElement
-                const accordionContent = accordionComponent.querySelector('.accordion-content')
-                const arrow = this.querySelector('.arrow')
+                accordionHeaders.forEach(header => {
+                    header.addEventListener('click', function () {
+                        const accordionComponent = this.parentElement
+                        const accordionContent = accordionComponent.querySelector('.accordion-content')
+                        const arrow = this.querySelector('.arrow')
 
-                // Toggle the active class
-                accordionComponent.classList.toggle('active')
+                        // Toggle the active class
+                        accordionComponent.classList.toggle('active')
 
-                // Toggle content visibility
-                if (accordionComponent.classList.contains('active')) {
-                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px'
-                    arrow.style.transform = 'rotate(180deg)'
-                } else {
-                    accordionContent.style.maxHeight = '0px'
-                    arrow.style.transform = 'rotate(0deg)'
-                }
-            })
-        })
-    }
+                        // Toggle content visibility
+                        if (accordionComponent.classList.contains('active')) {
+                            accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px'
+                            arrow.style.transform = 'rotate(180deg)'
+                        } else {
+                            accordionContent.style.maxHeight = '0px'
+                            arrow.style.transform = 'rotate(0deg)'
+                        }
+                    })
+                })
+            }
 
-    // Calling the function so it runs
-    renderItinerary()
+            // Calling the function so it runs
+            renderItinerary()
 
-    // 5. Function to render Inclusions
-    function renderInclusions() {
-        // Mapping through the travelPackage database to render on the DOM
-        const inclusionComponent = selectedPackage.inclusions
-        const displayItinerary = inclusionComponent.map((inclusion, index) => {
-            return `<!-- Package Included Container -->
+            // 5. Function to render Inclusions
+            function renderInclusions() {
+                // Mapping through the travelPackage database to render on the DOM
+                const inclusionComponent = selectedPackage.inclusions
+                const displayItinerary = inclusionComponent.map((inclusion, index) => {
+                    return `<!-- Package Included Container -->
                     <div class="package-included-card-container">
                         <div class="package-included-card-flip">
                             <!-- Front Face -->
                             <div class="package-included-card card-front" id="back-card">
                                 <div class="inner-package-card">
-                                    <h3 class="package-included-name" style= "width: 20px; ">${inclusion.inclusionTitle}</h3>
+                                    <h3 class="package-included-name" style= "width: 20px;  font-size: 18px;">${inclusion.inclusionTitle}</h3>
                                  <div class="japa-package-inclusion-badge">
                                         <img src="./assets/japa-package-inclusion-stamp.svg" alt="" srcset="">
                                     </div>
@@ -569,20 +688,20 @@
                             </div>
                         </div>
                     </div>`
-        })
-        // Rendering travel packages in the DOM
-        document.getElementById("inclusion-grid").innerHTML = displayItinerary.join('')
-    }
+                })
+                // Rendering travel packages in the DOM
+                document.getElementById("inclusion-grid").innerHTML = displayItinerary.join('')
+            }
 
-    // Calling the function so it runs
-    renderInclusions()
+            // Calling the function so it runs
+            renderInclusions()
 
-    // 6. Function to render Accomodations
-    function renderAccomodation() {
-        // Mapping through the travelPackage database to render on the DOM
-        const accomodationComponent = selectedPackage.accomodation
-        const displayAccomodation = accomodationComponent.map((accomodation, index) => {
-            return `     <!-- Accomodation Card -->
+            // 6. Function to render Accomodations
+            function renderAccomodation() {
+                // Mapping through the travelPackage database to render on the DOM
+                const accomodationComponent = selectedPackage.accomodation
+                const displayAccomodation = accomodationComponent.map((accomodation, index) => {
+                    return `     <!-- Accomodation Card -->
                         <div class="accomodation-card">
                             <img src=${accomodation.accomodationThumbnail}
                                 alt="" class="accomodation-thumbnail">
@@ -591,41 +710,76 @@
                                 <p class="desc">${accomodation.accomodationDesc}</p>
                             </div>
                         </div>`
-        })
-        // Rendering travel packages in the DOM
-        document.getElementById("accomodation-grid").innerHTML = displayAccomodation.join('')
-    }
+                })
+                // Rendering travel packages in the DOM
+                document.getElementById("accomodation-grid").innerHTML = displayAccomodation.join('')
+            }
 
-    // Calling the function so it runs
-    renderAccomodation()
+            // Calling the function so it runs
+            renderAccomodation()
 
-    // 7. Function to render spots left
-    function renderSpotsLeft() {
-        const displaySpotsLeft = `${selectedPackage.totalPackages.remaining} of ${selectedPackage.totalPackages.totalCount} left`
-        // Rendering travel packages in the DOM
-        document.getElementById("spots-left").innerHTML = displaySpotsLeft
-    }
+            const bookingSheet = document.querySelector('.book-spot-bar-right');
+            if (bookingSheet) {
+                bookingSheet.addEventListener('click', function (e) {
+                    // Only toggle if clicking in the header area (top 80px) 
+                    // and not on interactive elements
+                    const rect = this.getBoundingClientRect();
+                    const clickY = e.clientY - rect.top;
 
-    // Calling the function so it runs
-    renderSpotsLeft()
+                    if (clickY <= 80 && !e.target.closest('input, button, select, a')) {
+                        this.classList.toggle('expanded');
+                    }
+                });
+            }
 
-    // 8. Function to render price per type
-    function renderPricebyType() {
-        const displayPricebyType = `${selectedPackage.price.currency} ${selectedPackage.price.amount.toLocaleString()} ${selectedPackage.price.priceType}`
-        // Rendering travel packages in the DOM
-        document.getElementById("price-of-package").innerHTML = displayPricebyType
-    }
+            // 7. Function to render spots left
+            function renderSpotsLeft() {
+                db.collection("travel-packages").get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            const packageData = doc.data().packages; // an array of packages
+                            const packageId = doc.id;
 
-    // Calling the function so it runs
-    renderPricebyType()
+                            const foundIndex = packageData.findIndex(pkg => pkg.id === targetId);
+
+                            if (foundIndex !== -1) {
+                                console.log("Found package in document:", packageId, packageData[foundIndex]);
+                                const currentRemaining = packageData[foundIndex].totalPackages.remaining;
+
+                                const displaySpotsLeft = `${currentRemaining} of ${selectedPackage.totalPackages.totalCount} left`
+                                // Rendering travel packages in the DOM
+                                document.getElementById("spots-left").innerHTML = displaySpotsLeft
+
+                            } else {
+                                console.log(`Package with id ${targetId} not found in document ${packageId}`);
+                            }
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error getting documents: ", error);
+                    });
+            }
+
+            // Calling the function so it runs
+            renderSpotsLeft()
+
+            // 8. Function to render price per type
+            function renderPricebyType() {
+                const displayPricebyType = `${selectedPackage.price.currency} ${selectedPackage.price.amount.toLocaleString()} ${selectedPackage.price.priceType}`
+                // Rendering travel packages in the DOM
+                document.getElementById("price-of-package").innerHTML = displayPricebyType
+            }
+
+            // Calling the function so it runs
+            renderPricebyType()
 
 
-    // 5. Function to render Add-ons
-    function renderAddonsn() {
-        const addonComponent = selectedPackage.addons;
+            // 5. Function to render Add-ons
+            function renderAddonsn() {
+                const addonComponent = selectedPackage.addons;
 
-        const displayAddon = addonComponent.map((addon, index) => {
-            return `
+                const displayAddon = addonComponent.map((addon, index) => {
+                    return `
             <div class="add-on-component">
                 <div class="add-on-component-inner">
                     <div class="add-on-name-price">
@@ -635,342 +789,386 @@
                     <button class="addon-btn" id="add-addonToOrder-${index}">Add to package</button>
                 </div>
             </div>`;
-        });
+                });
 
-        document.getElementById("addon-container").innerHTML = displayAddon.join('');
+                document.getElementById("addon-container").innerHTML = displayAddon.join('');
 
-        addonComponent.forEach((addon, index) => {
-            const button = document.getElementById(`add-addonToOrder-${index}`);
-            button.addEventListener('click', function () {
-                addonToOrder(addon, button);
-            });
-        });
-    }
-
-    // Confetti Animation
-    function triggerConfetti(button) {
-        const confetti = document.createElement('span');
-        confetti.textContent = '🎉';
-        confetti.className = 'mini-confetti';
-        button.appendChild(confetti);
-
-        setTimeout(() => {
-            confetti.remove();
-        }, 1000);
-    }
-
-    // My addonToOrder function
-    const selectedAddons = []
-    function addonToOrder(addon, button) {
-        const index = selectedAddons.findIndex(item => item.addonName === addon.addonName);
-
-        if (index > -1) {
-            selectedAddons.splice(index, 1);
-            button.classList.remove('added');
-            button.textContent = "Add to package";
-        } else {
-            selectedAddons.push(addon);
-            button.classList.add('added');
-            button.textContent = "Added";
-            triggerConfetti(button);
-        }
-
-        renderTotalPrice(); // Update total price after selection
-    }
-
-
-    // Calling the function so it runs
-    renderAddonsn()
-
-    // Travel Details Navigation with Smooth Scroll
-    document.addEventListener('DOMContentLoaded', function () {
-        const navItems = document.querySelectorAll('.travel-details-nav .nav-item');
-        const contentSections = document.querySelectorAll('.content-section');
-
-        // Section mapping - maps nav targets to actual section IDs/classes
-        const sectionMap = {
-            'overview': '.what-package-is-about',
-            'itinerary': '.day-by-day-itinerary',
-            'included': '.package-included',
-            'accommodation': '.where-you-will-stay',
-            'reviews': '.bottom-component' // Add this section if it exists
-        };
-
-        // Handle navigation clicks
-        navItems.forEach(navItem => {
-            navItem.addEventListener('click', function () {
-                const target = this.getAttribute('data-target');
-                const targetSelector = sectionMap[target];
-
-                if (targetSelector) {
-                    const targetElement = document.querySelector(targetSelector);
-
-                    if (targetElement) {
-                        // Remove active class from all nav items
-                        navItems.forEach(item => item.classList.remove('active'));
-
-                        // Add active class to clicked nav item
-                        this.classList.add('active');
-
-                        // Smooth scroll to target section
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                }
-            });
-        });
-
-        // Optional: Update active nav item based on scroll position
-        function updateActiveNavOnScroll() {
-            const scrollPosition = window.scrollY + 100; // Offset for better UX
-
-            // Find which section is currently in view
-            let currentSection = null;
-
-            Object.entries(sectionMap).forEach(([key, selector]) => {
-                const element = document.querySelector(selector);
-                if (element) {
-                    const elementTop = element.offsetTop;
-                    const elementHeight = element.offsetHeight;
-
-                    if (scrollPosition >= elementTop && scrollPosition < elementTop + elementHeight) {
-                        currentSection = key;
-                    }
-                }
-            });
-
-            // Update active nav item
-            if (currentSection) {
-                navItems.forEach(item => {
-                    item.classList.remove('active');
-                    if (item.getAttribute('data-target') === currentSection) {
-                        item.classList.add('active');
-                    }
+                addonComponent.forEach((addon, index) => {
+                    const button = document.getElementById(`add-addonToOrder-${index}`);
+                    button.addEventListener('click', function () {
+                        addonToOrder(addon, button);
+                    });
                 });
             }
-        }
 
-        // Throttle scroll event for better performance
-        let scrollTimeout;
-        window.addEventListener('scroll', function () {
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-            }
-            scrollTimeout = setTimeout(updateActiveNavOnScroll, 50);
-        });
+            // Confetti Animation
+            function triggerConfetti(button) {
+                const confetti = document.createElement('span');
+                confetti.textContent = '🎉';
+                confetti.className = 'mini-confetti';
+                button.appendChild(confetti);
 
-        // Initialize active state on page load
-        updateActiveNavOnScroll();
-    });
-
-
-    // 9. Render pricing global scope
-    renderPricebyType()
-    function renderTotalPrice() {
-        const travelerCount = parseInt(document.getElementById("traveler-count").value.trim()) || 1;
-
-        const basePrice = selectedPackage.price.amount;
-        const addonTotal = selectedAddons.reduce((sum, addon) => sum + addon.addonPrice, 0);
-
-        const totalAmtdue = (travelerCount * basePrice) + addonTotal;
-
-        document.getElementById('totalAmt').innerHTML =
-            `${selectedPackage.price.currency} ${totalAmtdue.toLocaleString()}`;
-    }
-    document.getElementById('payForPackage').addEventListener('click', function () {
-        // Collect form input values
-        const travelerCount = document.getElementById("traveler-count").value.trim();
-        const firstName = document.getElementById("first-name").value.trim();
-        const lastName = document.getElementById("last-name").value.trim();
-        const emailAddress = document.getElementById("email").value.trim();
-        const phoneNumber = document.getElementById("phone").value.trim();
-
-        // Validation function
-        function validateForm() {
-            const errors = [];
-
-            // Validate traveler count
-            if (!travelerCount) {
-                errors.push("Traveler count is required");
-            } else if (travelerCount > selectedPackage.groupSize.max || travelerCount < selectedPackage.groupSize.min) {
-                errors.push(`For this Package, Traveler minimum count is ${selectedPackage.groupSize.min} and maximum count is ${selectedPackage.groupSize.max} `)
-            } else if (travelerCount > selectedPackage.totalPackages.remaining) {
-                errors.push(`Sorry, Traveler count has exceeded the available packages left`)
+                setTimeout(() => {
+                    confetti.remove();
+                }, 1000);
             }
 
-            // Validate first name
-            if (!firstName) {
-                errors.push("First name is required");
-            } else if (firstName.length < 2 || firstName.length > 50) {
-                errors.push("First name must be between 2 and 50 characters");
-            } else if (!/^[a-zA-Z\s'-]+$/.test(firstName)) {
-                errors.push("First name can only contain letters, spaces, hyphens, and apostrophes");
-            }
+            // My addonToOrder function
+            const selectedAddons = []
+            function addonToOrder(addon, button) {
+                const index = selectedAddons.findIndex(item => item.addonName === addon.addonName);
 
-            // Validate last name
-            if (!lastName) {
-                errors.push("Last name is required");
-            } else if (lastName.length < 2 || lastName.length > 50) {
-                errors.push("Last name must be between 2 and 50 characters");
-            } else if (!/^[a-zA-Z\s'-]+$/.test(lastName)) {
-                errors.push("Last name can only contain letters, spaces, hyphens, and apostrophes");
-            }
-
-            // Validate email
-            if (!emailAddress) {
-                errors.push("Email address is required");
-            } else {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailAddress)) {
-                    errors.push("Please enter a valid email address");
-                } else if (emailAddress.length > 254) {
-                    errors.push("Email address is too long");
+                if (index > -1) {
+                    selectedAddons.splice(index, 1);
+                    button.classList.remove('added');
+                    button.textContent = "Add to package";
+                } else {
+                    selectedAddons.push(addon);
+                    button.classList.add('added');
+                    button.textContent = "Added";
+                    triggerConfetti(button);
                 }
+
+                renderTotalPrice(); // Update total price after selection
             }
 
-            // Validate phone number
-            if (!phoneNumber) {
-                errors.push("Phone number is required");
-            } else {
-                // Remove all non-digit characters for validation
-                const digitsOnly = phoneNumber.replace(/\D/g, '');
-                if (digitsOnly.length < 10 || digitsOnly.length > 15) {
-                    errors.push("Phone number must be between 10 and 15 digits");
+
+            // Calling the function so it runs
+            renderAddonsn()
+
+            // Travel Details Navigation with Smooth Scroll
+            function initializeNavigation() {
+                const navItems = document.querySelectorAll('.nav-item');
+
+                // Wait for DOM to be fully loaded and sections to be rendered
+                function waitForSections() {
+                    const overviewSection = document.querySelector('.what-package-is-about');
+                    const itinerarySection = document.querySelector('.day-by-day-itinerary');
+                    const includedSection = document.querySelector('.package-included');
+                    const accommodationSection = document.querySelector('.where-you-will-stay');
+
+                    // Check if all sections exist
+                    if (!overviewSection || !itinerarySection || !includedSection || !accommodationSection) {
+                        // If sections don't exist yet, wait and try again
+                        setTimeout(waitForSections, 100);
+                        return;
+                    }
+
+                    // Assign IDs to ensure targeting works
+                    overviewSection.id = 'overview';
+                    itinerarySection.id = 'itinerary';
+                    includedSection.id = 'included';
+                    accommodationSection.id = 'accommodation';
+
+                    const sections = {
+                        'overview': overviewSection,
+                        'itinerary': itinerarySection,
+                        'included': includedSection,
+                        'accommodation': accommodationSection
+                    };
+
+
+                    // Add click event listeners to nav items
+                    navItems.forEach(navItem => {
+                        navItem.addEventListener('click', function () {
+                            const target = this.getAttribute('data-target');
+                            const targetSection = sections[target];
+
+                            console.log('Clicked nav item:', target); // Debug log
+                            console.log('Target section found:', !!targetSection); // Debug log
+
+                            if (targetSection) {
+                                // Remove active class from all nav items
+                                navItems.forEach(item => item.classList.remove('active'));
+
+                                // Add active class to clicked nav item
+                                this.classList.add('active');
+
+                                // Smooth scroll to target section with offset for fixed header
+                                const offsetTop = targetSection.offsetTop - 100; // Adjust offset as needed
+
+                                window.scrollTo({
+                                    top: offsetTop,
+                                    behavior: 'smooth'
+                                });
+                            } else {
+                                console.error('Section not found for target:', target);
+                            }
+                        });
+                    });
                 }
-                // Optional: Check for valid phone number format
-                const phoneRegex = /^[\+]?[\d\s\-\(\)\.]{10,}$/;
-                if (!phoneRegex.test(phoneNumber)) {
-                    errors.push("Please enter a valid phone number");
+
+                // Start waiting for sections
+                waitForSections();
+            }
+
+            // Initialize navigation - call this after your content is rendered
+            function initNavigation() {
+                // Wait a bit longer to ensure all content is rendered by your DOM manipulation
+                setTimeout(initializeNavigation, 500);
+            }
+
+            // Call this function in your existing initializeApp() function, 
+            // AFTER all the render functions have completed
+            // Add this line at the end of your initializeApp() function:
+            // initNavigation();
+
+            // Or call it directly when DOM is ready:
+            document.addEventListener('DOMContentLoaded', function () {
+                initNavigation();
+            });
+
+
+            // 9. Render pricing global scope
+            renderPricebyType()
+            function renderTotalPrice() {
+                const travelerCount = parseInt(document.getElementById("traveler-count").value.trim()) || 1;
+
+                const basePrice = selectedPackage.price.amount;
+                const addonTotal = selectedAddons.reduce((sum, addon) => sum + addon.addonPrice, 0);
+
+                const totalAmtdue = (travelerCount * basePrice) + addonTotal;
+
+                document.getElementById('totalAmt').innerHTML =
+                    `${selectedPackage.price.currency} ${totalAmtdue.toLocaleString()}`;
+            }
+            document.getElementById('payForPackage').addEventListener('click', function () {
+                // Collect form input values
+                const travelerCount = document.getElementById("traveler-count").value.trim();
+                const firstName = document.getElementById("first-name").value.trim();
+                const lastName = document.getElementById("last-name").value.trim();
+                const emailAddress = document.getElementById("email").value.trim();
+                const phoneNumber = document.getElementById("phone").value.trim();
+
+                // Validation function
+                function validateForm() {
+                    const errors = [];
+
+                    // Validate traveler count
+                    if (!travelerCount) {
+                        errors.push("Traveler count is required");
+                    } else if (travelerCount > selectedPackage.groupSize.max || travelerCount < selectedPackage.groupSize.min) {
+                        errors.push(`For this Package, Traveler minimum count is ${selectedPackage.groupSize.min} and maximum count is ${selectedPackage.groupSize.max} `)
+                    } else if (travelerCount > selectedPackage.totalPackages.remaining) {
+                        errors.push(`Sorry, Traveler count has exceeded the available packages left`)
+                    }
+
+                    // Validate first name
+                    if (!firstName) {
+                        errors.push("First name is required");
+                    } else if (firstName.length < 2 || firstName.length > 50) {
+                        errors.push("First name must be between 2 and 50 characters");
+                    } else if (!/^[a-zA-Z\s'-]+$/.test(firstName)) {
+                        errors.push("First name can only contain letters, spaces, hyphens, and apostrophes");
+                    }
+
+                    // Validate last name
+                    if (!lastName) {
+                        errors.push("Last name is required");
+                    } else if (lastName.length < 2 || lastName.length > 50) {
+                        errors.push("Last name must be between 2 and 50 characters");
+                    } else if (!/^[a-zA-Z\s'-]+$/.test(lastName)) {
+                        errors.push("Last name can only contain letters, spaces, hyphens, and apostrophes");
+                    }
+
+                    // Validate email
+                    if (!emailAddress) {
+                        errors.push("Email address is required");
+                    } else {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(emailAddress)) {
+                            errors.push("Please enter a valid email address");
+                        } else if (emailAddress.length > 254) {
+                            errors.push("Email address is too long");
+                        }
+                    }
+
+                    // Validate phone number
+                    if (!phoneNumber) {
+                        errors.push("Phone number is required");
+                    } else {
+                        // Remove all non-digit characters for validation
+                        const digitsOnly = phoneNumber.replace(/\D/g, '');
+                        if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+                            errors.push("Phone number must be between 10 and 15 digits");
+                        }
+                        // Optional: Check for valid phone number format
+                        const phoneRegex = /^[\+]?[\d\s\-\(\)\.]{10,}$/;
+                        if (!phoneRegex.test(phoneNumber)) {
+                            errors.push("Please enter a valid phone number");
+                        }
+                    }
+
+                    return errors;
                 }
-            }
 
-            return errors;
-        }
+                // Clear previous error messages
+                clearErrorMessages();
 
-        // Clear previous error messages
-        clearErrorMessages();
+                // Validate form
+                const validationErrors = validateForm();
 
-        // Validate form
-        const validationErrors = validateForm();
+                if (validationErrors.length > 0) {
+                    // Display errors
+                    displayErrors(validationErrors);
+                    return; // Stop execution if validation fails
+                }
 
-        if (validationErrors.length > 0) {
-            // Display errors
-            displayErrors(validationErrors);
-            return; // Stop execution if validation fails
-        }
+                // If validation passes, create user info object
 
-        // If validation passes, create user info object
-
-        // Adding total addons price
-        const addonsPrice = selectedAddons.map((addon => {
-            return addon.addonPrice
-        }))
-        const totalAddonsPrice = addonsPrice.reduce((sum, num) => sum + num, 0);
+                // Adding total addons price
+                const addonsPrice = selectedAddons.map((addon => {
+                    return addon.addonPrice
+                }))
+                const totalAddonsPrice = addonsPrice.reduce((sum, num) => sum + num, 0);
 
 
 
 
-        const userInfo = {
-            travelerCount: parseInt(travelerCount),
-            firstName,
-            lastName,
-            emailAddress: emailAddress.toLowerCase(), // Normalize email
-            phoneNumber,
-            selectedAddons: selectedAddons,
-            amounts: {
-                basePrice: selectedPackage.price.amount,
-                addonsPrice: totalAddonsPrice
-            }
-        };
-        // Total Amount Calculation
-        const totalAmtdue = Number((userInfo.travelerCount) * (userInfo.amounts.basePrice)) + Number(userInfo.amounts.addonsPrice);
-        //Function to render total price
-        function renderTotalPrice() {
-            document.getElementById('totalAmt').innerHTML = `${selectedPackage.price.currency} ${totalAmtdue}` || `${selectedPackage.price.amount}`
-        }
+                const userInfo = {
+                    travelerCount: parseInt(travelerCount),
+                    firstName,
+                    lastName,
+                    emailAddress: emailAddress.toLowerCase(), // Normalize email
+                    phoneNumber,
+                    selectedAddons: selectedAddons,
+                    amounts: {
+                        basePrice: selectedPackage.price.amount,
+                        addonsPrice: totalAddonsPrice
+                    }
+                };
+                // Total Amount Calculation
+                const totalAmtdue = Number((userInfo.travelerCount) * (userInfo.amounts.basePrice)) + Number(userInfo.amounts.addonsPrice);
+                //Function to render total price
+                function renderTotalPrice() {
+                    document.getElementById('totalAmt').innerHTML = `${selectedPackage.price.currency} ${totalAmtdue}` || `${selectedPackage.price.amount}`
+                }
 
-        renderTotalPrice()
-        // Debugging: log to console
-        console.log("Form validated successfully:", userInfo);
+                renderTotalPrice()
+                // Debugging: log to console
+                console.log("Form validated successfully:", userInfo);
 
-        // Continue with your payment processing logic here
-        // processPayment(userInfo);
+                // Continue with your payment processing logic here
+                // processPayment(userInfo);
 
-        // Flutterwave Paywall
+                // Flutterwave Paywall
 
-        selectedPackage.totalPackages.remaining -= userInfo.travelerCount
+                // Subtracting booked package from total packages
+                selectedPackage.totalPackages.remaining -= userInfo.travelerCount
 
-        renderSpotsLeft()
-        console.log(selectedPackage.totalPackages);
+                // Function to update travel package count from backend
+                db.collection("travel-packages").get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            const packageData = doc.data().packages; // an array of packages
+                            const packageId = doc.id;
 
-        // What Happens after payment success
+                            const foundIndex = packageData.findIndex(pkg => pkg.id === targetId);
 
-        // 1. Generate a unique booking ID
+                            if (foundIndex !== -1) {
+                                console.log("Found package in document:", packageId, packageData[foundIndex]);
+                                const currentRemaining = packageData[foundIndex].totalPackages.remaining;
+                                const updatedRemaining = currentRemaining - userInfo.travelerCount;
 
-        function generateBookingID() {
-            const prefix = "#JPX";
-            const randomNumber = Math.floor(100000 + Math.random() * 900000); // Ensures 6 digits
-            return `${prefix}${randomNumber}`;
-        }
-
-        function generateUniqueBookingID() {
-            let bookingID;
-            do {
-                bookingID = generateBookingID();
-            } while (allBookingIDs.includes(bookingID)); // Keep trying until unique
-
-            allBookingIDs.push(bookingID); // Store the new unique ID
-            return bookingID;
-        }
-        const newBookingID = generateUniqueBookingID();
-        console.log(newBookingID); // e.g., "#JPX983457"
-
-        // 2. Create the receipt
-
-        let userBookingSession = {
-            bookingId: newBookingID,
-            travelerName: `${firstName} ${lastName}`,
-            travelerEmail: emailAddress,
-            destination: selectedPackage.destination,
-            packageName: selectedPackage.name,
-            duration: selectedPackage.duration.days,
-            travelerNo: parseInt(travelerCount),
-            totalAmtPaid: `${selectedPackage.price.currency} ${totalAmtdue.toLocaleString()}`,
-            bookingDate: formattedDate,
-            receipt: []
-        }
-
-        console.log(userBookingSession);
-        allBookingSessions.push(userBookingSession)
-
-        // Convert the object to a JSON string, then URL-encode it
-        sessionStorage.setItem('bookingSession', JSON.stringify(userBookingSession));
-        // Routing the user to the payment successful page
-
-        simulateAction()
-
-        setTimeout(() => {
-            // redirect after 6 seconds
-            window.location.href = `travel-package-payment-successful.html?bookingID=${newBookingID}`;
-        }, 6000);
+                                // Ensure remaining does not go below 0
+                                packageData[foundIndex].totalPackages.remaining = Math.max(updatedRemaining, 0);
 
 
-    });
+                                // Now update Firestore with modified packageData
+                                doc.ref.update({
+                                    packages: packageData
+                                })
+                                    .then(() => {
+                                        console.log(`Updated package ${targetId} in document ${packageId}`);
+                                    })
+                                    .catch((error) => {
+                                        console.error("Error updating document: ", error);
+                                    });
 
-    // Helper function to display errors
-    function displayErrors(errors) {
-        // Remove existing error display
-        const existingErrorDiv = document.getElementById('validation-errors');
-        if (existingErrorDiv) {
-            existingErrorDiv.remove();
-        }
+                            } else {
+                                console.log(`Package with id ${targetId} not found in document ${packageId}`);
+                            }
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error getting documents: ", error);
+                    });
 
-        // Create error display element
-        const errorDiv = document.createElement('div');
-        errorDiv.id = 'validation-errors';
-        errorDiv.style.cssText = `
+
+                renderSpotsLeft()
+                console.log(selectedPackage.totalPackages);
+
+                // What Happens after payment success
+
+                // 1. Generate a unique booking ID
+
+                function generateBookingID() {
+                    const prefix = "#JPX";
+                    const randomNumber = Math.floor(100000 + Math.random() * 900000); // Ensures 6 digits
+                    return `${prefix}${randomNumber}`;
+                }
+
+                function generateUniqueBookingID() {
+                    let bookingID;
+                    do {
+                        bookingID = generateBookingID();
+                    } while (allBookingIDs.includes(bookingID)); // Keep trying until unique
+
+                    allBookingIDs.push(bookingID); // Store the new unique ID
+                    return bookingID;
+                }
+                const newBookingID = generateUniqueBookingID();
+                console.log(newBookingID); // e.g., "#JPX983457"
+
+                // 2. Create the receipt
+
+                let userBookingSession = {
+                    bookingId: newBookingID,
+                    travelerName: `${firstName} ${lastName}`,
+                    travelerEmail: emailAddress,
+                    destination: selectedPackage.destination,
+                    packageName: selectedPackage.name,
+                    duration: durationInDays,
+                    startDate: startDate.toDateString(),
+                    endDate: endDate.toDateString(),
+                    travelerNo: parseInt(travelerCount),
+                    totalAmtPaid: `${selectedPackage.price.currency} ${totalAmtdue.toLocaleString()}`,
+                    bookingDate: formattedDate,
+                    tripThumbnail: selectedPackage.packageThumbnail,
+                    receipt: []
+                }
+
+                console.log(userBookingSession);
+                allBookingSessions.push(userBookingSession)
+                upcomingbookings.push(userBookingSession)
+
+                // Convert the object to a JSON string, then URL-encode it
+                sessionStorage.setItem('bookingSession', JSON.stringify(userBookingSession));
+                sessionStorage.setItem('upcomingbookings', JSON.stringify(upcomingbookings));
+                // Routing the user to the payment successful page
+
+                simulateAction()
+
+                setTimeout(() => {
+                    // redirect after 8 seconds
+                    window.location.href = `travel-package-payment-successful.html?bookingID=${newBookingID}`;
+                }, 8000);
+
+
+            });
+
+            // Helper function to display errors
+            function displayErrors(errors) {
+                // Remove existing error display
+                const existingErrorDiv = document.getElementById('validation-errors');
+                if (existingErrorDiv) {
+                    existingErrorDiv.remove();
+                }
+
+                // Create error display element
+                const errorDiv = document.createElement('div');
+                errorDiv.id = 'validation-errors';
+                errorDiv.style.cssText = `
         background-color: #fee;
         color: #c00;
         padding: 10px;
@@ -979,37 +1177,53 @@
         font-size: 16px;
     `;
 
-        // Add error messages
-        const errorList = document.createElement('ul');
-        errorList.style.margin = '0';
-        errorList.style.paddingLeft = '20px';
+                // Add error messages
+                const errorList = document.createElement('ul');
+                errorList.style.margin = '0';
+                errorList.style.paddingLeft = '20px';
 
-        errors.forEach(error => {
-            const errorItem = document.createElement('li');
-            errorItem.textContent = error;
-            errorList.appendChild(errorItem);
-        });
+                errors.forEach(error => {
+                    const errorItem = document.createElement('li');
+                    errorItem.textContent = error;
+                    errorList.appendChild(errorItem);
+                });
 
-        errorDiv.appendChild(errorList);
+                errorDiv.appendChild(errorList);
 
-        // Insert error div before the form or payment button
-        const payButton = document.getElementById('payForPackage');
-        payButton.parentNode.insertBefore(errorDiv, payButton);
+                // Insert error div before the form or payment button
+                const payButton = document.getElementById('payForPackage');
+                payButton.parentNode.insertBefore(errorDiv, payButton);
 
-        // Scroll to error display
-        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+                // Scroll to error display
+                errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
 
-    // Helper function to clear error messages
-    function clearErrorMessages() {
-        const errorDiv = document.getElementById('validation-errors');
-        if (errorDiv) {
-            errorDiv.remove();
+            // Helper function to clear error messages
+            function clearErrorMessages() {
+                const errorDiv = document.getElementById('validation-errors');
+                if (errorDiv) {
+                    errorDiv.remove();
+                }
+            }
+
+            renderAddonsn();     // your existing function
+            renderTotalPrice();  // update total price right after DOM is ready
+
+        } catch (error) {
+            console.error("Error initializing app:", error);
+            // Show error message to user
+            document.body.innerHTML = `
+            <div style="text-align: center; padding: 40px;">
+                <p style="color: #e74c3c;">Failed to load travel packages. Please refresh the page.</p>
+            </div>
+        `;
         }
+
+
     }
 
-    renderAddonsn();     // your existing function
-    renderTotalPrice();  // update total price right after DOM is ready
+    // Call the function when DOM is ready
+    document.addEventListener('DOMContentLoaded', initializeApp);
 
 
 </script>

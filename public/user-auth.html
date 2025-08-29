@@ -10,6 +10,9 @@
     <script src="https://kit.fontawesome.com/f61c7f8567.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
+
+
     <link
         href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
@@ -55,7 +58,7 @@
                 <span>or</span>
             </div>
 
-            <button id="signupwithgoogleBtn" onclick="googleSignup()" type="button" class="google-btn">
+            <button id="signupwithgoogleBtn" type="button" class="google-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                     <path fill="#EA4335"
                         d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115Z" />
@@ -91,12 +94,38 @@
     // Initialize Firebase Authentication and get a reference to the service
     const auth = firebase.auth();
 
+    // Initialize Cloud Firestore and get a reference to the service
+    const db = firebase.firestore();
+
+    // Move saveUserData function outside and make it async
+    async function saveUserData(user) {
+        try {
+            await db.collection("users").doc(user.uid).set({
+                userId: user.uid,
+                name: user.displayName || "",
+                email: user.email,
+                savedItems: [],
+                bookmarks: [],
+                upcomingTrips: [],
+                pastTrips: [],
+                joinedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            console.log("User data saved successfully for:", user.email);
+            return true;
+        } catch (error) {
+            console.error("Error saving user data:", error);
+            return false;
+        }
+    }
+
     function createAccount() {
         const name = document.getElementById("name").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirm-password").value;
         const signupBtn = document.getElementById("signupBtn");
+
         if (!name) {
             alert("Please enter your name.");
         }
@@ -119,15 +148,36 @@
         else {
             signupBtn.innerHTML = "Creating account...";
             signupBtn.setAttribute("disabled", "true");
-            auth.createUserWithEmailAndPassword(email, password, name)
-                .then((userCredential) => {
-                    alert("Account created successfully");
-                    const user = userCredential.user;
-                    console.log(user);
 
-                    // window.location.href = "index.html";
+            // Create user with email and password only
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // Update the user's profile with display name
+                    return user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(async () => {
+                    // Get the updated user
+                    const user = auth.currentUser;
+                    console.log("User created with display name:", user.displayName);
+
+                    // Save user data and wait for it to complete
+                    const saved = await saveUserData(user);
+
+                    if (saved) {
+                        alert("Account created successfully");
+                        // Only redirect after successful save
+                        window.location.href = "./index.html";
+                    } else {
+                        alert("Account created but there was an issue saving your profile. Please try logging in.");
+                        window.location.href = "./index.html";
+                    }
                 })
                 .catch((error) => {
+                    console.error("Error:", error);
                     alert(error.message);
                 })
                 .finally(() => {
@@ -135,38 +185,55 @@
                     signupBtn.removeAttribute("disabled");
                 });
         }
-
     }
 
     // Google Auth Provider
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    function googleSignup() {
-        firebase.auth()
-            .signInWithPopup(provider)
-            .then((result) => {
-                { firebase.auth.OAuthCredential }
-                var credential = result.credential;
-                var token = credential.accessToken;
-                console.log(token);
+    document.getElementById("signupwithgoogleBtn").addEventListener("click", function () {
+        auth.signInWithPopup(provider)
+            .then(async (result) => {
+                const user = result.user;
+                const isNewUser = result.additionalUserInfo.isNewUser;
 
-                var user = result.user;
-// come back to redirect to index.html
+                // Save user data for both new and returning users (with merge: true)
+                const saved = await saveUserData(user);
 
-                // ...
-            }).catch((error) => {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-               console.log(errorMessage);
-               
-                var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
-                // ...
+                if (isNewUser) {
+                    console.log("New user signed up with Google:", user.email);
+                    alert("Welcome to JAPA, " + user.displayName + "!");
+                } else {
+                    console.log("Returning user logged in:", user.email);
+                    alert("Welcome back, " + user.displayName + "!");
+                }
+
+                if (saved) {
+                    window.location.href = "index.html";
+                } else {
+                    console.error("Failed to save user data, but proceeding with login");
+                    window.location.href = "index.html";
+                }
+            })
+            .catch((error) => {
+                console.error("Google Sign-In Error:", error.message);
+                alert("Google Sign-In failed: " + error.message);
             });
+    });
+
+    // Optional: Add a function to check and debug users collection
+    function debugUsersCollection() {
+        db.collection("users").get().then((querySnapshot) => {
+            console.log("Total users in collection:", querySnapshot.size);
+            querySnapshot.forEach((doc) => {
+                console.log(`User ID: ${doc.id}`, doc.data());
+            });
+        }).catch((error) => {
+            console.error("Error fetching users:", error);
+        });
     }
 
+    // Call this function in your browser console to debug
+    // debugUsersCollection();
 </script>
 
 </html>
