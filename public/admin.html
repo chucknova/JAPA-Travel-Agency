@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Packages Admin</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+        }
+
+        .packages-container {
+            margin-top: 20px;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .category-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-header h2 {
+            color: #333;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .package-count {
+            background: #007bff;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .add-package-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .add-package-btn:hover {
+            background: #218838;
+        }
+
+        .category-packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .package-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .package-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .package-destination {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .package-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .package-duration {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .package-desc {
+            color: #555;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .package-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .view-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .view-btn:hover {
+            background: #0056b3;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .package-info {
+            margin-bottom: 30px;
+        }
+
+        .capacity-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .capacity-item {
+            text-align: center;
+        }
+
+        .capacity-item .label {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .capacity-item span:last-child {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .bookings-list h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .booking-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background: white;
+        }
+
+        .booking-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .booking-info {
+            flex: 1;
+        }
+
+        .booking-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .booking-email {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .booking-date {
+            color: #999;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .no-bookings {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Travel Packages Admin</h1>
+
+        <div class="stats" id="stats-container">
+            <div class="stat-item">
+                <div class="stat-number" id="total-packages">-</div>
+                <div class="stat-label">Total Packages</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="total-categories">-</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">Loading packages...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="packages-container" class="packages-container"></div>
+
+        <!-- Package Details Modal -->
+        <div id="package-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-package-name">Package Details</h2>
+                    <button class="close-btn" onclick="closePackageModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="package-info">
+                        <div id="package-details-content"></div>
+                    </div>
+                    <div class="bookings-section">
+                        <h3>Booking Information</h3>
+                        <div class="capacity-info">
+                            <div class="capacity-item">
+                                <span class="label">Total Capacity:</span>
+                                <span id="total-capacity">-</span>
+                            </div>
+                            <div class="capacity-item">
+                                <span class="label">Booked:</span>
+                                <span id="booked-count">-</span>
+                            </div>
+                            <div class="capacity-item">
+                                <span class="label">Remaining:</span>
+                                <span id="remaining-capacity">-</span>
+                            </div>
+                        </div>
+                        <div class="bookings-list">
+                            <h4>Booked Users</h4>
+                            <div id="bookings-container">Loading bookings...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Package Modal -->
+        <div id="add-package-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="add-modal-title">Add New Package</h2>
+                    <button class="close-btn" onclick="closeAddPackageModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-package-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="new-package-name">Package Name *</label>
+                                <input type="text" id="new-package-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-destination">Destination *</label>
+                                <input type="text" id="new-destination" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-short-desc">Short Description *</label>
+                            <textarea id="new-short-desc" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="new-duration">Duration (days) *</label>
+                                <input type="number" id="new-duration" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-price">Price (NGN) *</label>
+                                <input type="number" id="new-price" min="0" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="new-difficulty">Difficulty Level</label>
+                                <select id="new-difficulty">
+                                    <option value="easy">Easy</option>
+                                    <option value="moderate">Moderate</option>
+                                    <option value="relaxed">Relaxed</option>
+                                    <option value="challenging">Challenging</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-group-size">Max Group Size</label>
+                                <input type="number" id="new-group-size" min="1" value="10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-thumbnail">Package Thumbnail URL</label>
+                            <input type="url" id="new-thumbnail" placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-highlights">Highlights (comma-separated)</label>
+                            <input type="text" id="new-highlights"
+                                placeholder="Beach Access, Spa, Adventure Activities">
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="new-start-date">Start Date</label>
+                                <input type="date" id="new-start-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-end-date">End Date</label>
+                                <input type="date" id="new-end-date">
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="new-total-packages">Total Package Count</label>
+                                <input type="number" id="new-total-packages" min="1" value="70">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-remaining-packages">Remaining Packages</label>
+                                <input type="number" id="new-remaining-packages" min="0" value="70">
+                            </div>
+                        </div>
+
+                        <!-- About Package Section -->
+                        <div class="form-group">
+                            <label for="new-about-package">About Package (Detailed Description)</label>
+                            <textarea id="new-about-package" rows="4"
+                                placeholder="Detailed description of the package experience..."></textarea>
+                        </div>
+
+                        <!-- Itinerary Section -->
+                        <div class="form-group">
+                            <label>Itinerary</label>
+                            <div id="itinerary-container">
+                                <div class="itinerary-item"
+                                    style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;">
+                                    <input type="text" placeholder="Day 1: Title"
+                                        style="width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                    <textarea placeholder="Day 1: Details" rows="3"
+                                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addItineraryItem()"
+                                style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">+
+                                Add Day</button>
+                        </div>
+
+                        <!-- Inclusions Section -->
+                        <div class="form-group">
+                            <label>Inclusions</label>
+                            <div id="inclusions-container">
+                                <div class="inclusion-item"
+                                    style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;">
+                                    <input type="text" placeholder="Inclusion Title"
+                                        style="width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                    <textarea placeholder="Inclusion Details" rows="2"
+                                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInclusionItem()"
+                                style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">+
+                                Add Inclusion</button>
+                        </div>
+
+                        <!-- Accommodation Section -->
+                        <div class="form-group">
+                            <label>Accommodation</label>
+                            <div id="accommodation-container">
+                                <div class="accommodation-item"
+                                    style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;">
+                                    <div
+                                        style="display: grid; grid-template-columns: 1fr 100px; gap: 10px; margin-bottom: 8px;">
+                                        <input type="text" placeholder="Accommodation Name"
+                                            style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <input type="number" placeholder="Nights" min="1"
+                                            style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                    </div>
+                                    <input type="url" placeholder="Accommodation Image URL"
+                                        style="width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                    <textarea placeholder="Accommodation Description" rows="2"
+                                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addAccommodationItem()"
+                                style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">+
+                                Add Accommodation</button>
+                        </div>
+
+                        <!-- Add-ons Section -->
+                        <div class="form-group">
+                            <label>Add-ons</label>
+                            <div id="addons-container">
+                                <div class="addon-item"
+                                    style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;">
+                                    <div style="display: grid; grid-template-columns: 1fr 150px; gap: 10px;">
+                                        <input type="text" placeholder="Add-on Name"
+                                            style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <input type="number" placeholder="Price (NGN)" min="0"
+                                            style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addAddonItem()"
+                                style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">+
+                                Add Add-on</button>
+                        </div>
+
+                        <!-- Tour Gallery Section -->
+                        <div class="form-group">
+                            <label>Tour Gallery (Image URLs)</label>
+                            <div id="gallery-container">
+                                <input type="url" placeholder="Image URL 1"
+                                    style="width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <button type="button" onclick="addGalleryItem()"
+                                style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">+
+                                Add Image</button>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" onclick="closeAddPackageModal()" class="btn-secondary">Cancel</button>
+                            <button type="submit" class="btn-primary">Add Package</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-package-name">Package Details</h2>
+                <button class="close-btn" onclick="closePackageModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="package-info">
+                    <div id="package-details-content"></div>
+                </div>
+                <div class="bookings-section">
+                    <h3>Booking Information</h3>
+                    <div class="capacity-info">
+                        <div class="capacity-item">
+                            <span class="label">Total Capacity:</span>
+                            <span id="total-capacity">-</span>
+                        </div>
+                        <div class="capacity-item">
+                            <span class="label">Booked:</span>
+                            <span id="booked-count">-</span>
+                        </div>
+                        <div class="capacity-item">
+                            <span class="label">Remaining:</span>
+                            <span id="remaining-capacity">-</span>
+                        </div>
+                    </div>
+                    <div class="bookings-list">
+                        <h4>Booked Users</h4>
+                        <div id="bookings-container">Loading bookings...</div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCpzXbFwpeHOBprUTFnvxp-0NvSjlIeuRg",
+            authDomain: "japa-269a4.firebaseapp.com",
+            projectId: "japa-269a4",
+            storageBucket: "japa-269a4.firebasestorage.app",
+            messagingSenderId: "736749113389",
+            appId: "1:736749113389:web:886266a10a7b32f5ae28a4"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let allPackages = [];
+        let allCategories = [];
+
+        // Function to load all travel packages
+        async function loadTravelPackages() {
+            try {
+                console.log('Starting to load packages...');
+
+                const snapshot = await db.collection("travel-packages").get();
+                console.log('Snapshot size:', snapshot.size);
+
+                allCategories = [];
+                allPackages = [];
+
+                snapshot.forEach((doc) => {
+                    console.log('Document ID:', doc.id);
+                    const categoryData = doc.data();
+                    console.log('Category data:', categoryData);
+
+                    allCategories.push({
+                        id: doc.id,
+                        ...categoryData
+                    });
+
+                    // Extract packages from this category
+                    if (categoryData.packages && Array.isArray(categoryData.packages)) {
+                        categoryData.packages.forEach(package => {
+                            allPackages.push({
+                                ...package,
+                                categoryId: doc.id,
+                                categoryName: categoryData.categoryName
+                            });
+                        });
+                    }
+                });
+
+                console.log('Total packages found:', allPackages.length);
+                console.log('Total categories found:', allCategories.length);
+
+                hideLoading();
+                displayPackages(allPackages);
+                updateStats();
+
+            } catch (error) {
+                console.error('Error loading packages:', error);
+                hideLoading();
+                showError('Error loading packages: ' + error.message);
+            }
+        }
+
+        // Function to display packages grouped by category
+        function displayPackages(packages) {
+            const container = document.getElementById('packages-container');
+
+            if (packages.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No packages found</div>';
+                return;
+            }
+
+            // Group packages by category
+            const packagesByCategory = {};
+            packages.forEach(package => {
+                const categoryName = package.categoryName || 'Uncategorized';
+                if (!packagesByCategory[categoryName]) {
+                    packagesByCategory[categoryName] = [];
+                }
+                packagesByCategory[categoryName].push(package);
+            });
+
+            // Create HTML for each category
+            let html = '';
+            Object.keys(packagesByCategory).forEach(categoryName => {
+                const categoryPackages = packagesByCategory[categoryName];
+                const categoryId = categoryPackages[0]?.categoryId || 'unknown';
+                html += `
+                    <div class="category-section">
+                        <div class="category-header">
+                            <div class="category-header-left">
+                                <h2>${categoryName}</h2>
+                                <span class="package-count">${categoryPackages.length} packages</span>
+                            </div>
+                            <button class="add-package-btn" onclick="openAddPackageForm('${categoryId}', '${categoryName}')">
+                                + Add Package
+                            </button>
+                        </div>
+                        <div class="category-packages">
+                            ${categoryPackages.map(package => createPackageCard(package)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+
+
+        // Function to create package card HTML
+        function createPackageCard(package) {
+            const price = package.price ? `₦${package.price.amount.toLocaleString()}` : 'Price not set';
+            const duration = package.duration ? `${package.duration.days} days` : 'Duration not set';
+            const image = package.packageThumbnail || 'https://via.placeholder.com/350x200?text=No+Image';
+
+            return `
+                <div class="package-card">
+                    <img src="${image}" alt="${package.name}" class="package-image" onerror="this.src='https://via.placeholder.com/350x200?text=Image+Error'">
+                    <div class="package-name">${package.name || 'Unnamed Package'}</div>
+                    <div class="package-destination">${package.destination || 'Unknown Destination'}</div>
+                    <div class="package-price">${price}</div>
+                    <div class="package-duration">${duration} • ${package.difficulty || 'N/A'}</div>
+                    <div class="package-desc">${package.shortDesc || 'No description available'}</div>
+                    <div class="package-actions">
+                        <button class="view-btn" onclick="viewPackageDetails('${package.categoryId}', '${package.id}')">View Details</button>
+                        <button class="delete-btn" onclick="deletePackage('${package.categoryId}', '${package.id}')">Delete</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addItineraryItem() {
+            const container = document.getElementById('itinerary-container');
+            const dayCount = container.children.length + 1;
+            const newItem = document.createElement('div');
+            newItem.className = 'itinerary-item';
+            newItem.style.cssText = 'border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;';
+            newItem.innerHTML = `
+        <input type="text" placeholder="Day ${dayCount}: Title" style="width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        <textarea placeholder="Day ${dayCount}: Details" rows="3" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+        <button type="button" onclick="this.parentElement.remove()" style="background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-top: 8px; font-size: 12px;">Remove</button>
+    `;
+            container.appendChild(newItem);
+        }
+
+        function addInclusionItem() {
+            const container = document.getElementById('inclusions-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'inclusion-item';
+            newItem.style.cssText = 'border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;';
+            newItem.innerHTML = `
+        <input type="text" placeholder="Inclusion Title" style="width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        <textarea placeholder="Inclusion Details" rows="2" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+        <button type="button" onclick="this.parentElement.remove()" style="background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-top: 8px; font-size: 12px;">Remove</button>
+    `;
+            container.appendChild(newItem);
+        }
+
+        function addAccommodationItem() {
+            const container = document.getElementById('accommodation-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'accommodation-item';
+            newItem.style.cssText = 'border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;';
+            newItem.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 100px; gap: 10px; margin-bottom: 8px;">
+            <input type="text" placeholder="Accommodation Name" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            <input type="number" placeholder="Nights" min="1" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <input type="url" placeholder="Accommodation Image URL" style="width: 100%; margin-bottom: 8px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        <textarea placeholder="Accommodation Description" rows="2" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+        <button type="button" onclick="this.parentElement.remove()" style="background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-top: 8px; font-size: 12px;">Remove</button>
+    `;
+            container.appendChild(newItem);
+        }
+
+        function addAddonItem() {
+            const container = document.getElementById('addons-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'addon-item';
+            newItem.style.cssText = 'border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px;';
+            newItem.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 150px; gap: 10px;">
+            <input type="text" placeholder="Add-on Name" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            <input type="number" placeholder="Price (NGN)" min="0" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" style="background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-top: 8px; font-size: 12px;">Remove</button>
+    `;
+            container.appendChild(newItem);
+        }
+
+        function addGalleryItem() {
+            const container = document.getElementById('gallery-container');
+            const imageCount = container.children.length + 1;
+            const newItem = document.createElement('div');
+            newItem.style.cssText = 'display: flex; gap: 10px; margin-bottom: 8px; align-items: center;';
+            newItem.innerHTML = `
+        <input type="url" placeholder="Image URL ${imageCount}" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        <button type="button" onclick="this.parentElement.remove()" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Remove</button>
+    `;
+            container.appendChild(newItem);
+        }
+
+        // Function to delete a package
+        async function deletePackage(categoryId, packageId) {
+            if (!confirm('Are you sure you want to delete this package?')) {
+                return;
+            }
+
+            try {
+                console.log('Deleting package:', packageId, 'from category:', categoryId);
+
+                // Get the category document
+                const categoryDoc = await db.collection("travel-packages").doc(categoryId).get();
+
+                if (!categoryDoc.exists) {
+                    throw new Error('Category not found');
+                }
+
+                const categoryData = categoryDoc.data();
+
+                // Filter out the package to delete
+                const updatedPackages = categoryData.packages.filter(pkg => pkg.id !== packageId);
+
+                // Update the document with the filtered packages
+                await db.collection("travel-packages").doc(categoryId).update({
+                    packages: updatedPackages
+                });
+
+                console.log('Package deleted successfully');
+
+                // Reload packages
+                loadTravelPackages();
+
+            } catch (error) {
+                console.error('Error deleting package:', error);
+                alert('Error deleting package: ' + error.message);
+            }
+        }
+
+        // Function to update statistics
+        function updateStats() {
+            document.getElementById('total-packages').textContent = allPackages.length;
+            document.getElementById('total-categories').textContent = allCategories.length;
+        }
+
+        // Function to hide loading
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Function to show error
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        // Debug function to check Firebase connection
+        window.debugFirebase = function () {
+            console.log('Firebase app:', firebase.app());
+            console.log('Firestore instance:', db);
+        };
+
+        // Function to view package details
+        async function viewPackageDetails(categoryId, packageId) {
+            try {
+                // Find the specific package
+                const package = allPackages.find(pkg => pkg.categoryId === categoryId && pkg.id === packageId);
+
+                if (!package) {
+                    alert('Package not found');
+                    return;
+                }
+
+                // Show modal
+                document.getElementById('package-modal').style.display = 'flex';
+                document.getElementById('modal-package-name').textContent = package.name;
+
+                // Display package details
+                displayPackageInfo(package);
+
+                // Load booking information
+                await loadBookingInfo(packageId);
+
+            } catch (error) {
+                console.error('Error viewing package details:', error);
+                alert('Error loading package details: ' + error.message);
+            }
+        }
+
+        // Function to display package information
+        function displayPackageInfo(package) {
+            const price = package.price ? `₦${package.price.amount.toLocaleString()}` : 'Price not set';
+            const duration = package.duration ? `${package.duration.days} days` : 'Duration not set';
+            const highlights = package.highlights ? package.highlights.join(', ') : 'No highlights listed';
+
+            const detailsHtml = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <strong>Destination:</strong> ${package.destination || 'Not specified'}
+                    </div>
+                    <div>
+                        <strong>Duration:</strong> ${duration}
+                    </div>
+                    <div>
+                        <strong>Price:</strong> ${price}
+                    </div>
+                    <div>
+                        <strong>Difficulty:</strong> ${package.difficulty || 'Not specified'}
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>Description:</strong><br>
+                    ${package.shortDesc || 'No description available'}
+                </div>
+                <div>
+                    <strong>Highlights:</strong><br>
+                    ${highlights}
+                </div>
+            `;
+
+            document.getElementById('package-details-content').innerHTML = detailsHtml;
+        }
+
+        // Function to load booking information
+        async function loadBookingInfo(packageId) {
+            try {
+                console.log('Loading bookings for package:', packageId);
+
+                // Get the package to check total capacity and name
+                const package = allPackages.find(pkg => pkg.id === packageId);
+                const totalCapacity = package.totalPackages ? package.totalPackages.totalCount : 70;
+                const packageName = package.name;
+
+                // Query users collection for bookings
+                const usersSnapshot = await db.collection("users").get();
+
+                let packageBookings = [];
+                let totalTravelersBooked = 0;
+
+                usersSnapshot.forEach(doc => {
+                    const userData = doc.data();
+
+                    // Check upcomingTrips for this package by name
+                    if (userData.upcomingTrips && Array.isArray(userData.upcomingTrips)) {
+                        userData.upcomingTrips.forEach(trip => {
+                            if (trip.packageName === packageName) {
+                                const travelerCount = trip.travelerNo || 1;
+                                totalTravelersBooked += travelerCount;
+
+                                packageBookings.push({
+                                    userId: doc.id,
+                                    userName: userData.name || trip.travelerName || 'Anonymous User',
+                                    userEmail: userData.email || trip.travelerEmail || 'No email',
+                                    bookingDate: trip.bookingDate || 'Unknown date',
+                                    bookingId: trip.bookingId || 'No ID',
+                                    travelerCount: travelerCount,
+                                    totalAmount: trip.totalAmtPaid || 'Not specified',
+                                    startDate: trip.startDate || 'Not scheduled',
+                                    endDate: trip.endDate || 'Not scheduled',
+                                    status: 'upcoming'
+                                });
+                            }
+                        });
+                    }
+
+                    // Also check pastTrips
+                    if (userData.pastTrips && Array.isArray(userData.pastTrips)) {
+                        userData.pastTrips.forEach(trip => {
+                            if (trip.packageName === packageName) {
+                                const travelerCount = trip.travelerNo || 1;
+                                totalTravelersBooked += travelerCount;
+
+                                packageBookings.push({
+                                    userId: doc.id,
+                                    userName: userData.name || trip.travelerName || 'Anonymous User',
+                                    userEmail: userData.email || trip.travelerEmail || 'No email',
+                                    bookingDate: trip.bookingDate || 'Unknown date',
+                                    bookingId: trip.bookingId || 'No ID',
+                                    travelerCount: travelerCount,
+                                    totalAmount: trip.totalAmtPaid || 'Not specified',
+                                    startDate: trip.startDate || 'Completed',
+                                    endDate: trip.endDate || 'Completed',
+                                    status: 'completed'
+                                });
+                            }
+                        });
+                    }
+                });
+
+                console.log('Found bookings:', packageBookings);
+                console.log('Total travelers booked:', totalTravelersBooked);
+
+                // Calculate remaining capacity
+                const remainingCapacity = Math.max(0, totalCapacity - totalTravelersBooked);
+
+                // Update capacity display
+                document.getElementById('total-capacity').textContent = totalCapacity;
+                document.getElementById('booked-count').textContent = totalTravelersBooked;
+                document.getElementById('remaining-capacity').textContent = remainingCapacity;
+
+                // Display bookings
+                displayBookings(packageBookings);
+
+            } catch (error) {
+                console.error('Error loading booking info:', error);
+                document.getElementById('bookings-container').innerHTML =
+                    '<div class="error">Error loading bookings: ' + error.message + '</div>';
+            }
+        }
+
+        // Function to display bookings
+        function displayBookings(bookings) {
+            const container = document.getElementById('bookings-container');
+
+            if (bookings.length === 0) {
+                container.innerHTML = '<div class="no-bookings">No bookings found for this package</div>';
+                return;
+            }
+
+            const bookingsHtml = bookings.map(booking => {
+                const initials = booking.userName.split(' ').map(n => n.charAt(0).toUpperCase()).join('');
+                const bookingDate = booking.bookingDate !== 'Unknown date' ?
+                    booking.bookingDate : 'Unknown date';
+                const statusBadge = booking.status === 'completed' ?
+                    '<span style="background: #28a745; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px;">Completed</span>' :
+                    '<span style="background: #007bff; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px;">Upcoming</span>';
+
+                return `
+                    <div class="booking-item">
+                        <div class="booking-avatar">${initials}</div>
+                        <div class="booking-info">
+                            <div class="booking-name">${booking.userName}</div>
+                            <div class="booking-email">${booking.userEmail}</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 3px;">
+                                Booking ID: ${booking.bookingId} • ${booking.travelerCount} traveler(s)
+                            </div>
+                            <div style="font-size: 12px; color: #666;">
+                                Amount: ${booking.totalAmount}
+                            </div>
+                            <div style="font-size: 12px; color: #666;">
+                                No of Seats Reserved: ${booking.travelerCount}
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            ${statusBadge}
+                            <div class="booking-date">Booked: ${bookingDate}</div>
+                            <div style="font-size: 11px; color: #999; margin-top: 2px;">
+                                ${booking.startDate} - ${booking.endDate}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = bookingsHtml;
+        }
+
+        // Function to close package modal
+        function closePackageModal() {
+            document.getElementById('package-modal').style.display = 'none';
+        }
+
+        // Function to open add package form
+        function openAddPackageForm(categoryId, categoryName) {
+            document.getElementById('add-package-modal').style.display = 'flex';
+            document.getElementById('add-modal-title').textContent = `Add New Package to ${categoryName}`;
+
+            // Store category info for form submission
+            document.getElementById('add-package-form').setAttribute('data-category-id', categoryId);
+            document.getElementById('add-package-form').setAttribute('data-category-name', categoryName);
+        }
+
+        // Function to close add package modal
+        function closeAddPackageModal() {
+            document.getElementById('add-package-modal').style.display = 'none';
+            document.getElementById('add-package-form').reset();
+        }
+
+        // Function to generate unique package ID
+        function generatePackageId() {
+            const prefix = 'beach_'; // You can make this dynamic based on category
+            const timestamp = Date.now().toString();
+            return prefix + timestamp.slice(-6);
+        }
+
+        // Handle add package form submission
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('add-package-form').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const categoryId = this.getAttribute('data-category-id');
+                const categoryName = this.getAttribute('data-category-name');
+
+                if (!categoryId) {
+                    alert('Error: Category information missing');
+                    return;
+                }
+
+                try {
+                    // Collect form data
+                    // Collect form data
+                    const formData = {
+                        id: generatePackageId(),
+                        name: document.getElementById('new-package-name').value.trim(),
+                        destination: document.getElementById('new-destination').value.trim(),
+                        shortDesc: document.getElementById('new-short-desc').value.trim(),
+                        aboutPackage: document.getElementById('new-about-package').value.trim() ||
+                            document.getElementById('new-short-desc').value.trim(),
+                        duration: { days: parseInt(document.getElementById('new-duration').value) },
+                        price: {
+                            amount: parseInt(document.getElementById('new-price').value),
+                            currency: "NGN",
+                            priceType: "per person"
+                        },
+                        packageThumbnail: document.getElementById('new-thumbnail').value.trim() ||
+                            'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=600&fit=crop',
+                        difficulty: document.getElementById('new-difficulty').value,
+                        groupSize: {
+                            min: 2,
+                            max: parseInt(document.getElementById('new-group-size').value)
+                        },
+                        highlights: document.getElementById('new-highlights').value
+                            .split(',').map(h => h.trim()).filter(h => h),
+                        startAndEndLocation: {
+                            startsAt: document.getElementById('new-start-date').value || "2025-08-10",
+                            endsAt: document.getElementById('new-end-date').value || "2025-08-15"
+                        },
+                        totalPackages: {
+                            totalCount: parseInt(document.getElementById('new-total-packages').value),
+                            remaining: parseInt(document.getElementById('new-remaining-packages').value)
+                        },
+                        // Collect itinerary data
+                        itinerary: Array.from(document.querySelectorAll('#itinerary-container .itinerary-item')).map((item, index) => {
+                            const inputs = item.querySelectorAll('input, textarea');
+                            return {
+                                itineraryTitle: inputs[0]?.value.trim() || `Day ${index + 1}: Activity`,
+                                itineraryDetails: inputs[1]?.value.trim() || 'Details to be updated'
+                            };
+                        }).filter(item => item.itineraryTitle && item.itineraryDetails),
+
+                        // Collect inclusions data
+                        inclusions: Array.from(document.querySelectorAll('#inclusions-container .inclusion-item')).map(item => {
+                            const inputs = item.querySelectorAll('input, textarea');
+                            return {
+                                inclusionTitle: inputs[0]?.value.trim() || '',
+                                inclusionDetails: inputs[1]?.value.trim() || ''
+                            };
+                        }).filter(item => item.inclusionTitle && item.inclusionDetails),
+
+                        // Collect accommodation data
+                        accomodation: Array.from(document.querySelectorAll('#accommodation-container .accommodation-item')).map(item => {
+                            const inputs = item.querySelectorAll('input, textarea');
+                            return {
+                                accomodationName: inputs[0]?.value.trim() || '',
+                                noOfNights: inputs[1]?.value || '1',
+                                accomodationThumbnail: inputs[2]?.value.trim() || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop',
+                                accomodationDesc: inputs[3]?.value.trim() || ''
+                            };
+                        }).filter(item => item.accomodationName && item.accomodationDesc),
+
+                        // Collect addons data
+                        addons: Array.from(document.querySelectorAll('#addons-container .addon-item')).map(item => {
+                            const inputs = item.querySelectorAll('input');
+                            return {
+                                addonName: inputs[0]?.value.trim() || '',
+                                addonPrice: parseInt(inputs[1]?.value) || 0
+                            };
+                        }).filter(item => item.addonName && item.addonPrice > 0),
+
+                        // Collect tour gallery data
+                        tourGallery: Array.from(document.querySelectorAll('#gallery-container input')).map(input =>
+                            input.value.trim()
+                        ).filter(url => url && url.startsWith('http'))
+                    };
+                    console.log('Adding new package:', formData);
+
+                    // Get the current category document
+                    const categoryDoc = await db.collection("travel-packages").doc(categoryId).get();
+
+                    if (!categoryDoc.exists) {
+                        throw new Error('Category not found');
+                    }
+
+                    const categoryData = categoryDoc.data();
+                    const currentPackages = categoryData.packages || [];
+
+                    // Add the new package to the array
+                    const updatedPackages = [...currentPackages, formData];
+
+                    // Update the document
+                    await db.collection("travel-packages").doc(categoryId).update({
+                        packages: updatedPackages
+                    });
+
+                    console.log('Package added successfully');
+
+                    // Close modal and reload packages
+                    closeAddPackageModal();
+                    showNotification('Package added successfully!', 'success');
+
+                    // Reload packages to show the new one
+                    loadTravelPackages();
+
+                } catch (error) {
+                    console.error('Error adding package:', error);
+                    showNotification('Error adding package: ' + error.message, 'error');
+                }
+            });
+
+            // Initialize the app after form listener is set
+            loadTravelPackages();
+        });
+
+        // Function to show notifications
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 4px;
+                font-weight: 600;
+                z-index: 2000;
+                max-width: 300px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            `;
+
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function (event) {
+            const packageModal = document.getElementById('package-modal');
+            const addPackageModal = document.getElementById('add-package-modal');
+
+            if (event.target === packageModal) {
+                closePackageModal();
+            }
+            if (event.target === addPackageModal) {
+                closeAddPackageModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

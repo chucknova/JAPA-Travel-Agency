@@ -28,7 +28,7 @@
         <div class="navcontents">
             <div class="navcontents-left">
                 <div class="logo">
-                    <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
+                    <a href="./index.html"><img src="assets/japa-logo.svg" alt="Logo" class="logo-img"></a>
                 </div>
 
                 <ul class="nav-links">
@@ -255,83 +255,6 @@
         });
 
     }
-    myFirebaseUserAuth()
-
-    function showLoading() {
-        document.getElementById("bottom-pk").innerHTML = `
-        <div class="loading-container" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-        ">
-            <div class="airbnb-spinner" style="
-                width: 48px; 
-                height: 48px; 
-                margin-bottom: 32px;
-                position: relative;
-            ">
-                <div class="spinner-dot" style="
-                    position: absolute;
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    background-color: #FF385C;
-                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
-                "></div>
-                <div class="spinner-dot" style="
-                    position: absolute;
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    background-color: #FF385C;
-                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
-                    animation-delay: -0.16s;
-                    left: 18px;
-                "></div>
-                <div class="spinner-dot" style="
-                    position: absolute;
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    background-color: #FF385C;
-                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
-                    animation-delay: -0.32s;
-                    left: 36px;
-                "></div>
-            </div>
-            <p style="
-                color: #222222; 
-                font-size: 20px; 
-                font-weight: 500; 
-                margin: 0;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                text-align: center;
-            ">Finding amazing places for you...</p>
-        </div>
-        <style>
-            @keyframes airbnb-bounce {
-                0%, 80%, 100% {
-                    transform: scale(0);
-                    opacity: 0.5;
-                }
-                40% {
-                    transform: scale(1);
-                    opacity: 1;
-                }
-            }
-        </style>
-    `;
-    }    // Show loading state immediately
-    showLoading();
 
     // import travelPackages from "./travel-package-schema.js";
     // console.log(travelPackages);
@@ -364,7 +287,6 @@
     let selectedsubpkg = selectedPackage.packages
     console.log("Selected SUBPACKAGE:", selectedsubpkg);
 
-    // Global saved items array - initialize as empty, will be populated from Firestore
     // Global saved items array and state management
     let savedItems = [];
     let isDataLoaded = false;
@@ -426,10 +348,8 @@
         // Update UI
         updateBookmarkCount();
 
-        // Re-render packages to update bookmark states
-        if (typeof renderPackages === 'function') {
-            renderPackages();
-        }
+        // Update bookmark states for existing packages
+        updateAllBookmarkStates();
     });
 
     let bookmarkCount = document.getElementById('bookmark-count');
@@ -605,67 +525,76 @@
         }
     }
 
-    // Wait for data to be loaded before accessing selectedPackage
-    function initializePageContent() {
-        console.log("selected package:", selectedPackage);
-        let subPackages = selectedPackage.packages;
+    // Function to update all bookmark states after auth loads
+    function updateAllBookmarkStates() {
+        if (!isDataLoaded) return;
 
-        // Function to render hero
-        function renderHero() {
-            const displayHero = `<div class="hero-section-tp"
-            style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${selectedPackage.categoryThumbnail});">
-            <div class="hero-content-tp">
-                <h1 class="hero-header-tp">${selectedPackage.categoryName}</h1>
-                <p class="hero-subtext-tp" style="font-weight: 500;">${selectedPackage.description}</p>
-            </div>
-        </div>`;
-
-            document.getElementById("heroo").innerHTML = displayHero;
-        }
-
-        // Function to render category header name
-        function renderHeaderName() {
-            const displayHeaderName = `Top ${selectedPackage.categoryName} Packages at JAPA this month`;
-            document.getElementById("tp-header").innerHTML = displayHeaderName;
-        }
-
-        // Function to sort packages
-        function sortPackages(sortBy) {
-            let sortedPackages = [...subPackages];
-
-            switch (sortBy) {
-                case 'price':
-                    sortedPackages.sort((a, b) => {
-                        const priceA = typeof a.price.amount === 'string' ?
-                            parseFloat(a.price.amount.replace(/,/g, '')) :
-                            parseFloat(a.price.amount);
-                        const priceB = typeof b.price.amount === 'string' ?
-                            parseFloat(b.price.amount.replace(/,/g, '')) :
-                            parseFloat(b.price.amount);
-                        return priceA - priceB;
-                    });
-                    break;
-                case 'departure-time':
-                    sortedPackages.sort((a, b) => {
-                        return a.duration.days - b.duration.days;
-                    });
-                    break;
-                case 'arrival-time':
-                    sortedPackages.sort((a, b) => {
-                        return b.name.localeCompare(a.name);
-                    });
-                    break;
-                default:
-                    return sortedPackages;
+        // Update all existing bookmark icons on the page
+        document.querySelectorAll('.heart-icon').forEach(heartIcon => {
+            if (heartIcon.id.startsWith('bookmark-')) {
+                const packageId = heartIcon.id.replace('bookmark-', '');
+                const isCurrentlySaved = isSaved(packageId);
+                heartIcon.innerHTML = getBookmarkSVG(isCurrentlySaved);
             }
+        });
+    }
 
-            return sortedPackages;
+    // Function to render hero
+    function renderHero() {
+        const displayHero = `<div class="hero-section-tp"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${selectedPackage.categoryThumbnail});">
+        <div class="hero-content-tp">
+            <h1 class="hero-header-tp">${selectedPackage.categoryName}</h1>
+            <p class="hero-subtext-tp" style="font-weight: 500;">${selectedPackage.description}</p>
+        </div>
+    </div>`;
+
+        document.getElementById("heroo").innerHTML = displayHero;
+    }
+
+    // Function to render category header name
+    function renderHeaderName() {
+        const displayHeaderName = `Top ${selectedPackage.categoryName} Packages at JAPA this month`;
+        document.getElementById("tp-header").innerHTML = displayHeaderName;
+    }
+
+    // Function to sort packages
+    function sortPackages(sortBy) {
+        let sortedPackages = [...selectedsubpkg];
+
+        switch (sortBy) {
+            case 'price':
+                sortedPackages.sort((a, b) => {
+                    const priceA = typeof a.price.amount === 'string' ?
+                        parseFloat(a.price.amount.replace(/,/g, '')) :
+                        parseFloat(a.price.amount);
+                    const priceB = typeof b.price.amount === 'string' ?
+                        parseFloat(b.price.amount.replace(/,/g, '')) :
+                        parseFloat(b.price.amount);
+                    return priceA - priceB;
+                });
+                break;
+            case 'departure-time':
+                sortedPackages.sort((a, b) => {
+                    return a.duration.days - b.duration.days;
+                });
+                break;
+            case 'arrival-time':
+                sortedPackages.sort((a, b) => {
+                    return b.name.localeCompare(a.name);
+                });
+                break;
+            default:
+                return sortedPackages;
         }
 
-        // Function to get the appropriate SVG based on state
-        function getBookmarkSVG(saved) {
-            if (saved) {
-                return `
+        return sortedPackages;
+    }
+
+    // Function to get the appropriate SVG based on state
+    function getBookmarkSVG(saved) {
+        if (saved) {
+            return `
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" 
   stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-bookmark-icon lucide-bookmark">
@@ -678,9 +607,9 @@
   </defs>
   <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" fill="#E71D36" class="bookmark-fill"/>
 </svg>`;
-            } else {
-                return `
-<svg xmlns="http://www.w3.svg" width="32" height="32" viewBox="0 0 24 24" 
+        } else {
+            return `
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" 
   stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
   class="lucide lucide-bookmark-icon lucide-bookmark">
   <defs>
@@ -692,64 +621,81 @@
   </defs>
   <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" fill="url(#glossyFill)" class="bookmark-fill"/>
 </svg>`;
-            }
         }
+    }
 
-        function renderPackages(packagesToRender = subPackages) {
-            const displaySubPk = packagesToRender.map((subPkg, index) => {
-                const startDate = new Date(subPkg.startAndEndLocation.startsAt);
-                const endDate = new Date(subPkg.startAndEndLocation.endsAt);
-                const timeDiff = endDate - startDate;
-                const durationInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-                const originalIndex = subPackages.findIndex(pkg => pkg === subPkg);
+    function renderPackages(packagesToRender = selectedsubpkg) {
+        const displaySubPk = packagesToRender.map((subPkg, index) => {
+            const startDate = new Date(subPkg.startAndEndLocation.startsAt);
+            const endDate = new Date(subPkg.startAndEndLocation.endsAt);
+            const timeDiff = endDate - startDate;
+            const durationInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            const originalIndex = selectedsubpkg.findIndex(pkg => pkg === subPkg);
 
-                // Check if the package is saved
-                const isCurrentlySaved = isSaved(subPkg.id);
-                const bookmarkIcon = getBookmarkSVG(isCurrentlySaved);
+            // Check if the package is saved (will return false if data not loaded)
+            const isCurrentlySaved = isSaved(subPkg.id);
+            const bookmarkIcon = getBookmarkSVG(isCurrentlySaved);
 
-                return `<div class="travel-package-card-tp">
-        <div class="travel-package-upper" style="background-image: url(${subPkg.packageThumbnail}); position: relative;">
-            <div class="duration-tag" style="position: absolute; top: 15px; left: 15px;">
-                ${durationInDays} days
-            </div>
-            <div class="heart-icon" id="bookmark-${subPkg.id}" style="position: absolute; top: 15px; right: 15px; cursor: pointer;">
-                ${bookmarkIcon}
-            </div>
+            return `<div class="travel-package-card-tp">
+    <div class="travel-package-upper" style="background-image: url(${subPkg.packageThumbnail}); position: relative;">
+        <div class="duration-tag" style="position: absolute; top: 15px; left: 15px;">
+            ${durationInDays} days
         </div>
-        <div class="travel-package-lower">
-            <div class="package-location-name-desc" id="pkgIndex-${originalIndex}" data-package-index="${originalIndex}">
-                <p class="pk-location">${subPkg.destination}</p>
-                <p style="cursor: pointer;" class="pk-name">${subPkg.name}</p>
-                <p class="pk-desc">${subPkg.shortDesc}</p>
-            </div>
-            <div class="package-price-ratings">
-                <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount.toLocaleString()}</h3>
-
-                <p class="pk-ratings">⭐ 4.8 (152 reviews)</p>
-            </div>
+        <div class="heart-icon" id="bookmark-${subPkg.id}" style="position: absolute; top: 15px; right: 15px; cursor: pointer;">
+            ${bookmarkIcon}
         </div>
-    </div>`;
+    </div>
+    <div class="travel-package-lower">
+        <div class="package-location-name-desc" id="pkgIndex-${originalIndex}" data-package-index="${originalIndex}">
+            <p class="pk-location">${subPkg.destination}</p>
+            <p style="cursor: pointer;" class="pk-name">${subPkg.name}</p>
+            <p class="pk-desc">${subPkg.shortDesc}</p>
+        </div>
+        <div class="package-price-ratings">
+            <h3 class="pk-price">${subPkg.price.currency} ${subPkg.price.amount.toLocaleString()}</h3>
+
+            <p class="pk-ratings">⭐ 4.8 (152 reviews)</p>
+        </div>
+    </div>
+</div>`;
+        });
+
+        document.getElementById("bottom-pk").innerHTML = displaySubPk.join('');
+
+        // Add click event listeners to all package cards
+        document.querySelectorAll('.package-location-name-desc').forEach(card => {
+            card.addEventListener('click', function () {
+                const packageIndex = this.getAttribute('data-package-index');
+                routeToDetails(packageIndex);
             });
+        });
 
-            document.getElementById("bottom-pk").innerHTML = displaySubPk.join('');
-
-            // Add click event listeners to all package cards
-            document.querySelectorAll('.package-location-name-desc').forEach(card => {
-                card.addEventListener('click', function () {
-                    const packageIndex = this.getAttribute('data-package-index');
-                    routeToDetails(packageIndex);
-                });
-            });
+        // Update bookmark states after rendering if data is loaded
+        if (isDataLoaded) {
+            updateAllBookmarkStates();
         }
+    }
 
-        // Function to route user to sub travel packages page
-        function routeToDetails(packageIndex) {
-            console.log("Selected package index:", packageIndex);
-            console.log("Selected Package:", subPackages[packageIndex]);
-            console.log("test parent PackageId:", packageId);
+    // Function to route user to sub travel packages page
+    function routeToDetails(packageIndex) {
+        console.log("Selected package index:", packageIndex);
+        console.log("Selected Package:", selectedsubpkg[packageIndex]);
+        console.log("test parent PackageId:", packageId);
 
-            window.location.href = `travel-package-detail.html?parentPackageID=${packageId}&packageId=${packageIndex}`;
-        }
+        window.location.href = `travel-package-detail.html?parentPackageID=${packageId}&packageId=${packageIndex}`;
+    }
+
+    // Initialize page content immediately when DOM loads
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize auth handling
+        myFirebaseUserAuth();
+
+        // Initialize page content immediately - don't wait for auth
+        renderHero();
+        renderHeaderName();
+        renderPackages();
+
+        console.log("Page initialized immediately. Auth will update bookmark states when ready.");
 
         // Event listener for sort dropdown
         document.getElementById('sortBy').addEventListener('change', function () {
@@ -790,37 +736,13 @@
         });
 
         // Bookmark button navigation
-        document.getElementById('bookmark-btn').addEventListener('click', () => {
-            window.location.href = 'favorite-travel-packages.html';
-        });
-
-        // Initialize the page
-        renderHero();
-        renderHeaderName();
-        renderPackages();
-
-        console.log("Page initialized. Current saved items:", savedItems);
-    }
-
-    
-    // Wait for DOM and auth to be ready before initializing
-    document.addEventListener('DOMContentLoaded', function () {
-        // Check if auth state has been determined
-        const checkAuthAndInit = () => {
-            if (isDataLoaded) {
-                initializePageContent();
-            } else {
-                // Wait a bit more and check again
-                setTimeout(checkAuthAndInit, 100);
-            }
-        };
-
-        checkAuthAndInit();
+        const bookmarkBtn = document.getElementById('bookmark-btn');
+        if (bookmarkBtn) {
+            bookmarkBtn.addEventListener('click', () => {
+                window.location.href = 'favorite-travel-packages.html';
+            });
+        }
     });
-
-
-
-
 </script>
 
 </html>

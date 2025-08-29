@@ -23,28 +23,28 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-      <div class="navcontents">
-        <div class="navcontents-left">
-          <div class="logo">
-            <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
-          </div>
+        <div class="navcontents">
+            <div class="navcontents-left">
+                <div class="logo">
+                    <a href="./index.html"><img src="assets/japa-logo.svg" alt="Logo" class="logo-img"></a>
+                </div>
 
-          <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#who-we-are">Who we are</a></li>
-            <li><a href="#how-to-japa">How to JAPA</a></li>
-            <li><a href="#featured-picks">Our Featured Picks</a></li>
-            <li><a href="#why-us">Why us</a></li>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#who-we-are">Who we are</a></li>
+                    <li><a href="#how-to-japa">How to JAPA</a></li>
+                    <li><a href="#featured-picks">Our Featured Picks</a></li>
+                    <li><a href="#why-us">Why us</a></li>
 
-          </ul>
+                </ul>
+            </div>
+
+            <div class="user-actions">
+                <button id="username" class="login-button">
+                    <a href="user-auth.html">Log In</a>
+                </button>
+            </div>
         </div>
-
-        <div class="user-actions">
-          <button id="username" class="login-button">
-            <a href="user-auth.html">Log In</a>
-          </button>
-        </div>
-      </div>
     </nav>
 
     <div id="success-container" class="success-container">
@@ -90,7 +90,7 @@
     }
     displayNav()
 
-function myFirebaseUserAuth() {
+    function myFirebaseUserAuth() {
         // Firebase Auth State Change Handler
         firebase.auth().onAuthStateChanged((user) => {
             const usernameElement = document.getElementById("username");
@@ -272,9 +272,8 @@ function myFirebaseUserAuth() {
                     const upcomingBookings = JSON.parse(sessionStorage.getItem('upcomingbookings') || '[]');
 
                     await userDocRef.set({
-                        upcomingTrips: upcomingBookings,
-                        // Add other user fields as needed
-                    });
+                        upcomingTrips: upcomingBookings
+                    }, { merge: true });
                 }
 
             } catch (error) {
@@ -507,7 +506,7 @@ function myFirebaseUserAuth() {
         `;
     }
 
-    routetoupcoming.addEventListener("click", function() {
+    routetoupcoming.addEventListener("click", function () {
         window.location.href = "./bookinghistory.html"
     })
 

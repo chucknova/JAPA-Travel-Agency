@@ -27,7 +27,7 @@
         <div class="navcontents">
             <div class="navcontents-left">
                 <div class="logo">
-                    <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
+                    <a href="./index.html"><img src="assets/japa-logo.svg" alt="Logo" class="logo-img"></a>
                 </div>
 
                 <ul class="nav-links">
@@ -112,6 +112,83 @@
 
     // Initialize Cloud Firestore and get a reference to the service
     const db = firebase.firestore();
+
+        // Show loading state initially
+    function showLoading() {
+        document.getElementById("bottom-container").innerHTML = `
+        <div class="loading-container" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+        ">
+            <div class="airbnb-spinner" style="
+                width: 48px; 
+                height: 48px; 
+                margin-bottom: 32px;
+                position: relative;
+            ">
+                <div class="spinner-dot" style="
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #FF385C;
+                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
+                "></div>
+                <div class="spinner-dot" style="
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #FF385C;
+                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
+                    animation-delay: -0.16s;
+                    left: 18px;
+                "></div>
+                <div class="spinner-dot" style="
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #FF385C;
+                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
+                    animation-delay: -0.32s;
+                    left: 36px;
+                "></div>
+            </div>
+            <p style="
+                color: #222222; 
+                font-size: 20px; 
+                font-weight: 500; 
+                margin: 0;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                text-align: center;
+            ">Finding amazing places for you...</p>
+        </div>
+        <style>
+            @keyframes airbnb-bounce {
+                0%, 80%, 100% {
+                    transform: scale(0);
+                    opacity: 0.5;
+                }
+                40% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+    `;
+    }    // Show loading state immediately
+    showLoading();
 
     function myFirebaseUserAuth() {
         // Firebase Auth State Change Handler
@@ -248,82 +325,6 @@
     }
     myFirebaseUserAuth()
 
-    // Show loading state initially
-    function showLoading() {
-        document.getElementById("bottom-container").innerHTML = `
-        <div class="loading-container" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-        ">
-            <div class="airbnb-spinner" style="
-                width: 48px; 
-                height: 48px; 
-                margin-bottom: 32px;
-                position: relative;
-            ">
-                <div class="spinner-dot" style="
-                    position: absolute;
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    background-color: #FF385C;
-                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
-                "></div>
-                <div class="spinner-dot" style="
-                    position: absolute;
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    background-color: #FF385C;
-                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
-                    animation-delay: -0.16s;
-                    left: 18px;
-                "></div>
-                <div class="spinner-dot" style="
-                    position: absolute;
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    background-color: #FF385C;
-                    animation: airbnb-bounce 1.4s ease-in-out infinite both;
-                    animation-delay: -0.32s;
-                    left: 36px;
-                "></div>
-            </div>
-            <p style="
-                color: #222222; 
-                font-size: 20px; 
-                font-weight: 500; 
-                margin: 0;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                text-align: center;
-            ">Finding amazing places for you...</p>
-        </div>
-        <style>
-            @keyframes airbnb-bounce {
-                0%, 80%, 100% {
-                    transform: scale(0);
-                    opacity: 0.5;
-                }
-                40% {
-                    transform: scale(1);
-                    opacity: 1;
-                }
-            }
-        </style>
-    `;
-    }    // Show loading state immediately
-    showLoading();
 
     // Fetch data from Firebase
     db.collection("travel-packages").get()

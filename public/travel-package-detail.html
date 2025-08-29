@@ -31,7 +31,7 @@
         <div class="navcontents">
             <div class="navcontents-left">
                 <div class="logo">
-                    <img src="assets/japa-logo.svg" alt="Logo" class="logo-img">
+                    <a href="./index.html"><img src="assets/japa-logo.svg" alt="Logo" class="logo-img"></a>
                 </div>
 
                 <ul class="nav-links">
@@ -1022,8 +1022,15 @@
                 }))
                 const totalAddonsPrice = addonsPrice.reduce((sum, num) => sum + num, 0);
 
+                // Check authentication state synchronously
+                const currentUser = firebase.auth().currentUser;
 
-
+                if (!currentUser) {
+                    alert("Please login or create an account to book this package")
+                    // Redirect to login with return URL
+                    window.location.href = `user-auth.html?returnTo=${encodeURIComponent(window.location.href)}`;
+                    return;
+                }
 
                 const userInfo = {
                     travelerCount: parseInt(travelerCount),

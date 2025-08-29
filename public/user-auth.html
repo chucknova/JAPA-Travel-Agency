@@ -220,7 +220,7 @@
             });
     });
 
-    // Optional: Add a function to check and debug users collection
+    
     function debugUsersCollection() {
         db.collection("users").get().then((querySnapshot) => {
             console.log("Total users in collection:", querySnapshot.size);
@@ -231,9 +231,6 @@
             console.error("Error fetching users:", error);
         });
     }
-
-    // Call this function in your browser console to debug
-    // debugUsersCollection();
 </script>
 
 </html>
