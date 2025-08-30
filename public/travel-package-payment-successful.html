@@ -401,8 +401,9 @@
                     const doc = new jsPDF();
 
                     // 🎨 Clean white background
-                    doc.setFillColor(255, 255, 255);
-                    doc.rect(0, 0, 210, 297, 'F');
+                     doc.setFillColor(255, 255, 255);
+                doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+
 
                     // 📄 Title
                     doc.setFontSize(16);
@@ -465,7 +466,7 @@
                     doc.text(`TOTAL PAID:  ${bookingSession.totalAmtPaid || 'N/A'}`, 20, yPos);
                     yPos += lineHeight * 2.5;
 
-                    // 🙏 Thank you footer
+                    // thank you footer
                     doc.setFontSize(8);
                     doc.setFont("courier", "normal");
                     doc.setTextColor(80, 80, 80);
@@ -477,13 +478,13 @@
                     doc.text("JAPA — Making your travel dreams a reality.", 105, yPos, { align: "center" });
                     yPos += 15;
 
-                    // 📱 Contact info
+                    //  Contact info
                     doc.setFontSize(7);
                     doc.setFont("courier", "normal");
                     doc.setTextColor(120, 120, 120);
                     doc.text("support@japatravel.com | www.japatravel.com", 105, yPos, { align: "center" });
 
-                    // 📄 Save file with timestamp
+                    //  Save file with timestamp
                     const timestamp = new Date().toISOString().slice(0, 10);
                     const fileName = `japa_receipt_${(bookingSession.bookingId || bookingID || 'unknown').replace("#", "")}_${timestamp}.pdf`;
                     doc.save(fileName);

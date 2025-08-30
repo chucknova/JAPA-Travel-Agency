@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 
-// Download service account key from Firebase Console
+// Make sure this file exists in the same folder
 const serviceAccount = require('./service-account-key.json');
 
 admin.initializeApp({
@@ -9,10 +9,8 @@ admin.initializeApp({
 
 async function makeUserAdmin(email) {
   try {
-    // Get the user by email
     const user = await admin.auth().getUserByEmail(email);
     
-    // Set admin custom claims
     await admin.auth().setCustomUserClaims(user.uid, { 
       admin: true,
       role: 'admin' 
@@ -25,5 +23,5 @@ async function makeUserAdmin(email) {
   }
 }
 
-// Replace with your admin email
-makeUserAdmin('admin@yourdomain.com');
+// Replace with your actual admin email
+makeUserAdmin('admin@japa.com');
